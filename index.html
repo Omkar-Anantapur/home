@@ -4,186 +4,224 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>City Design | DAA Project</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Playfair+Display:wght@600&display=swap" rel="stylesheet">
   <style>
-    /* -------- Global Styles -------- */
-    body {
+    /* ---------- GLOBAL ---------- */
+    * {
       margin: 0;
-      font-family: 'Poppins', sans-serif;
-      background-color: #1f1f1f;
-      color: #f9f9f9;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #0d0d0d;
+      color: #f5f5f5;
       scroll-behavior: smooth;
     }
 
-    /* -------- Header -------- */
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    /* ---------- NAVBAR ---------- */
     header {
-      background-color: #00d2d3;
+      background-color: #0d0d0d;
+      padding: 20px 8%;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 15px 60px;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+      border-bottom: 1px solid #1f1f1f;
       position: sticky;
       top: 0;
       z-index: 10;
     }
 
     .logo {
-      font-size: 1.5rem;
-      font-weight: 700;
-      color: #111;
-      letter-spacing: 1px;
+      font-family: 'Playfair Display', serif;
+      font-size: 1.6rem;
+      letter-spacing: 2px;
+      color: #fff;
     }
 
     nav a {
-      color: #111;
-      text-decoration: none;
       margin: 0 15px;
-      font-weight: 600;
-      transition: 0.3s;
+      font-weight: 500;
+      color: #ccc;
+      transition: color 0.3s;
     }
 
     nav a:hover {
       color: #fff;
     }
 
-    /* -------- Sections -------- */
+    /* ---------- HOME SECTION ---------- */
     section {
-      padding: 60px 10%;
-      background-color: #2b2b2b;
-      margin-bottom: 30px;
-      border-radius: 10px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+      padding: 80px 10%;
+      text-align: center;
     }
 
-    h1, h2 {
-      color: #00d2d3;
-      text-align: center;
+    #home {
+      height: 90vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      background: radial-gradient(circle at center, #111 0%, #000 100%);
+      animation: fadeIn 1.5s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+      from {opacity: 0;}
+      to {opacity: 1;}
+    }
+
+    #home h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 3.5rem;
+      color: #fff;
+      text-shadow: 0 0 10px rgba(255,255,255,0.4);
       margin-bottom: 20px;
+    }
+
+    #home p {
+      font-size: 1.1rem;
+      color: #ccc;
+      max-width: 600px;
+      line-height: 1.6;
+    }
+
+    /* ---------- CONTENT SECTIONS ---------- */
+    h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem;
+      color: #fff;
+      margin-bottom: 25px;
+      text-shadow: 0 0 6px rgba(255,255,255,0.2);
     }
 
     p {
       font-size: 1rem;
-      line-height: 1.6;
-      color: #e4e4e4;
-      text-align: justify;
+      color: #ddd;
+      line-height: 1.7;
+      max-width: 900px;
+      margin: 0 auto 30px;
     }
 
-    /* -------- Table -------- */
-    table {
-      width: 60%;
-      margin: 30px auto;
-      border-collapse: collapse;
-      text-align: center;
+    /* ---------- MEMBER SECTIONS ---------- */
+    .member {
+      background-color: #111;
+      margin: 50px auto;
+      padding: 60px 10%;
+      border-radius: 10px;
+      box-shadow: 0 0 20px rgba(255,255,255,0.05);
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .member:hover {
+      transform: scale(1.02);
+      box-shadow: 0 0 30px rgba(255,255,255,0.1);
+    }
+
+    .member h3 {
+      font-size: 1.5rem;
+      margin-bottom: 10px;
+      color: #fff;
+    }
+
+    .member p {
+      color: #aaa;
       font-size: 1rem;
-      background-color: #fff;
-      color: #111;
-      border-radius: 8px;
-      overflow: hidden;
     }
 
-    th {
-      background-color: #00d2d3;
-      color: #111;
-      padding: 15px;
-    }
-
-    td {
-      padding: 12px;
-      border-bottom: 1px solid #ccc;
-      font-weight: 500;
-    }
-
-    tr:last-child td {
-      border-bottom: none;
-    }
-
-    /* -------- Footer -------- */
+    /* ---------- FOOTER ---------- */
     footer {
       text-align: center;
       padding: 20px;
-      color: #aaa;
+      border-top: 1px solid #1f1f1f;
+      color: #777;
       font-size: 0.9rem;
+      letter-spacing: 0.5px;
     }
 
   </style>
 </head>
 <body>
-  <!-- Header -->
+
+  <!-- HEADER -->
   <header>
     <div class="logo">CITY DESIGN</div>
     <nav>
       <a href="#home">Home</a>
       <a href="#about">About</a>
       <a href="#project">Project</a>
-      <a href="#team">Team</a>
+      <a href="#omkar">Omkar</a>
+      <a href="#manish">Manish</a>
+      <a href="#abhilash">Abhilash</a>
+      <a href="#bheemangouda">Bheemangouda</a>
     </nav>
   </header>
 
-  <!-- Introduction -->
+  <!-- HOME SECTION -->
   <section id="home">
-    <h1>Introduction</h1>
-    <p style="text-align:center; font-size:1.1rem;">
-      <strong>Course:</strong> DAA<br>
+    <h1>City Design Project</h1>
+    <p>
+      <strong>Course:</strong> DAA &nbsp; | &nbsp;
       <strong>Course Code:</strong> 24ECSC205<br>
-      <strong>Course Instructor:</strong> Prof. Prakash Hegade<br>
-      <strong>University:</strong> KLE Technological University<br>
-      <strong>Topic:</strong> City Design
+      <strong>Instructor:</strong> Prof. Prakash Hegade &nbsp; | &nbsp;
+      <strong>University:</strong> KLE Technological University
     </p>
   </section>
 
-  <!-- Team -->
-  <section id="team">
-    <h2>Team Members</h2>
-    <table>
-      <tr>
-        <th>Name</th>
-        <th>USN</th>
-      </tr>
-      <tr>
-        <td>Omkar Anantapur</td>
-        <td>01fe24bcs022</td>
-      </tr>
-      <tr>
-        <td>Manish Singri</td>
-        <td>01fe24bcs</td>
-      </tr>
-      <tr>
-        <td>Abhilash Benarji</td>
-        <td>01fe24bcs</td>
-      </tr>
-      <tr>
-        <td>Bheemangouda Biradar</td>
-        <td>01fe24bcs</td>
-      </tr>
-    </table>
-  </section>
-
-  <!-- About Section -->
+  <!-- ABOUT SECTION -->
   <section id="about">
     <h2>About the Course</h2>
     <p>
       Design and Analysis of Algorithms (DAA) is at the core of computer science. 
-      It enables us to solve problems efficiently and helps in understanding the 
-      logic behind computational thinking. This project applies algorithmic 
-      principles to urban design — showcasing how computational ideas can help 
-      model and optimize aspects of a modern city.
+      It enhances analytical and logical reasoning, providing the foundation for 
+      solving computational problems efficiently. This course allows us to explore 
+      algorithmic design approaches and apply them to real-world systems.
     </p>
   </section>
 
-  <!-- Project Section -->
+  <!-- PROJECT SECTION -->
   <section id="project">
     <h2>Project Overview</h2>
     <p>
-      The “City Design” project integrates algorithmic approaches in urban 
-      planning to simulate traffic management, optimize road networks, and 
-      visualize city layouts. By applying data structures and algorithms, 
-      we aim to bring efficiency and sustainability to digital city models.
+      The “City Design” project integrates algorithmic logic with urban modeling 
+      concepts. By using data structures and optimization techniques, we aim to 
+      simulate and improve aspects like traffic management, connectivity, and 
+      spatial layout. It demonstrates how computational thinking can enhance 
+      sustainable city planning.
     </p>
   </section>
 
-  <!-- Footer -->
+  <!-- TEAM MEMBERS -->
+  <section id="omkar" class="member">
+    <h3>Omkar Anantapur</h3>
+    <p>USN: 01fe24bcs022</p>
+  </section>
+
+  <section id="manish" class="member">
+    <h3>Manish Singri</h3>
+    <p>USN: 01fe24bcs107</p>
+  </section>
+
+  <section id="abhilash" class="member">
+    <h3>Abhilash Benarji</h3>
+    <p>USN: 01fe24bcs153</p>
+  </section>
+
+  <section id="bheemangouda" class="member">
+    <h3>Bheemangouda Biradar</h3>
+    <p>USN: 01fe24bcs149</p>
+  </section>
+
+  <!-- FOOTER -->
   <footer>
-    © 2025 | City Design Project – KLE Technological University
+    © 2025 | City Design – DAA Project | KLE Technological University
   </footer>
+
 </body>
 </html>
