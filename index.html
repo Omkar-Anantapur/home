@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Team Portfolio</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: #f5f5f5;
+        }
+        header {
+            background: #333;
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        .section {
+            padding: 40px;
+            max-width: 1000px;
+            margin: auto;
+        }
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        /* Team Section */
+        .team-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+        }
+        .member-card {
+            background: white;
+            width: 250px;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        .member-card img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+        /* Projects */
+        .project {
+            background: white;
+            padding: 20px;
+            margin: 15px 0;
+            border-radius: 6px;
+            box-shadow: 0 0 8px rgba(0,0,0,0.1);
+        }
+        footer {
+            text-align: center;
+            padding: 20px;
+            background: #222;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Our Team Portfolio</h1>
+    <p>Creative Minds | Developers | Designers</p>
+</header>
+
+<!-- About Team -->
+<section class="section">
+    <h2>About Our Team</h2>
+    <p>
+        We are a group of passionate individuals working together to create impactful digital solutions.
+        Our team specializes in web development, UI/UX design, software engineering, and project management.
+    </p>
+</section>
+
+<!-- Team Members -->
+<section class="section">
+    <h2>Meet the Team</h2>
+    <div class="team-container">
+        <div class="member-card">
+            <img src="https://via.placeholder.com/100" alt="Member Photo">
+            <h3>Abhilash benarji</h3>
+            <p>Team Leader</p>
+        </div>
+
+        <div class="member-card">
+            <img src="https://via.placeholder.com/100" alt="Member Photo">
+            <h3>Omkar Anantapur</h3>
+            <p>Developer</p>
+        </div>
+
+        <div class="member-card">
+            <img src="https://via.placeholder.com/100" alt="Member Photo">
+            <h3>Manish singri</h3>
+            <p>Designer</p>
+        </div>
+
+        <div class="member-card">
+            <img src="https://via.placeholder.com/100" alt="Member Photo">
+            <h3>Bheemangouda biradar</h3>
+            <p>Project Manager</p>
+        </div>
+    </div>
+</section>
+
+<!-- Projects -->
+<section class="section">
+    <h2>Our Projects</h2>
+
+    <div class="project">
+        <h3>Project One</h3>
+        <p>A web application built to help users track daily tasks efficiently.</p>
+    </div>
+
+    <div class="project">
+        <h3>Project Two</h3>
+        <p>Creative mobile app design that focuses on enhancing user experience.</p>
+    </div>
+
+    <div class="project">
+        <h3>Project Three</h3>
+        <p>AI-based tool built to automate repetitive workflows.</p>
+    </div>
+
+</section>
+
+<!-- Contact -->
+<footer>
+    <p>Contact Us: team@portfolio.com</p>
+</footer>
+
+</body>
+</html>
