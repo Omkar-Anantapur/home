@@ -9,7 +9,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Playfair+Display:wght@600&display=swap" rel="stylesheet">
 
   <style>
-    /* -------------- GLOBAL -------------- */
+    /* ============ GLOBAL STYLES ============ */
     * {
       margin: 0;
       padding: 0;
@@ -35,7 +35,7 @@
       letter-spacing: 0.5px;
     }
 
-    /* -------------- HEADER -------------- */
+    /* ============ HEADER ============ */
     header {
       background: rgba(0,0,0,0.85);
       backdrop-filter: blur(10px);
@@ -66,7 +66,7 @@
       text-shadow: 0 0 6px #fff;
     }
 
-    /* -------------- HOME -------------- */
+    /* ============ HOME SECTION ============ */
     #home {
       height: 70vh;
       display: flex;
@@ -97,7 +97,6 @@
       padding: 25px 50px;
       box-shadow: 0 0 25px rgba(255,255,255,0.1);
       max-width: 600px;
-      transition: transform 0.3s ease-in-out;
     }
 
     #home h1 {
@@ -113,10 +112,10 @@
       font-size: 0.95rem;
     }
 
-    /* -------------- CAROUSEL -------------- */
+    /* ============ CAROUSEL ============ */
     .carousel {
       width: 80%;
-      margin: 60px auto;
+      margin: 80px auto 40px;
       overflow: hidden;
       position: relative;
       border-radius: 12px;
@@ -157,7 +156,7 @@
       animation-play-state: paused;
     }
 
-    /* -------------- SECTIONS -------------- */
+    /* ============ GENERAL SECTION STYLES ============ */
     section {
       padding: 80px 10%;
       text-align: center;
@@ -178,7 +177,7 @@
       font-size: 1rem;
     }
 
-    /* -------------- MEMBER CARDS -------------- */
+    /* ============ MEMBER CARDS ============ */
     .member {
       width: 80%;
       margin: 40px auto;
@@ -204,7 +203,7 @@
       color: #aaa;
     }
 
-    /* -------------- ANIMATIONS -------------- */
+    /* ============ SCROLL ANIMATION ============ */
     .hidden {
       opacity: 0;
       transform: translateY(40px);
@@ -216,7 +215,7 @@
       transform: translateY(0);
     }
 
-    /* -------------- FOOTER -------------- */
+    /* ============ FOOTER ============ */
     footer {
       text-align: center;
       padding: 20px;
@@ -252,7 +251,7 @@
     </div>
   </section>
 
-  <!-- CAROUSEL -->
+  <!-- CAROUSEL ABOVE ABOUT -->
   <div class="carousel hidden">
     <div class="carousel-track">
       <div class="carousel-item"><h3>Omkar Anantapur</h3><p>USN: 01fe24bcs022</p></div>
@@ -267,7 +266,7 @@
     </div>
   </div>
 
-  <!-- ABOUT -->
+  <!-- ABOUT SECTION -->
   <section id="about" class="hidden">
     <h2>About the Course</h2>
     <p>
@@ -276,7 +275,7 @@
     </p>
   </section>
 
-  <!-- PROJECT -->
+  <!-- PROJECT SECTION -->
   <section id="project" class="hidden">
     <h2>Project Overview</h2>
     <p>
@@ -285,7 +284,7 @@
     </p>
   </section>
 
-  <!-- INDIVIDUAL SECTIONS -->
+  <!-- INDIVIDUAL TEAM MEMBER SECTIONS -->
   <section id="omkar" class="member hidden">
     <h3>Omkar Anantapur</h3>
     <p>USN: 01fe24bcs022</p>
@@ -306,6 +305,7 @@
     <p>USN: 01fe24bcs149</p>
   </section>
 
+  <!-- FOOTER -->
   <footer>
     © 2025 | City Design – DAA Project | KLE Technological University
   </footer>
