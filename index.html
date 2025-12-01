@@ -18,6 +18,7 @@
       background-color: #0d0d0d;
       color: #f5f5f5;
       scroll-behavior: smooth;
+      overflow-x: hidden;
     }
 
     a {
@@ -49,19 +50,15 @@
       margin: 0 15px;
       font-weight: 500;
       color: #ccc;
-      transition: color 0.3s;
+      transition: color 0.3s, text-shadow 0.3s;
     }
 
     nav a:hover {
       color: #fff;
+      text-shadow: 0 0 5px #fff;
     }
 
     /* ---------- HOME SECTION ---------- */
-    section {
-      padding: 80px 10%;
-      text-align: center;
-    }
-
     #home {
       height: 90vh;
       display: flex;
@@ -70,6 +67,8 @@
       align-items: center;
       background: radial-gradient(circle at center, #111 0%, #000 100%);
       animation: fadeIn 1.5s ease-in-out;
+      text-align: center;
+      padding: 0 5%;
     }
 
     @keyframes fadeIn {
@@ -79,10 +78,10 @@
 
     #home h1 {
       font-family: 'Playfair Display', serif;
-      font-size: 3.5rem;
+      font-size: 3.8rem;
       color: #fff;
-      text-shadow: 0 0 10px rgba(255,255,255,0.4);
-      margin-bottom: 20px;
+      text-shadow: 0 0 12px rgba(255,255,255,0.3);
+      margin-bottom: 25px;
     }
 
     #home p {
@@ -92,7 +91,70 @@
       line-height: 1.6;
     }
 
+    /* ---------- CAROUSEL SECTION ---------- */
+    #team-carousel {
+      background-color: #111;
+      padding: 80px 0;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .carousel-track {
+      display: flex;
+      width: calc(300px * 8);
+      animation: scroll 20s linear infinite;
+    }
+
+    @keyframes scroll {
+      from { transform: translateX(0); }
+      to { transform: translateX(-50%); }
+    }
+
+    .card {
+      width: 300px;
+      flex: none;
+      background-color: #0d0d0d;
+      border: 1px solid #222;
+      border-radius: 10px;
+      margin: 0 20px;
+      padding: 40px 20px;
+      text-align: center;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .card:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 20px rgba(255,255,255,0.08);
+    }
+
+    .card h3 {
+      font-family: 'Playfair Display', serif;
+      color: #fff;
+      margin-bottom: 10px;
+      font-size: 1.2rem;
+    }
+
+    .card p {
+      color: #aaa;
+      font-size: 0.95rem;
+    }
+
+    .carousel-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, #111 0%, transparent 15%, transparent 85%, #111 100%);
+      pointer-events: none;
+    }
+
     /* ---------- CONTENT SECTIONS ---------- */
+    section {
+      padding: 80px 10%;
+      text-align: center;
+    }
+
     h2 {
       font-family: 'Playfair Display', serif;
       font-size: 2rem;
@@ -107,32 +169,6 @@
       line-height: 1.7;
       max-width: 900px;
       margin: 0 auto 30px;
-    }
-
-    /* ---------- MEMBER SECTIONS ---------- */
-    .member {
-      background-color: #111;
-      margin: 50px auto;
-      padding: 60px 10%;
-      border-radius: 10px;
-      box-shadow: 0 0 20px rgba(255,255,255,0.05);
-      transition: transform 0.3s, box-shadow 0.3s;
-    }
-
-    .member:hover {
-      transform: scale(1.02);
-      box-shadow: 0 0 30px rgba(255,255,255,0.1);
-    }
-
-    .member h3 {
-      font-size: 1.5rem;
-      margin-bottom: 10px;
-      color: #fff;
-    }
-
-    .member p {
-      color: #aaa;
-      font-size: 1rem;
     }
 
     /* ---------- FOOTER ---------- */
@@ -154,12 +190,9 @@
     <div class="logo">CITY DESIGN</div>
     <nav>
       <a href="#home">Home</a>
+      <a href="#team-carousel">Team</a>
       <a href="#about">About</a>
       <a href="#project">Project</a>
-      <a href="#omkar">Omkar</a>
-      <a href="#manish">Manish</a>
-      <a href="#abhilash">Abhilash</a>
-      <a href="#bheemangouda">Bheemangouda</a>
     </nav>
   </header>
 
@@ -168,20 +201,61 @@
     <h1>City Design Project</h1>
     <p>
       <strong>Course:</strong> DAA &nbsp; | &nbsp;
-      <strong>Course Code:</strong> 24ECSC205<br>
+      <strong>Code:</strong> 24ECSC205<br>
       <strong>Instructor:</strong> Prof. Prakash Hegade &nbsp; | &nbsp;
       <strong>University:</strong> KLE Technological University
     </p>
+  </section>
+
+  <!-- TEAM CAROUSEL -->
+  <section id="team-carousel">
+    <div class="carousel-track">
+      <div class="card">
+        <h3>Omkar Anantapur</h3>
+        <p>USN: 01fe24bcs022</p>
+      </div>
+      <div class="card">
+        <h3>Manish Singri</h3>
+        <p>USN: 01fe24bcs107</p>
+      </div>
+      <div class="card">
+        <h3>Abhilash Benarji</h3>
+        <p>USN: 01fe24bcs153</p>
+      </div>
+      <div class="card">
+        <h3>Bheemangouda Biradar</h3>
+        <p>USN: 01fe24bcs149</p>
+      </div>
+
+      <!-- Repeat for infinite loop effect -->
+      <div class="card">
+        <h3>Omkar Anantapur</h3>
+        <p>USN: 01fe24bcs022</p>
+      </div>
+      <div class="card">
+        <h3>Manish Singri</h3>
+        <p>USN: 01fe24bcs107</p>
+      </div>
+      <div class="card">
+        <h3>Abhilash Benarji</h3>
+        <p>USN: 01fe24bcs153</p>
+      </div>
+      <div class="card">
+        <h3>Bheemangouda Biradar</h3>
+        <p>USN: 01fe24bcs149</p>
+      </div>
+    </div>
+    <div class="carousel-overlay"></div>
   </section>
 
   <!-- ABOUT SECTION -->
   <section id="about">
     <h2>About the Course</h2>
     <p>
-      Design and Analysis of Algorithms (DAA) is at the core of computer science. 
-      It enhances analytical and logical reasoning, providing the foundation for 
-      solving computational problems efficiently. This course allows us to explore 
-      algorithmic design approaches and apply them to real-world systems.
+      Design and Analysis of Algorithms (DAA) forms the core of computer science.
+      It emphasizes efficiency, optimization, and structured problem-solving.
+      This project demonstrates how algorithmic principles can be applied
+      creatively to real-world scenarios through computational modeling.
     </p>
   </section>
 
@@ -189,33 +263,12 @@
   <section id="project">
     <h2>Project Overview</h2>
     <p>
-      The “City Design” project integrates algorithmic logic with urban modeling 
-      concepts. By using data structures and optimization techniques, we aim to 
-      simulate and improve aspects like traffic management, connectivity, and 
-      spatial layout. It demonstrates how computational thinking can enhance 
-      sustainable city planning.
+      The “City Design” project integrates algorithmic strategies with urban 
+      simulation techniques. It focuses on optimizing traffic systems, 
+      mapping structures, and analyzing network efficiency. 
+      Through data-driven design, it represents how algorithms can shape 
+      the future of intelligent cities.
     </p>
-  </section>
-
-  <!-- TEAM MEMBERS -->
-  <section id="omkar" class="member">
-    <h3>Omkar Anantapur</h3>
-    <p>USN: 01fe24bcs022</p>
-  </section>
-
-  <section id="manish" class="member">
-    <h3>Manish Singri</h3>
-    <p>USN: 01fe24bcs107</p>
-  </section>
-
-  <section id="abhilash" class="member">
-    <h3>Abhilash Benarji</h3>
-    <p>USN: 01fe24bcs153</p>
-  </section>
-
-  <section id="bheemangouda" class="member">
-    <h3>Bheemangouda Biradar</h3>
-    <p>USN: 01fe24bcs149</p>
   </section>
 
   <!-- FOOTER -->
