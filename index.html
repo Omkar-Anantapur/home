@@ -3,13 +3,12 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>City Design | DAA Project</title>
+  <title>Bheemangouda Biradar | City Design – DAA Project</title>
 
   <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Playfair+Display:wght@600&display=swap" rel="stylesheet">
 
   <style>
-    /* ============ GLOBAL STYLES ============ */
     * {
       margin: 0;
       padding: 0;
@@ -20,7 +19,6 @@
       font-family: 'Inter', sans-serif;
       background-color: #0b0b0b;
       color: #f5f5f5;
-      scroll-behavior: smooth;
       overflow-x: hidden;
     }
 
@@ -35,7 +33,7 @@
       letter-spacing: 0.5px;
     }
 
-    /* ============ HEADER ============ */
+    /* HEADER */
     header {
       background: rgba(0,0,0,0.85);
       backdrop-filter: blur(10px);
@@ -66,136 +64,173 @@
       text-shadow: 0 0 6px #fff;
     }
 
-    /* ============ HOME SECTION ============ */
-    #home {
-      height: 70vh;
+    /* MAIN CONTAINER */
+    .wrapper {
+      max-width: 1000px;
+      margin: 80px auto;
+      padding: 0 8%;
+    }
+
+    .profile-card {
+      background: radial-gradient(circle at top, #151515 0%, #050505 100%);
+      border-radius: 18px;
+      padding: 30px 24px;
+      border: 1px solid #222;
+      box-shadow: 0 0 25px rgba(0,0,0,0.6);
+      display: grid;
+      grid-template-columns: minmax(0, 1.1fr) minmax(0, 1.3fr);
+      gap: 30px;
+      align-items: center;
+    }
+
+    @media (max-width: 800px) {
+      .profile-card {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .avatar {
       display: flex;
       flex-direction: column;
-      justify-content: center;
       align-items: center;
-      background: radial-gradient(circle at center, #111 0%, #000 100%);
-      text-align: center;
-      position: relative;
-      overflow: hidden;
+      gap: 15px;
     }
 
-    #home::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: radial-gradient(circle, rgba(255,255,255,0.1), transparent 70%);
-      z-index: 0;
-      opacity: 0.3;
-    }
-
-    #home-content {
-      position: relative;
-      z-index: 1;
-      background: rgba(255,255,255,0.05);
-      backdrop-filter: blur(12px);
-      border-radius: 15px;
-      padding: 25px 50px;
-      box-shadow: 0 0 25px rgba(255,255,255,0.1);
-      max-width: 600px;
-    }
-
-    #home h1 {
-      font-size: 2.4rem;
-      color: #fff;
-      text-shadow: 0 0 12px rgba(255,255,255,0.3);
-      margin-bottom: 10px;
-    }
-
-    #home p {
-      color: #ccc;
-      line-height: 1.5;
-      font-size: 0.95rem;
-    }
-
-    /* ============ CAROUSEL ============ */
-    .carousel {
-      width: 80%;
-      margin: 80px auto 40px;
-      overflow: hidden;
-      position: relative;
-      border-radius: 12px;
-      background: rgba(255,255,255,0.03);
-      backdrop-filter: blur(8px);
-      box-shadow: 0 0 20px rgba(255,255,255,0.05);
-    }
-
-    .carousel-track {
+    .avatar-circle {
+      width: 140px;
+      height: 140px;
+      border-radius: 50%;
+      background: conic-gradient(from 160deg, #38bdf8, #f97316, #a855f7, #38bdf8);
+      padding: 3px;
       display: flex;
-      width: calc(200%);
-      animation: slide 18s linear infinite;
+      align-items: center;
+      justify-content: center;
     }
 
-    .carousel-item {
-      flex: 0 0 25%;
+    .avatar-inner {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      background: #050505;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #777;
+      font-size: 0.9rem;
       text-align: center;
-      padding: 50px 20px;
-      color: #fff;
+      padding: 10px;
     }
 
-    .carousel-item h3 {
-      font-size: 1.3rem;
-      margin-bottom: 10px;
-    }
-
-    .carousel-item p {
+    .tag {
+      font-size: 0.8rem;
+      padding: 4px 12px;
+      border-radius: 999px;
+      border: 1px solid #333;
       color: #bbb;
+    }
+
+    .name {
+      font-size: 1.9rem;
+      margin-bottom: 4px;
+    }
+
+    .usn {
       font-size: 0.95rem;
+      color: #aaa;
+      margin-bottom: 15px;
     }
 
-    @keyframes slide {
-      0% { transform: translateX(0); }
-      100% { transform: translateX(-50%); }
+    .role {
+      font-size: 0.95rem;
+      color: #f97316;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      margin-bottom: 18px;
     }
 
-    .carousel:hover .carousel-track {
-      animation-play-state: paused;
-    }
-
-    /* ============ SECTIONS ============ */
-    section {
-      padding: 80px 10%;
-      text-align: center;
-    }
-
-    h2 {
-      font-size: 2rem;
-      margin-bottom: 20px;
+    .section-title {
+      font-size: 1.1rem;
+      margin-bottom: 8px;
       color: #fff;
-      text-shadow: 0 0 5px rgba(255,255,255,0.15);
     }
 
-    p {
-      max-width: 900px;
-      margin: 0 auto 30px;
+    .section-text {
+      font-size: 0.95rem;
+      color: #d0d0d0;
       line-height: 1.7;
-      color: #ddd;
-      font-size: 1rem;
+      margin-bottom: 16px;
     }
 
-    /* ============ SCROLL ANIMATION ============ */
-    .hidden {
-      opacity: 0;
-      transform: translateY(40px);
-      transition: opacity 0.8s ease, transform 0.8s ease;
+    .pill-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 6px;
+      margin-bottom: 16px;
     }
 
-    .show {
-      opacity: 1;
-      transform: translateY(0);
+    .pill {
+      font-size: 0.8rem;
+      padding: 6px 12px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid #2a2a2a;
+      color: #ccc;
     }
 
-    /* ============ FOOTER ============ */
+    .sub-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 18px;
+      margin-top: 10px;
+    }
+
+    .sub-card {
+      background: rgba(255,255,255,0.02);
+      border-radius: 12px;
+      border: 1px solid #222;
+      padding: 12px 14px;
+      text-align: left;
+    }
+
+    .sub-card h3 {
+      font-size: 0.95rem;
+      margin-bottom: 6px;
+    }
+
+    .sub-card p {
+      font-size: 0.85rem;
+      color: #c5c5c5;
+      line-height: 1.6;
+    }
+
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      margin-top: 28px;
+      font-size: 0.9rem;
+      color: #9ca3af;
+      border: 1px solid #272727;
+      padding: 8px 14px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.02);
+      transition: background 0.2s, border-color 0.2s, color 0.2s;
+    }
+
+    .back-link:hover {
+      background: rgba(255,255,255,0.06);
+      border-color: #3b3b3b;
+      color: #e5e5e5;
+    }
+
     footer {
       text-align: center;
       padding: 20px;
       border-top: 1px solid #1f1f1f;
       color: #777;
-      font-size: 0.9rem;
+      font-size: 0.85rem;
+      margin-top: 60px;
     }
   </style>
 </head>
@@ -205,73 +240,86 @@
   <header>
     <div class="logo">CITY DESIGN</div>
     <nav>
-      <a href="#home">Home</a>
-      <a href="#about">About</a>
-      <a href="#project">Project</a>
+      <a href="index.html">Home</a>
+      <a href="index.html#project">Project</a>
+      <a href="Bheemangouda.html">Profile</a>
     </nav>
   </header>
 
-  <!-- HOME -->
-  <section id="home">
-    <div id="home-content" class="hidden">
-      <h1>City Design Project</h1>
-      <p><strong>Course:</strong> DAA | <strong>Code:</strong> 24ECSC205<br>
-         <strong>Instructor:</strong> Prof. Prakash Hegade<br>
-         <strong>University:</strong> KLE Technological University</p>
+  <!-- MAIN CONTENT -->
+  <main class="wrapper">
+    <div class="profile-card">
+      <!-- LEFT: AVATAR & BASIC INFO -->
+      <div class="avatar">
+        <div class="avatar-circle">
+          <div class="avatar-inner">
+            Photo placeholder<br/>
+            (replace with img later)
+          </div>
+        </div>
+        <span class="tag">Team Member · DAA Project</span>
+      </div>
+
+      <!-- RIGHT: DETAILS -->
+      <div>
+        <h1 class="name">Bheemangouda Biradar</h1>
+        <p class="usn">USN: 01fe24bcs149 · KLE Technological University</p>
+        <p class="role">Project Management & Design Analysis</p>
+
+        <div>
+          <h2 class="section-title">About</h2>
+          <p class="section-text">
+            A first-year Computer Science Engineering student focused on building strong fundamentals in
+            algorithms, problem solving, and clean system design. Actively involved in the
+            <strong>City Design – DAA Project</strong>, handling structure, logic flow, and documentation.
+          </p>
+        </div>
+
+        <div>
+          <h2 class="section-title">Core Skills</h2>
+          <div class="pill-list">
+            <span class="pill">Design & Analysis of Algorithms</span>
+            <span class="pill">Time Complexity Reasoning</span>
+            <span class="pill">Team Coordination</span>
+            <span class="pill">Web Structure (HTML & CSS)</span>
+            <span class="pill">Problem Breakdown</span>
+          </div>
+        </div>
+
+        <div class="sub-grid">
+          <div class="sub-card">
+            <h3>Role in City Design Project</h3>
+            <p>
+              Helps translate real-world city problems into algorithmic models, connects business cases
+              with appropriate data structures, and ensures the documentation clearly explains logic
+              and complexity.
+            </p>
+          </div>
+          <div class="sub-card">
+            <h3>Technical Focus</h3>
+            <p>
+              Interested in graphs, shortest path problems, greedy strategies, and how algorithm choices
+              affect performance in real systems like routing, scheduling, and resource allocation.
+            </p>
+          </div>
+          <div class="sub-card">
+            <h3>Future Goals</h3>
+            <p>
+              To move from just writing code to designing systems thoughtfully, combining theoretical
+              DAA concepts with practical web-based implementations and scalable solutions.
+            </p>
+          </div>
+        </div>
+
+        <a class="back-link" href="index.html">
+          ← Back to main project page
+        </a>
+      </div>
     </div>
-  </section>
+  </main>
 
-  <!-- CAROUSEL ABOVE ABOUT -->
-  <div class="carousel hidden">
-    <div class="carousel-track">
-      <div class="carousel-item"><h3>Omkar Anantapur</h3><p>USN: 01fe24bcs022</p></div>
-      <div class="carousel-item"><h3>Manish Singri</h3><p>USN: 01fe24bcs107</p></div>
-      <div class="carousel-item"><h3>Abhilash Benarji</h3><p>USN: 01fe24bcs153</p></div>
-      <div class="carousel-item"><h3>Bheemangouda Biradar</h3><p>USN: 01fe24bcs149</p></div>
-      <!-- Duplicate for seamless loop -->
-      <div class="carousel-item"><h3>Omkar Anantapur</h3><p>USN: 01fe24bcs022</p></div>
-      <div class="carousel-item"><h3>Manish Singri</h3><p>USN: 01fe24bcs107</p></div>
-      <div class="carousel-item"><h3>Abhilash Benarji</h3><p>USN: 01fe24bcs153</p></div>
-      <div class="carousel-item"><h3>Bheemangouda Biradar</h3><p>USN: 01fe24bcs149</p></div>
-    </div>
-  </div>
-
-  <!-- ABOUT SECTION -->
-  <section id="about" class="hidden">
-    <h2>About the Course</h2>
-    <p>
-      Design and Analysis of Algorithms (DAA) teaches how to design efficient algorithms and evaluate performance. 
-      It builds analytical thinking that helps solve computational problems and forms the base for advanced computer science concepts.
-    </p>
-  </section>
-
-  <!-- PROJECT SECTION -->
-  <section id="project" class="hidden">
-    <h2>Project Overview</h2>
-    <p>
-      The "City Design" project applies DAA principles to model and optimize city planning. 
-      Using algorithmic logic, it simulates traffic management and resource optimization for smarter, efficient urban infrastructure.
-    </p>
-  </section>
-
-  <!-- FOOTER -->
   <footer>
-    © 2025 | City Design – DAA Project | KLE Technological University
+    © 2025 | City Design – DAA Project | Profile: Bheemangouda Biradar
   </footer>
-
-  <!-- SCROLL ANIMATIONS -->
-  <script>
-    const hiddenEls = document.querySelectorAll('.hidden');
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('show');
-          observer.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.15 });
-
-    hiddenEls.forEach(el => observer.observe(el));
-  </script>
 </body>
 </html>
