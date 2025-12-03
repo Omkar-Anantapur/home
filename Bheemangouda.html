@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>City Design Project – DAA Business Cases</title>
+    <style>
+        body {
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            margin: 0;
+            padding: 0;
+            background: #0f172a;
+            color: #e5e7eb;
+        }
+        header {
+            background: #020617;
+            padding: 1.5rem 2rem;
+            border-bottom: 1px solid #1f2937;
+        }
+        header h1 {
+            margin: 0;
+            font-size: 1.8rem;
+            color: #38bdf8;
+        }
+        header p {
+            margin: 0.4rem 0 0;
+            font-size: 0.95rem;
+            color: #9ca3af;
+        }
+        main {
+            max-width: 1100px;
+            margin: 1.5rem auto 3rem;
+            padding: 0 1rem 2rem;
+        }
+        .intro {
+            background: #020617;
+            border-radius: 0.75rem;
+            padding: 1rem 1.25rem;
+            border: 1px solid #1f2937;
+            margin-bottom: 1.5rem;
+            font-size: 0.95rem;
+            color: #d1d5db;
+        }
+        .case {
+            background: #020617;
+            border-radius: 0.75rem;
+            padding: 1rem 1.25rem;
+            margin-bottom: 1.25rem;
+            border: 1px solid #1f2937;
+        }
+        .case h2 {
+            margin: 0 0 0.5rem;
+            font-size: 1.1rem;
+            color: #f97316;
+        }
+        .case h3 {
+            margin: 0.5rem 0;
+            font-size: 0.95rem;
+            color: #a5b4fc;
+        }
+        .meta {
+            font-size: 0.9rem;
+            margin: 0.4rem 0 0.8rem;
+            color: #9ca3af;
+        }
+        code, pre {
+            font-family: "Fira Code", SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+        }
+        pre {
+            background: #020617;
+            border-radius: 0.5rem;
+            padding: 0.75rem;
+            overflow-x: auto;
+            font-size: 0.85rem;
+            border: 1px solid #111827;
+        }
+        .tags {
+            font-size: 0.8rem;
+            margin-bottom: 0.5rem;
+            color: #9ca3af;
+        }
+        .tags span {
+            display: inline-block;
+            background: #1e293b;
+            border-radius: 999px;
+            padding: 0.15rem 0.6rem;
+            margin-right: 0.3rem;
+        }
+        a {
+            color: #38bdf8;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+<header>
+    <h1>Design & Analysis of Algorithms – City Business Cases</h1>
+    <p>Real-world problems for our city modeled using data structures, algorithms, and time-complexity analysis.</p>
+</header>
+
+<main>
+    <section class="intro">
+        <p>
+            This page connects <strong>city-level business problems</strong> (for example in Hubballi-Dharwad)
+            to <strong>classic algorithms and data structures</strong>. Each case shows:
+        </p>
+        <ul>
+            <li>Business context</li>
+            <li>Data structure used</li>
+            <li>Core algorithm</li>
+            <li>Time complexity</li>
+            <li>Sample Python code (logic focus, not full production system)</li>
+        </ul>
+    </section>
+
+    <!-- 1. Smart traffic routing -->
+    <article class="case" id="case1">
+        <h2>1. Smart Traffic Routing Between Two Junctions</h2>
+        <p>
+            The city wants to give drivers the <strong>fastest route</strong> between two junctions,
+            considering road distances. This reduces congestion and travel time.
+        </p>
+
+        <div class="tags">
+            <span>Graph</span><span>Priority Queue</span><span>Dijkstra</span>
+        </div>
+
+        <p class="meta">
+            <strong>Data structure:</strong> Adjacency list representation of a weighted graph + Min-Heap (priority queue)<br>
+            <strong>Algorithm:</strong> Dijkstra’s shortest path algorithm<br>
+            <strong>Time complexity:</strong> <code>O((V + E) log V)</code>
+        </p>
+
+        <h3>Code (Python – Dijkstra on city road network)</h3>
+        <pre><code class="language-python">
+import heapq
+
+def dijkstra(graph, source):
+    """
+    graph: dict[node] = list[(neighbor, weight)]
+    source: starting junction
+    returns: dict with shortest distance from source to every node
+    """
+    INF = float('inf')
+    dist = {node: INF for node in graph}
+    dist[source] = 0
+
+    pq = [(0, source)]  # (distance, node)
+
+    while pq:
+        d, u = heapq.heappop(pq)
+        if d != dist[u]:
+            continue  # stale entry
+
+        for v, w in graph[u]:
+            if dist[v] > dist[u] + w:
+                dist[v] = dist[u] + w
+                heapq.heappush(pq, (dist[v], v))
+
+    return dist
+
+# Example usage:
+city_graph = {
+    "Hubballi_BusStand": [("KIMS_Hospital", 4), ("Unkal_Lake", 6)],
+    "KIMS_Hospital": [("Unkal_Lake", 2)],
+    "Unkal_Lake": []
+}
+
+distances = dijkstra(city_graph, "Hubballi_BusStand")
+print(distances)
+        </code></pre>
+    </article>
+
+    <!-- 2. Garbage truck route planning -->
+    <article class="case" id="case2">
+        <h2>2. Garbage Truck Route Planning (Daily Collection)</h2>
+        <p>
+            A garbage truck must visit multiple collection points once and return to the depot.
+            Exact TSP is expensive, so the city uses a greedy approximation for a near-optimal route.
+        </p>
+
+        <div class="tags">
+            <span>2D Points</span><span>Matrix</span><span>Greedy TSP Approx</span>
+        </div>
+
+        <p class="meta">
+            <strong>Data structure:</strong> Distance matrix (2D array)<br>
+            <strong>Algorithm:</strong> Nearest Neighbor heuristic for TSP<br>
+            <strong>Time complexity:</strong> <code>O(n^2)</code>
+        </p>
+
+        <h3>Code (Python – simple nearest neighbor TSP)</h3>
+        <pre><code class="language-python">
+def nearest_neighbor_tsp(dist_matrix, start=0):
+    """
+    dist_matrix: n x n matrix, dist_matrix[i][j] = distance from i to j
+    start: starting node (depot)
+    returns: path visiting all nodes and returning to start
+    """
+    n = len(dist_matrix)
+    visited = [False] * n
+    path = [start]
+    visited[start] = True
+    current = start
+
+    for _ in range(n - 1):
+        next_node = None
+        best_dist = float('inf')
+        for j in range(n):
+            if not visited[j] and dist_matrix[current][j] < best_dist:
+                best_dist = dist_matrix[current][j]
+                next_node = j
+        path.append(next_node)
+        visited[next_node] = True
+        current = next_node
+
+    path.append(start)  # return to depot
+    return path
+
+# Example: 4 garbage collection points + depot
+dist = [
+    [0, 2, 9, 10],
+    [1, 0, 6, 4],
+    [15, 7, 0, 8],
+    [6, 3, 12, 0]
+]
+
+route = nearest_neighbor_tsp(dist, start=0)
+print("Route:", route)
+        </code></pre>
+    </article>
+
+    <!-- 3. Nearest ambulance / hospital -->
+    <article class="case" id="case3">
+        <h2>3. Nearest Ambulance / Hospital in an Emergency</h2>
+        <p>
+            Given the accident location, the control room must find the <strong>nearest reachable hospital</strong>
+            through the city road network as quickly as possible.
+        </p>
+
+        <div class="tags">
+            <span>Graph</span><span>BFS</span><span>Queue</span>
+        </div>
+
+        <p class="meta">
+            <strong>Data structure:</strong> Adjacency list + Queue<br>
+            <strong>Algorithm:</strong> Breadth-First Search (unweighted graph)<br>
+            <strong>Time complexity:</strong> <code>O(V + E)</code>
+        </p>
+
+        <h3>Code (Python – BFS to nearest hospital)</h3>
+        <pre><code class="language-python">
+from collections import deque
+
+def nearest_hospital(graph, is_hospital, source):
+    """
+    graph: dict[node] = list[neighbor]
+    is_hospital: function(node) -> bool
+    source: accident location
+    returns: nearest hospital node or None
+    """
+    q = deque([source])
+    visited = {source}
+
+    while q:
+        u = q.popleft()
+        if is_hospital(u):
+            return u
+        for v in graph[u]:
+            if v not in visited:
+                visited.add(v)
+                q.append(v)
+    return None
+
+# Example usage:
+graph = {
+    "Accident_Spot": ["Junction1"],
+    "Junction1": ["Hospital_A", "Junction2"],
+    "Junction2": ["Hospital_B"],
+    "Hospital_A": [],
+    "Hospital_B": []
+}
+
+def is_hospital(node):
+    return node.startswith("Hospital")
+
+print(nearest_hospital(graph, is_hospital, "Accident_Spot"))
+        </code></pre>
+    </article>
+
+    <!-- 4. Next bus search -->
+    <article class="case" id="case4">
+        <h2>4. Finding the Next Bus from a Stop</h2>
+        <p>
+            At a bus stop, the system stores all departure times in sorted order.
+            For a given current time, we find the <strong>next bus</strong> efficiently.
+        </p>
+
+        <div class="tags">
+            <span>Sorted Array</span><span>Binary Search</span>
+        </div>
+
+        <p class="meta">
+            <strong>Data structure:</strong> Sorted array of times (e.g. in minutes from midnight)<br>
+            <strong>Algorithm:</strong> Binary search (lower bound)<br>
+            <strong>Time complexity:</strong> <code>O(log n)</code>
+        </p>
+
+        <h3>Code (Python – next departure using binary search)</h3>
+        <pre><code class="language-python">
+import bisect
+
+def next_bus(departures, current_time):
+    """
+    departures: sorted list of times (e.g. minutes past midnight)
+    current_time: current time in the same unit
+    returns: time of next bus or None
+    """
+    idx = bisect.bisect_left(departures, current_time)
+    if idx == len(departures):
+        return None  # no more buses today
+    return departures[idx]
+
+# Example:
+departures = [480, 510, 540, 600]  # 8:00, 8:30, 9:00, 10:00
+print(next_bus(departures, 525))   # 9:00 (540)
+        </code></pre>
+    </article>
+
+    <!-- 5. Parking slot lookup -->
+    <article class="case" id="case5">
+        <h2>5. Real-Time Parking Slot Availability</h2>
+        <p>
+            The city app shows available slots in each parking lot.
+            We need <strong>fast updates and lookups</strong> whenever a vehicle enters or exits.
+        </p>
+
+        <div class="tags">
+            <span>Hash Map</span><span>Dictionary</span>
+        </div>
+
+        <p class="meta">
+            <strong>Data structure:</strong> Hash map (dictionary) mapping <code>lot_id → free_slots</code><br>
+            <strong>Algorithm:</strong> Direct access by key<br>
+            <strong>Time complexity:</strong> Update & lookup in expected <code>O(1)</code>
+        </p>
+
+        <h3>Code (Python – simple parking manager)</h3>
+        <pre><code class="language-python">
+class ParkingManager:
+    def __init__(self):
+        # lot_id -> free slots
+        self.free_slots = {}
+
+    def add_lot(self, lot_id, capacity):
+        self.free_slots[lot_id] = capacity
+
+    def park(self, lot_id):
+        if self.free_slots.get(lot_id, 0) > 0:
+            self.free_slots[lot_id] -= 1
+            return True
+        return False
+
+    def leave(self, lot_id):
+        if lot_id in self.free_slots:
+            self.free_slots[lot_id] += 1
+
+    def get_free_slots(self, lot_id):
+        return self.free_slots.get(lot_id, 0)
+
+pm = ParkingManager()
+pm.add_lot("Hubballi_Central", 100)
+pm.park("Hubballi_Central")
+print(pm.get_free_slots("Hubballi_Central"))
+        </code></pre>
+    </article>
+
+    <!-- 6. Water pipeline connectivity -->
+    <article class="case" id="case6">
+        <h2>6. Detecting Water Supply Reachability</h2>
+        <p>
+            The water department wants to know whether a house is <strong>connected to the main pipeline</strong>.
+            We model the network as an undirected graph and use DFS.
+        </p>
+
+        <div class="tags">
+            <span>Graph</span><span>DFS</span>
+        </div>
+
+        <p class="meta">
+            <strong>Data structure:</strong> Adjacency list<br>
+            <strong>Algorithm:</strong> Depth-First Search (connected component check)<br>
+            <strong>Time complexity:</strong> <code>O(V + E)</code>
+        </p>
+
+        <h3>Code (Python – check if a house gets water)</h3>
+        <pre><code class="language-python">
+def has_water_supply(graph, source_main, house):
+    visited = set()
+
+    def dfs(u):
+        visited.add(u)
+        for v in graph[u]:
+            if v not in visited:
+                dfs(v)
+
+    dfs(source_main)
+    return house in visited
+
+# Example:
+pipeline = {
+    "Main_Tank": ["Area1"],
+    "Area1": ["Main_Tank", "StreetA"],
+    "StreetA": ["Area1", "House_101"],
+    "House_101": ["StreetA"],
+    "Isolated_House": []
+}
+
+print(has_water_supply(pipeline, "Main_Tank", "House_101"))   # True
+print(has_water_supply(pipeline, "Main_Tank", "Isolated_House"))  # False
+        </code></pre>
+    </article>
+
+    <!-- 7. Crime hotspot queries using 2D prefix sum -->
+    <article class="case" id="case7">
+        <h2>7. Crime Hotspot Queries in City Grid</h2>
+        <p>
+            The police department divides the city into a grid and stores the number of incidents per cell.
+            They frequently query the <strong>total incidents in a rectangular zone</strong>.
+        </p>
+
+        <div class="tags">
+            <span>2D Array</span><span>Prefix Sum</span>
+        </div>
+
+        <p class="meta">
+            <strong>Data structure:</strong> 2D prefix sum array<br>
+            <strong>Algorithm:</strong> Precomputation of prefix sums + O(1) range queries<br>
+            <strong>Time complexity:</strong> Build: <code>O(NM)</code>, each query: <code>O(1)</code>
+        </p>
+
+        <h3>Code (Python – 2D prefix sum)</h3>
+        <pre><code class="language-python">
+def build_prefix(grid):
+    n, m = len(grid), len(grid[0])
+    pref = [[0]*(m+1) for _ in range(n+1)]
+    for i in range(1, n+1):
+        for j in range(1, m+1):
+            pref[i][j] = (grid[i-1][j-1] + pref[i-1][j]
+                          + pref[i][j-1] - pref[i-1][j-1])
+    return pref
+
+def query(pref, x1, y1, x2, y2):
+    """
+    Query sum in rectangle [(x1,y1), (x2,y2)] inclusive, 0-based indices.
+    """
+    x1 += 1; y1 += 1; x2 += 1; y2 += 1
+    return (pref[x2][y2] - pref[x1-1][y2]
+            - pref[x2][y1-1] + pref[x1-1][y1-1])
+
+# Example:
+crime_grid = [
+    [1, 0, 2],
+    [0, 3, 1],
+    [2, 1, 0]
+]
+
+pref = build_prefix(crime_grid)
+print(query(pref, 0, 0, 1, 1))  # total in top-left 2x2 block
+        </code></pre>
+    </article>
+
+    <!-- 8. Land record lookups -->
+    <article class="case" id="case8">
+        <h2>8. Fast Land Record Lookup</h2>
+        <p>
+            Land records identified by unique survey numbers must be searchable quickly.
+            Records are kept sorted and accessed using binary search.
+        </p>
+
+        <div class="tags">
+            <span>Sorted Array</span><span>Binary Search</span>
+        </div>
+
+        <p class="meta">
+            <strong>Data structure:</strong> Sorted array (later could be a balanced BST)<br>
+            <strong>Algorithm:</strong> Binary search<br>
+            <strong>Time complexity:</strong> <code>O(log n)</code>
+        </p>
+
+        <h3>Code (Python – binary search by survey number)</h3>
+        <pre><code class="language-python">
+def find_record(records, target_survey):
+    """
+    records: list of (survey_no, owner_name) sorted by survey_no
+    """
+    lo, hi = 0, len(records) - 1
+    while lo <= hi:
+        mid = (lo + hi) // 2
+        survey_no, owner = records[mid]
+        if survey_no == target_survey:
+            return records[mid]
+        elif survey_no < target_survey:
+            lo = mid + 1
+        else:
+            hi = mid - 1
+    return None
+
+records = [(101, "Ravi"), (123, "Priya"), (150, "Anand")]
+print(find_record(records, 123))
+        </code></pre>
+    </article>
+
+    <!-- 9. Matching riders and autos -->
+    <article class="case" id="case9">
+        <h2>9. Matching Riders with Auto Drivers</h2>
+        <p>
+            A ride-sharing system wants to match riders and nearby autos based on pickup distance.
+            Both lists are sorted and matched greedily.
+        </p>
+
+        <div class="tags">
+            <span>Arrays</span><span>Sorting</span><span>Two Pointers</span>
+        </div>
+
+        <p class="meta">
+            <strong>Data structure:</strong> Arrays of positions (or distances)<br>
+            <strong>Algorithm:</strong> Sort + two-pointer greedy matching<br>
+            <strong>Time complexity:</strong> Sorting: <code>O(n log n)</code>; matching: <code>O(n)</code>
+        </p>
+
+        <h3>Code (Python – greedy distance-based matching)</h3>
+        <pre><code class="language-python">
+def match_riders(riders, autos):
+    """
+    riders, autos: sorted lists of pickup positions on a line (for simplicity)
+    returns: list of (rider_position, auto_position)
+    """
+    i = j = 0
+    matches = []
+    while i &lt; len(riders) and j &lt; len(autos):
+        matches.append((riders[i], autos[j]))
+        i += 1
+        j += 1
+    return matches
+
+riders = sorted([2, 10, 15])
+autos = sorted([1, 9, 20])
+print(match_riders(riders, autos))
+        </code></pre>
+    </article>
+
+    <!-- 10. Electricity load monitoring with segment tree -->
+    <article class="case" id="case10">
+        <h2>10. Electricity Load Monitoring by Zone</h2>
+        <p>
+            The power department divides the city into zones and monitors power usage.
+            They need fast <strong>range sum queries</strong> and <strong>point updates</strong> when load changes.
+        </p>
+
+        <div class="tags">
+            <span>Segment Tree</span><span>Range Query</span>
+        </div>
+
+        <p class="meta">
+            <strong>Data structure:</strong> Segment tree over an array of loads<br>
+            <strong>Algorithm:</strong> Segment tree build + update + range sum query<br>
+            <strong>Time complexity:</strong> Build: <code>O(n)</code>, Update: <code>O(log n)</code>, Query: <code>O(log n)</code>
+        </p>
+
+        <h3>Code (Python – basic segment tree for range sum)</h3>
+        <pre><code class="language-python">
+class SegmentTree:
+    def __init__(self, arr):
+        self.n = len(arr)
+        self.tree = [0] * (4 * self.n)
+        self._build(arr, 1, 0, self.n - 1)
+
+    def _build(self, arr, idx, l, r):
+        if l == r:
+            self.tree[idx] = arr[l]
+        else:
+            mid = (l + r) // 2
+            self._build(arr, idx*2, l, mid)
+            self._build(arr, idx*2+1, mid+1, r)
+            self.tree[idx] = self.tree[idx*2] + self.tree[idx*2+1]
+
+    def update(self, pos, val, idx=1, l=0, r=None):
+        if r is None:
+            r = self.n - 1
+        if l == r:
+            self.tree[idx] = val
+        else:
+            mid = (l + r) // 2
+            if pos <= mid:
+                self.update(pos, val, idx*2, l, mid)
+            else:
+                self.update(pos, val, idx*2+1, mid+1, r)
+            self.tree[idx] = self.tree[idx*2] + self.tree[idx*2+1]
+
+    def query(self, ql, qr, idx=1, l=0, r=None):
+        if r is None:
+            r = self.n - 1
+        if qr &lt; l or ql &gt; r:
+            return 0
+        if ql <= l and r <= qr:
+            return self.tree[idx]
+        mid = (l + r) // 2
+        return (self.query(ql, qr, idx*2, l, mid) +
+                self.query(ql, qr, idx*2+1, mid+1, r))
+
+# Example load per zone:
+loads = [5, 3, 7, 2, 6]
+st = SegmentTree(loads)
+print(st.query(1, 3))  # total load zones 1..3
+st.update(2, 10)       # zone 2 updated
+print(st.query(1, 3))
+        </code></pre>
+    </article>
+</main>
+
+</body>
+</html>
