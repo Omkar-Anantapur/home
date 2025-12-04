@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>CITY PLANNING | SAMPURNAPURAM</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <style>
+    :root {
+      --bg: #020617;
+      --glass: rgba(255,255,255,0.08);
+      --glass-strong: rgba(255,255,255,0.14);
+      --border: rgba(255,255,255,0.25);
+      --text: #e5e7eb;
+      --muted: #9ca3af;
+      --accent: #e50914;
+      --glow: rgba(229,9,20,0.6);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: "Segoe UI", sans-serif; }
+
+    body {
+      min-height: 100vh;
+      color: var(--text);
+      background: #020617;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    /* Minimalist animated mist + moon glow background */
+    /* Video layer */
+    .bg-video {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: -4;
+  opacity: 0.6;
+  animation: videoFade 14s ease-in-out infinite alternate;
+  filter: brightness(0.55) contrast(1.1) saturate(0.9);
+}
+
+@keyframes videoFade {
+  0% { opacity: 0.45; }
+  100% { opacity: 0.70; }
+}
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(circle at 70% 20%, rgba(180,200,255,0.08), transparent 40%),
+        radial-gradient(circle at 30% 60%, rgba(120,170,220,0.06), transparent 45%),
+        linear-gradient(180deg, #000814, #020617 60%, #040b1f);
+      z-index: -2;
+    }
+
+    body::after {
+      content: "";
+      position: fixed;
+      inset: -40%;
+      background:
+        radial-gradient(circle at 10% 30%, rgba(255,255,255,0.05), transparent 25%),
+        radial-gradient(circle at 80% 70%, rgba(255,255,255,0.04), transparent 30%),
+        radial-gradient(circle at 50% 50%, rgba(180,200,255,0.06), transparent 35%);
+      filter: blur(80px);
+      animation: slowDrift 40s linear infinite;
+      z-index: -1;
+    }
+
+    /* Mobile safety: disable scaling overflow entirely */
+@media (max-width: 680px) {
+  .episode:hover {
+    transform: none;
+    box-shadow:
+      inset 0 1px 0 rgba(255,255,255,0.35),
+      0 10px 25px rgba(0,0,0,0.6);
+  }
+}
+
+.episode:hover::before {
+  transform: translateX(120%);
+}
+}
+
+@keyframes slowDrift {
+      0% { transform: translate(0, 0); }
+      50% { transform: translate(-6%, -4%); }
+      100% { transform: translate(0, 0); }
+    }
+
+    /* HEADER */
+    header {
+      background: rgba(0,0,0,0.65);
+      backdrop-filter: blur(14px);
+      padding: 1rem 3vw;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .title-group h1 { font-size: 1.5rem; letter-spacing: 3px; }
+    .title-group h2 { font-size: 0.9rem; color: var(--accent); letter-spacing: 5px; margin-top: 2px; }
+
+    nav a { color: var(--text); text-decoration: none; margin-left: 1.4rem; }
+    nav a:hover { color: var(--accent); }
+
+    section { display: none; padding: 3rem 5vw; }
+    section:target { display: block; }
+    #profiles { display: block; }
+
+    /* PROFILES */
+    .profile-wrapper { text-align: center; }
+    .profile-wrapper h1 { font-size: 2.5rem; margin-bottom: 3rem; }
+
+    .profiles {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      max-width: 900px;
+      margin: auto;
+      gap: 2.5rem;
+    }
+
+    .profile-card {
+      background: var(--glass);
+      backdrop-filter: blur(16px);
+      padding: 2rem;
+      border-radius: 20px;
+      cursor: pointer;
+      transition: 0.3s;
+      border: 1px solid var(--border);
+    }
+
+    .profile-card:hover {
+      border-color: var(--accent);
+      transform: scale(1.08);
+      box-shadow: 0 0 30px var(--glow);
+    }
+
+    .avatar {
+      width: 90px; height: 90px; border-radius: 50%;
+      background: linear-gradient(135deg, #111827, #1f2933);
+      margin: 0 auto 1rem;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.8rem; font-weight: 700; color: var(--accent);
+    }
+
+    .profile-card a { color: var(--text); text-decoration: none; }
+
+    /* GLASS CARDS */
+    .row { margin-bottom: 2.5rem; }
+    .row h2 { margin-bottom: 1rem; letter-spacing: 1px; }
+
+    .cards {
+  display: flex;
+  gap: 1.2rem;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 1.2rem 0.5rem;
+  position: relative;
+  scroll-behavior: smooth;
+}
+
+/* Hard clip container so hover never escapes on small screens */
+.row {
+  overflow: hidden;
+  position: relative;
+}
+
+    /* Prevent hover scale from escaping frame */
+    .row { overflow: hidden; }
+
+    .episode {
+  min-width: 240px;
+  max-width: 260px;
+  position: relative;
+  background: linear-gradient(180deg, rgba(255,255,255,0.14), rgba(255,255,255,0.04));
+  backdrop-filter: blur(22px) saturate(160%);
+  -webkit-backdrop-filter: blur(22px) saturate(160%);
+  border-radius: 22px;
+  padding: 1.6rem;
+  cursor: pointer;
+  border: 1px solid rgba(255,255,255,0.28);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.35),
+    0 10px 35px rgba(0,0,0,0.55);
+  transition: transform 0.35s cubic-bezier(.2,.8,.2,1),
+              box-shadow 0.35s cubic-bezier(.2,.8,.2,1),
+              border 0.35s ease, background 0.35s ease;
+  overflow: hidden;
+}
+
+/* Liquid glass light reflection */
+.episode::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(120deg,
+    transparent 30%,
+    rgba(255,255,255,0.35),
+    transparent 70%);
+  opacity: 0.35;
+  transform: translateX(-120%);
+  transition: transform 0.9s cubic-bezier(.2,.8,.2,1);
+}
+
+/* Depth rim glow */
+.episode::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  box-shadow:
+    inset 0 0 0 1px rgba(255,255,255,0.18),
+    inset 0 -20px 35px rgba(255,255,255,0.08);
+  pointer-events: none;
+}
+
+    .episode:hover {
+  transform: translateY(-4px) scale(1.02);
+  border-color: var(--accent);
+  box-shadow: 0 0 28px var(--glow);
+  background: var(--glass-strong);
+}
+
+    .episode h3 { color: var(--accent); margin-bottom: 0.4rem; }
+    .episode p { font-size: 0.9rem; color: var(--muted); }
+
+    .progress { height: 4px; background: rgba(255,255,255,0.2); margin-top: 0.8rem; border-radius: 4px; overflow: hidden; }
+    .progress span { display: block; height: 100%; background: var(--accent); width: 45%; }
+
+    /* MEMBER PAGE */
+    .member-box {
+      background: var(--glass);
+      backdrop-filter: blur(22px);
+      padding: 3rem;
+      border-radius: 30px;
+      max-width: 1100px;
+      margin: auto;
+      border: 1px solid var(--border);
+      box-shadow: 0 0 40px rgba(0,0,0,0.8);
+    }
+
+    .member-box h1 { color: var(--accent); margin-bottom: 0.5rem; }
+
+    /* MODAL */
+    .modal {
+      position: fixed; inset: 0; background: rgba(0,0,0,0.85); display: none;
+      align-items: center; justify-content: center; z-index: 2000;
+    }
+
+    .modal-content {
+      background: var(--glass-strong);
+      backdrop-filter: blur(24px);
+      padding: 2.5rem; border-radius: 24px;
+      max-width: 700px; width: 90%;
+      border: 1px solid var(--border);
+    }
+
+    .modal-content h2 { color: var(--accent); margin-bottom: 1rem; }
+    .modal-content p { line-height: 1.6; color: var(--text); }
+
+    .close-btn { margin-top: 1.5rem; background: var(--accent); border: none; padding: 0.7rem 1.6rem; color: white; border-radius: 10px; cursor: pointer; }
+
+    /* Profiles motion video layer */
+    .profile-video {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
+      z-index: -1;
+      opacity: 0.35;
+      filter: blur(2px) brightness(0.5) contrast(1.1);
+      animation: profileVideoDrift 18s ease-in-out infinite alternate;
+    }
+
+    @keyframes profileVideoDrift {
+      0% { transform: scale(1); }
+      100% { transform: scale(1.05); }
+    }
+
+footer { text-align: center; padding: 2rem; color: var(--muted); margin-top: 4rem; }
+  </style>
+</head>
+
+<body>
+
+<!-- BACKGROUND VIDEO -->
+<video class="bg-video" autoplay muted loop playsinline>
+  <source src="https://cdn.coverr.co/videos/coverr-misty-forest-night-9716/1080p.mp4" type="video/mp4">
+</video>
+
+<header>
+  <div class="title-group">
+    <h1>CITY PLANNING</h1>
+    <h2>SAMPURNAPURAM</h2>
+  </div>
+  <nav>
+    <a href="#profiles">Profiles</a>
+  </nav>
+</header>
+
+<!-- PROFILES -->
+<section id="profiles">
+  <!-- PROFILES PAGE MOTION VIDEO -->
+  <video class="profile-video" autoplay muted loop playsinline>
+    <source src="https://cdn.coverr.co/videos/coverr-night-forest-ambience-9717/1080p.mp4" type="video/mp4">
+  </video>
+  <div class="profile-wrapper">
+    <h1>Who’s Designing Today?</h1>
+    <div class="profiles">
+      <div class="profile-card"><a href="#member1"><div class="avatar">M1</div><h3>Member 1</h3></a></div>
+      <div class="profile-card"><a href="#member2"><div class="avatar">M2</div><h3>Member 2</h3></a></div>
+      <div class="profile-card"><a href="#member3"><div class="avatar">M3</div><h3>Member 3</h3></a></div>
+      <div class="profile-card"><a href="#member4"><div class="avatar">M4</div><h3>Member 4</h3></a></div>
+    </div>
+  </div>
+</section>
+
+<!-- MEMBER 1 -->
+<section id="member1">
+  <div class="member-box">
+    <h1>Member 1 — Traffic Systems</h1>
+      </div>
+    </div>
+
+    <div class="row">
+      <h2>Season 1 — Traffic Business Ideas</h2>
+      <div class="cards"><script>for(let i=1;i<=10;i++){document.write(`<div class='episode' onclick='openModal(${i})'><h3>Episode ${i}</h3><p>Traffic Strategy ${i}</p></div>`);}</script></div>
+    </div>
+  </div>
+</section>
+
+<!-- MEMBER 2 -->
+<section id="member2">
+  <div class="member-box">
+    <h1>Member 2 — Energy Systems</h1></div></div>
+
+    <div class="row"><h2>Season 2 — Energy Business Ideas</h2><div class="cards"><script>for(let i=1;i<=10;i++){document.write(`<div class='episode' onclick='openModal(${i})'><h3>Episode ${i}</h3><p>Energy Strategy ${i}</p></div>`);}</script></div></div>
+  </div>
+</section>
+
+<!-- MEMBER 3 -->
+<section id="member3">
+  <div class="member-box">
+    <h1>Member 3 — Waste & Water</h1></div></div>
+
+    <div class="row"><h2>Season 1 — Waste & Water Ideas</h2><div class="cards"><script>for(let i=1;i<=10;i++){document.write(`<div class='episode' onclick='openModal(${i})'><h3>Episode ${i}</h3><p>Waste/Water Model ${i}</p></div>`);}</script></div></div>
+  </div>
+</section>
+
+<!-- MEMBER 4 -->
+<section id="member4">
+  <div class="member-box">
+    <h1>Member 4 — Disaster Management</h1></div></div>
+
+    <div class="row"><h2>Season 1 — Disaster Business Ideas</h2><div class="cards"><script>for(let i=1;i<=10;i++){document.write(`<div class='episode' onclick='openModal(${i})'><h3>Episode ${i}</h3><p>Disaster Model ${i}</p></div>`);}</script></div></div>
+  </div>
+</section>
+
+<!-- MODAL -->
+<div class="modal" id="modal">
+  <div class="modal-content">
+    <h2 id="modalTitle">Episode</h2>
+    <p id="modalText">Full episode content will appear here.</p>
+    <button class="close-btn" onclick="closeModal()">Close</button>
+  </div>
+</div>
+
+<footer>© 2025 CITY PLANNING | SAMPURNAPURAM</footer>
+
+<script>
+  function openModal(num) {
+    document.getElementById('modalTitle').innerText = `Episode ${num}`;
+    document.getElementById('modalText').innerText = `This is the full detailed business management and city planning idea for Episode ${num} of SAMPURNAPURAM. Replace this with your actual content.`;
+    document.getElementById('modal').style.display = 'flex';
+  }
+  function closeModal() { document.getElementById('modal').style.display = 'none'; }
+</script>
+
+</body>
+</html>
