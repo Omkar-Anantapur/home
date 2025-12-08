@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Business Case Study</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+  body {
+    background:#0f172a;
+    color:#e5e7eb;
+    font-family: "Segoe UI", sans-serif;
+    margin:0;
+    padding:2rem;
+    line-height:1.6;
+  }
+  a { color:#38bdf8; text-decoration:none; }
+  a:hover { text-decoration:underline; }
+  .container {
+    max-width:900px; margin:auto;
+    background:#020617;
+    padding:2rem;
+    border-radius:12px;
+    border:1px solid #1e293b;
+  }
+  h1 { color:#e50914; text-align:center; margin-bottom:1rem; }
+  pre {
+    background:#111827;
+    padding:1rem;
+    border-radius:8px;
+    overflow-x:auto;
+    border:1px solid #1e293b;
+  }
+</style>
+</head>
+
+<body>
+
+<a href="bheemangouda.html">← Back</a>
+
+<div class="container">
+
+<h1>Business Case Study 1 – Smart Traffic Routing</h1>
+
+<h2>Problem Statement</h2>
+<p>Finding the shortest route between two traffic junctions to reduce congestion.</p>
+
+<h2>Algorithm Used</h2>
+<p><b>Dijkstra’s Shortest Path Algorithm</b></p>
+
+<h2>Time Complexity</h2>
+<p><code>O((V + E) log V)</code></p>
+
+<h2>C++ Code</h2>
+<pre><code>
+#include &lt;bits/stdc++.h&gt;
+using namespace std;
+
+vector<int> dijkstra(int n, vector&lt;vector&lt;pair<int,int&gt;&gt;&gt; &graph, int src) {
+    const int INF = 1e9;
+    vector<int> dist(n, INF);
+    priority_queue&lt;pair<int,int&gt;, vector&lt;pair<int,int&gt;&gt;, greater&lt;&gt;&gt; pq;
+
+    dist[src] = 0;
+    pq.push({0, src});
+
+    while(!pq.empty()) {
+        auto [d,u] = pq.top(); pq.pop();
+        if (d != dist[u]) continue;
+
+        for (auto [v,w] : graph[u]) {
+            if (dist[v] > d + w) {
+                dist[v] = d + w;
+                pq.push({dist[v], v});
+            }
+        }
+    }
+    return dist;
+}
+</code></pre>
+
+
+</div>
+
+</body>
+</html>
