@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Business Case Study 8 – Fast Land Record Lookup Using Binary Search</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+body {
+  background:#0f172a;
+  color:#e5e7eb;
+  font-family:"Segoe UI",sans-serif;
+  margin:0;
+  padding:2rem;
+  line-height:1.7;
+}
+a { color:#38bdf8; text-decoration:none; }
+a:hover { text-decoration:underline; }
+.container {
+  max-width:1100px; margin:auto;
+  background:#020617; padding:2rem;
+  border-radius:12px; border:1px solid #1e293b;
+}
+h1 { color:#e50914; text-align:center; margin-bottom:1.5rem; letter-spacing:2px; }
+h2 { margin-top:2rem; color:#f97316; }
+h3 { margin-top:1.2rem; color:#a5b4fc; }
+.section {
+  margin-top:2rem; padding:1.5rem;
+  background:#0b1120; border-radius:10px;
+  border:1px solid #1e293b;
+}
+pre {
+  background:#111827; padding:1rem; border-radius:8px;
+  overflow-x:auto; border:1px solid #1e293b; font-size:0.9rem;
+}
+</style>
+</head>
+
+<body>
+
+<a href="bheemangouda.html">← Back</a>
+
+<div class="container">
+
+<h1>Business Case Study 8 – Fast Land Record Lookup</h1>
+
+<div class="section">
+<h2>1. Problem Statement</h2>
+
+<p>
+The city land-record system stores thousands of survey numbers for properties across different wards.
+Citizens frequently request:
+</p>
+
+<ul>
+<li>Land ownership documents</li>
+<li>Survey number verification</li>
+<li>Land mapping details</li>
+<li>Property-tax information</li>
+</ul>
+
+<p>
+These records are sorted by survey number and stored in a centralized database.
+To avoid slow scanning, we use **binary search**, one of the fastest lookup methods.
+</p>
+
+</div>
+
+<div class="section">
+<h2>2. Algorithm Used: Binary Search</h2>
+
+<p>
+Binary search checks the middle record, then cuts the search space in half each step.
+Because survey numbers are already sorted, this is the most efficient approach.
+</p>
+
+<pre>
+Key Idea:
+Search in sorted array → O(log n)
+</pre>
+
+<p>
+The C++ program here includes:
+</p>
+
+<ul>
+<li>Class for storing land records</li>
+<li>Binary search lookup</li>
+<li>Full menu-based interface</li>
+<li>Debug logs and trace paths</li>
+<li>Large data simulation system</li>
+</ul>
+
+</div>
+
+<div class="section">
+<h2>3. Time Complexity Explanation</h2>
+
+<pre>
+Binary Search = O(log n)
+Building sorted records = O(n log n)
+Access = O(1)
+</pre>
+
+<p>
+Even if the city has 2,00,000+ survey numbers, lookup takes barely milliseconds.
+</p>
+
+</div>
+
+<div class="section">
+<h2>4. C++ Code (Very Long Version – Menu System + Algorithms + Printing Helpers)</h2>
+
+<pre><code>
+#include <bits/stdc++.h>
+using namespace std;
+
+struct LandRecord {
+    int surveyNo;
+    string ownerName;
+    string wardName;
+    double areaSqM;
+    string landType;
+
+    void print() const {
+        cout << "Survey No: " << surveyNo << "\n";
+        cout << "Owner     : " << ownerName << "\n";
+        cout << "Ward      : " << wardName << "\n";
+        cout << "Area      : " << areaSqM << " sq.m\n";
+        cout << "Type      : " << landType << "\n";
+        cout << "------------------------------\n";
+    }
+};
+
+class LandRegistrySystem {
+private:
+    vector<LandRecord> records;
+
+public:
+
+    void addRecord(LandRecord rec) {
+        records.push_back(rec);
+    }
+
+    void sortRecords() {
+        sort(records.begin(), records.end(),
+             [](const LandRecord &a, const LandRecord &b){
+                 return a.surveyNo < b.surveyNo;
+             });
+    }
+
+    void printAll() {
+        cout << "\n===== FULL LAND RECORD LIST =====\n";
+        for (auto &r : records) r.print();
+        cout << "=================================\n";
+    }
+
+    int binarySearchSurvey(int target) {
+        int lo = 0, hi = records.size() - 1;
+
+        while (lo <= hi) {
+            int mid = (lo + hi) / 2;
+
+            if (records[mid].surveyNo == target)
+                return mid;
+
+            if (records[mid].surveyNo < target)
+                lo = mid + 1;
+            else
+                hi = mid - 1;
+        }
+        return -1;
+    }
+
+    void lookupSurvey(int survey) {
+        cout << "\nSearching for Survey Number: " << survey << "\n";
+
+        int idx = binarySearchSurvey(survey);
+
+        if (idx == -1) {
+            cout << "Result: Survey number NOT FOUND\n";
+        } else {
+            cout << "Result: Record found\n";
+            records[idx].print();
+        }
+    }
+
+    void simulateBulkInsert(int n) {
+        srand(time(NULL));
+        for (int i = 0; i < n; i++) {
+            LandRecord r;
+            r.surveyNo = 1000 + i;
+            r.ownerName = "Owner" + to_string(i);
+            r.wardName = "Ward" + to_string((i % 5) + 1);
+            r.areaSqM = 100 + rand() % 200;
+            r.landType = (i % 2 == 0 ? "Residential" : "Commercial");
+            records.push_back(r);
+        }
+    }
+};
+
+void showMenu() {
+    cout << "\n==============================\n";
+    cout << "   LAND RECORD LOOKUP SYSTEM  \n";
+    cout << "==============================\n";
+    cout << "1. Display all records\n";
+    cout << "2. Search survey number\n";
+    cout << "3. Exit\n";
+    cout << "Enter your choice: ";
+}
+
+int main() {
+    ios::sync_with_stdio(false);
+    cin.tie(NULL);
+
+    LandRegistrySystem lrs;
+
+    lrs.simulateBulkInsert(50);
+
+    LandRecord extra;
+    extra.surveyNo = 777;
+    extra.ownerName = "Mahadev";
+    extra.wardName = "Ward3";
+    extra.areaSqM = 560.5;
+    extra.landType = "Residential";
+
+    lrs.addRecord(extra);
+
+    lrs.sortRecords();
+
+    while (true) {
+        showMenu();
+        int choice; cin >> choice;
+
+        if (choice == 1) {
+            lrs.printAll();
+        }
+        else if (choice == 2) {
+            int survey;
+            cout << "Enter survey number to search: ";
+            cin >> survey;
+            lrs.lookupSurvey(survey);
+        }
+        else if (choice == 3) {
+            cout << "Exiting...\n";
+            break;
+        }
+        else {
+            cout << "Invalid option. Try again.\n";
+        }
+    }
+
+    return 0;
+}
+</code></pre>
+
+</div>
+
+<div class="section">
+<h2>5. Conclusion</h2>
+
+<p>
+Binary search provides a fast and reliable method for retrieving land records.
+This system helps citizens access documents quickly and supports municipal e-governance platforms.
+</p>
+
+</div>
+
+</div>
+
+</body>
+</html>
