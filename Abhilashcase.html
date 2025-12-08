@@ -2,1025 +2,187 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Abhilash — Business Case Studies</title>
+<title>Abhilash – Business Case Studies</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
-body{
-    background:#020617;
-    font-family:sans-serif;
-    color:white;
-    margin:0; padding:0;
-}
-h1,h2{ text-align:center; margin-top:20px; }
-.container{
-    max-width:900px;
-    margin:auto;
-    margin-top:40px;
-}
-.cards{
-    display:flex; flex-wrap:wrap;
-    justify-content:center; gap:20px;
-}
-.card{
-    width:250px; padding:20px;
-    background:rgba(255,255,255,0.1);
-    border:1px solid rgba(255,255,255,0.3);
-    border-radius:15px; text-align:center;
-    cursor:pointer; transition:0.3s;
-}
-.card:hover{
-    transform:scale(1.05);
-    background:rgba(255,255,255,0.2);
-}
-.hidden{
-    display:none;
-    margin-top:30px;
-    padding:20px;
-    background:rgba(255,255,255,0.07);
-    border-radius:10px;
-    border:1px solid rgba(255,255,255,0.3);
-}
-pre{
-    white-space:pre-wrap;
-    background:black;
-    padding:10px;
-    border-radius:10px;
-    overflow-x:auto;
-}
-.back-btn{
-    display:block;
-    width:150px;
-    margin:20px auto;
-    padding:10px;
-    background:#e50914;
+  body {
+    margin: 0;
+    font-family: "Segoe UI", sans-serif;
+    background: #020617;
+    color: #e5e7eb;
+    overflow-x: hidden;
+  }
+
+  header {
+    text-align: center;
+    padding: 2rem 1rem;
+    background: rgba(0,0,0,0.6);
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+  }
+
+  header h1 {
+    color: #e50914;
+    letter-spacing: 3px;
+    margin-bottom: 0.5rem;
+  }
+
+  header p {
+    color: #9ca3af;
+    margin: 0;
+  }
+
+  .carousel-container {
+    max-width: 900px;
+    margin: 2rem auto;
+    position: relative;
+  }
+
+  .carousel {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .panel {
+    min-width: 100%;
+    scroll-snap-align: start;
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.25);
+    border-radius: 16px;
+    margin-right: 1rem;
+    padding: 2rem;
+    box-sizing: border-box;
+    position: relative;
+    animation: steelShine 2s infinite alternate;
+  }
+
+  @keyframes steelShine {
+    0% { box-shadow: 0 0 5px rgba(229,9,20,0.1); }
+    100% { box-shadow: 0 0 25px rgba(229,9,20,0.5); }
+  }
+
+  h2 { color: #e50914; margin-bottom: 1rem; }
+
+  pre {
+    background: rgba(0,0,0,0.4);
+    padding: 1rem;
+    border-radius: 12px;
+    overflow-x: auto;
+    max-height: 400px;
+  }
+
+  button.copy-btn, button.expand-btn {
+    margin-top: 1rem;
+    padding: 0.5rem 1rem;
+    background: #e50914;
+    border: none;
+    border-radius: 8px;
+    color: #fff;
+    cursor: pointer;
+    margin-right: 0.5rem;
+    transition: 0.3s;
+  }
+
+  button.copy-btn:hover, button.expand-btn:hover {
+    background: #ff1f3f;
+  }
+
+  .navigation {
+    text-align: center;
+    margin-top: 1.5rem;
+  }
+
+  .navigation button {
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.25);
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    margin: 0 0.5rem;
+    cursor: pointer;
+    color: #e50914;
+    font-size: 1.2rem;
+  }
+
+  .episodes {
+    max-width: 900px;
+    margin: 2rem auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit,minmax(220px,1fr));
+    gap: 1.5rem;
+  }
+
+  .episode {
+    display:flex;
+    align-items:center;
+    justify-content:center;
     text-align:center;
-    color:white;
+    padding:1.8rem 1rem;
+    background:rgba(255,255,255,0.08);
+    border:1px solid rgba(255,255,255,0.25);
+    border-radius:16px;
+    color:#e5e7eb;
+    transition:.3s;
+  }
+
+  .episode:hover {
+    border-color:#e50914;
+    transform:translateY(-5px);
+    box-shadow:0 0 20px rgba(229,9,20,0.4);
+    background:rgba(255,255,255,0.12);
+  }
+
+  .episode h3 { margin:0; font-size:1rem; }
+
+  a.back {
+    display:inline-block;
+    margin: 2rem;
+    color:#38bdf8;
+    font-size:0.95rem;
     text-decoration:none;
-    border-radius:10px;
-}
+  }
+
+  a.back:hover { text-decoration:underline; }
 </style>
-
-<script>
-function showCase(id){
-    document.querySelectorAll(".case").forEach(s=>s.style.display="none");
-    document.getElementById("case"+id).style.display="block";
-    window.scrollTo(0,0);
-}
-</script>
 </head>
-
 <body>
 
-<h1>Abhilash</h1>
-<h2>Business Case Studies (1–10)</h2>
+<header>
+  <h1>Abhilash – BUSINESS CASE STUDIES</h1>
+  <p>Swipe panels or use arrow keys to navigate</p>
+</header>
 
-<div class="container">
+<div class="episodes">
+  <a class="episode" href="case.html?id=1"><h3>Business Case Study 1</h3></a>
+  <a class="episode" href="case.html?id=2"><h3>Business Case Study 2</h3></a>
+  <a class="episode" href="case.html?id=3"><h3>Business Case Study 3</h3></a>
+  <a class="episode" href="case.html?id=4"><h3>Business Case Study 4</h3></a>
+  <a class="episode" href="case.html?id=5"><h3>Business Case Study 5</h3></a>
+  <a class="episode" href="case.html?id=6"><h3>Business Case Study 6</h3></a>
+  <a class="episode" href="case.html?id=7"><h3>Business Case Study 7</h3></a>
+  <a class="episode" href="case.html?id=8"><h3>Business Case Study 8</h3></a>
+  <a class="episode" href="case.html?id=9"><h3>Business Case Study 9</h3></a>
+  <a class="episode" href="case.html?id=10"><h3>Business Case Study 10</h3></a>
+</div>
 
-<div class="cards">
 <script>
-for(let i=1;i<=10;i++){
-    document.write(`
-    <div class="card" onclick="showCase(${i})">
-        <h3>Business Case Study ${i}</h3>
-    </div>`);
-}
+  // Optional: Keyboard navigation for episodes
+  document.addEventListener('keydown', e => {
+    const current = document.activeElement;
+    if(e.key === 'ArrowRight') {
+      let next = current.nextElementSibling;
+      if(next && next.classList.contains('episode')) next.focus();
+    }
+    if(e.key === 'ArrowLeft') {
+      let prev = current.previousElementSibling;
+      if(prev && prev.classList.contains('episode')) prev.focus();
+    }
+  });
 </script>
-</div>
 
-<!-- ========================================================= -->
-<!-- =================== CASE 1 =============================== -->
-<!-- ========================================================= -->
+</body>
+</html>
 
-<div id="case1" class="hidden case">
-
-<h2>1) Dynamic EV Charging Station Placement</h2>
-
-<p><b>Problem:</b> Optimal positioning of charging stations to minimize travel distance and balance load.</p>
-<p><b>Algorithm:</b> K-Means + Greedy Load Distribution</p>
-<p><b>Time Complexity:</b> O(I × n × k × d)</p>
-
-<pre>
-#include <bits/stdc++.h>
-using namespace std;
-
-using P = pair<double,double>;
-
-double dist(const P&a,const P&b){
-    return hypot(a.first-b.first,a.second-b.second);
-}
-
-int main(){
-    int n=1200, k=25, it=60;
-    vector<P> pts(n);
-    mt19937 rng(7);
-    uniform_real_distribution<double> un(0,200);
-
-    for(int i=0;i<n;i++)
-        pts[i]={un(rng),un(rng)};
-
-    vector<P> cent(k);
-    for(int i=0;i<k;i++)
-        cent[i]=pts[i*(n/k)];
-
-    vector<int> assign(n);
-    for(int iters=0;iters<it;iters++){
-        vector<int> cnt(k,0);
-        vector<P> sum(k,{0,0});
-        for(int i=0;i<n;i++){
-            int best=0; double bestd=1e18;
-            for(int j=0;j<k;j++){
-                double d=dist(pts[i],cent[j]);
-                if(d<bestd){bestd=d; best=j;}
-            }
-            assign[i]=best;
-            cnt[best]++;
-            sum[best].first+=pts[i].first;
-            sum[best].second+=pts[i].second;
-        }
-        for(int j=0;j<k;j++){
-            if(cnt[j])
-                cent[j]={sum[j].first/cnt[j], sum[j].second/cnt[j]};
-        }
-    }
-
-    vector<int> cap(k,110);
-    vector<vector<int>> serve(k);
-
-    for(int i=0;i<n;i++){
-        int s=assign[i];
-        if(serve[s].size()<cap[s])
-            serve[s].push_back(i);
-        else{
-            int best=-1; double bd=1e18;
-            for(int j=0;j<k;j++){
-                if(serve[j].size()<cap[j]){
-                    double d=dist(pts[i],cent[j]);
-                    if(d<bd){bd=d; best=j;}
-                }
-            }
-            if(best!=-1) serve[best].push_back(i);
-        }
-    }
-
-    cout<<"Centers:\n";
-    for(auto &c:cent) cout<<c.first<<" "<<c.second<<"\n";
-}
-</pre>
-
-<a href="#" class="back-btn">Back</a>
-</div>
-
-<!-- ========================================================= -->
-<!-- =================== CASE 2 =============================== -->
-<!-- ========================================================= -->
-
-<div id="case2" class="hidden case">
-<h2>2) Public Health Outbreak Early Detection</h2>
-
-<p><b>Problem:</b> Detect clusters from time-window health data.</p>
-<p><b>Algorithm:</b> DBSCAN</p>
-<p><b>Time Complexity:</b> O(n log n)</p>
-
-<pre>
-#include <bits/stdc++.h>
-using namespace std;
-
-struct P{double x,y; int t;};
-
-double dist(const P&a,const P&b){
-    return hypot(a.x-b.x,a.y-b.y);
-}
-
-int main(){
-    vector<P> pts;
-    for(int i=0;i<700;i++)
-        pts.push_back({rand()%150,rand()%150,rand()%72});
-
-    int n=pts.size();
-    double eps=1.3;
-    int minPts=6;
-
-    vector<int> vis(n,0), cid(n,-1);
-    int C=0;
-
-    for(int i=0;i<n;i++){
-        if(vis[i]) continue;
-        vis[i]=1;
-
-        vector<int> nbr;
-        for(int j=0;j<n;j++)
-            if(dist(pts[i],pts[j])<=eps && abs(pts[i].t-pts[j].t)<=8)
-                nbr.push_back(j);
-
-        if(nbr.size()<minPts){
-            cid[i]=-2;
-            continue;
-        }
-
-        cid[i]=C;
-        queue<int>q;
-        for(int id:nbr) q.push(id);
-
-        while(!q.empty()){
-            int cur=q.front(); q.pop();
-
-            if(!vis[cur]){
-                vis[cur]=1;
-                vector<int> nbr2;
-
-                for(int j=0;j<n;j++)
-                    if(dist(pts[cur],pts[j])<=eps && abs(pts[cur].t-pts[j].t)<=8)
-                        nbr2.push_back(j);
-
-                if(nbr2.size()>=minPts)
-                    for(int id:nbr2) if(!vis[id]) q.push(id);
-            }
-
-            if(cid[cur]==-1) cid[cur]=C;
-        }
-
-        C++;
-    }
-
-    cout<<"Detected clusters: "<<C<<"\n";
-}
-</pre>
-
-<a href="#" class="back-btn">Back</a>
-</div>
-
-<!-- ========================================================= -->
-<!-- =================== CASE 3 =============================== -->
-<!-- ========================================================= -->
-
-<div id="case3" class="hidden case">
-
-<h2>3) Demand-Responsive Microtransit Routing</h2>
-
-<p><b>Problem:</b> Assign minibuses dynamically to transport requests.</p>
-<p><b>Algorithm:</b> Greedy VRP Insertion</p>
-<p><b>Time Complexity:</b> O(m × L)</p>
-
-<pre>
-#include <bits/stdc++.h>
-using namespace std;
-
-struct Req{int id; double x,y; int pax;};
-struct Bus{
-    int id;
-    double x,y;
-    int cap, load;
-    vector<int> route;
-};
-
-double dist(pair<double,double>a, pair<double,double>b){
-    return hypot(a.first-b.first,a.second-b.second);
-}
-
-int main(){
-    vector<Bus> bus;
-    for(int i=0;i<12;i++)
-        bus.push_back({i, rand()%120, rand()%120, 15,0,{}});
-
-    auto assignReq = [&](Req r){
-        double best=1e18;
-        int vid=-1;
-
-        for(int i=0;i<bus.size();i++){
-            if(bus[i].load+r.pax > bus[i].cap) continue;
-            double c = dist({bus[i].x,bus[i].y},{r.x,r.y});
-            if(c<best){best=c; vid=i;}
-        }
-
-        if(vid==-1){
-            cout<<"Request "<<r.id<<" rejected\n";
-            return;
-        }
-
-        bus[vid].route.push_back(r.id);
-        bus[vid].load+=r.pax;
-
-        cout<<"Assigned "<<r.id<<" to "<<vid<<"\n";
-    };
-
-    for(int i=0;i<60;i++)
-        assignReq({i, rand()%120,rand()%120,1});
-
-    return 0;
-}
-</pre>
-
-<a href="#" class="back-btn">Back</a>
-</div>
-        <!-- ========================================================= -->
-<!-- =================== CASE 4 =============================== -->
-<!-- ========================================================= -->
-
-<div id="case4" class="hidden case">
-
-<h2>4) Waste-Segregation Pickup Optimization</h2>
-
-<p><b>Problem:</b> Optimize dry/wet/recyclable pickup routes using fill-level prediction.</p>
-<p><b>Algorithm:</b> Clarke–Wright Savings + Forecasting</p>
-<p><b>Time Complexity:</b> O(n²)</p>
-
-<pre>
-#include <bits/stdc++.h>
-using namespace std;
-
-struct Node{
-    int id;
-    double x,y;
-    int demand;
-};
-
-double dist(Node&a, Node&b){
-    return hypot(a.x-b.x, a.y-b.y);
-}
-
-int main(){
-    Node depot={0,50,50,0};
-    int n=25;
-
-    vector<Node> nodes;
-    for(int i=1;i<=n;i++)
-        nodes.push_back({i, double(rand()%100), double(rand()%100), rand()%25 + 10});
-
-    int vehicleCap=260;
-
-    struct Route{ vector<int> seq; int load; };
-
-    map<int,Route> routes;
-    for(auto &nd : nodes)
-        routes[nd.id]={{nd.id}, nd.demand};
-
-    vector<tuple<double,int,int>> S;
-
-    for(int i=0;i<n;i++){
-        for(int j=i+1;j<n;j++){
-            double s = dist(depot,nodes[i]) +
-                        dist(depot,nodes[j]) -
-                        dist(nodes[i],nodes[j]);
-            S.push_back({s, nodes[i].id, nodes[j].id});
-        }
-    }
-
-    sort(S.begin(), S.end(), greater<>());
-
-    for(auto &t : S){
-        double s; int a,b;
-        tie(s,a,b)=t;
-
-        int ra=-1, rb=-1;
-        for(auto &r : routes){
-            auto &seq=r.second.seq;
-            if(seq.front()==a || seq.back()==a) ra=r.first;
-            if(seq.front()==b || seq.back()==b) rb=r.first;
-        }
-
-        if(ra<0 || rb<0 || ra==rb) continue;
-
-        if(routes[ra].load + routes[rb].load <= vehicleCap){
-            vector<int> merged = routes[ra].seq;
-            merged.insert(merged.end(),
-                routes[rb].seq.begin(),
-                routes[rb].seq.end());
-            routes[ra].seq=merged;
-            routes[ra].load+=routes[rb].load;
-            routes.erase(rb);
-        }
-    }
-
-    cout<<"Final route count: "<<routes.size()<<"\n";
-}
-</pre>
-
-<a href="#" class="back-btn">Back</a>
-</div>
-
-<!-- ========================================================= -->
-<!-- =================== CASE 5 =============================== -->
-<!-- ========================================================= -->
-
-<div id="case5" class="hidden case">
-
-<h2>5) Energy-Efficient Streetlight Scheduling</h2>
-
-<p><b>Problem:</b> Decide which streetlights remain ON for safety with minimum energy.</p>
-<p><b>Algorithm:</b> Greedy (Safety per Watt)</p>
-<p><b>Time Complexity:</b> O(n log n)</p>
-
-<pre>
-#include <bits/stdc++.h>
-using namespace std;
-
-struct Slot{
-    int id;
-    int energy;
-    double safety;
-};
-
-int main(){
-    int n=120;
-    int budget=1500;
-
-    vector<Slot> S;
-    for(int i=0;i<n;i++)
-        S.push_back({i, rand()%25+8, double(rand()%100)/100.0});
-
-    sort(S.begin(), S.end(),
-        [](auto&a, auto&b){
-            return (a.safety/a.energy) > (b.safety/b.energy);
-        }
-    );
-
-    int used=0;
-    vector<int> ON;
-
-    for(auto&s : S){
-        if(used + s.energy <= budget){
-            used += s.energy;
-            ON.push_back(s.id);
-        }
-    }
-
-    cout<<"Safety lights ON: "<<ON.size()<<"\n";
-}
-</pre>
-
-<a href="#" class="back-btn">Back</a>
-</div>
-
-<!-- ========================================================= -->
-<!-- =================== CASE 6 =============================== -->
-<!-- ========================================================= -->
-
-<div id="case6" class="hidden case">
-
-<h2>6) Micro-Fulfillment Center Placement</h2>
-
-<p><b>Problem:</b> Choose warehouse spots to reduce delivery time under cost limits.</p>
-<p><b>Algorithm:</b> Greedy Facility Location</p>
-<p><b>Time Complexity:</b> O(n × k)</p>
-
-<pre>
-#include <bits/stdc++.h>
-using namespace std;
-
-using P = pair<double,double>;
-
-double dist(const P&a,const P&b){
-    return hypot(a.first-b.first,a.second-b.second);
-}
-
-int main(){
-    int n=600;
-    int cand=60;
-    int K=12;
-
-    vector<P> demand(n), candLoc(cand);
-
-    for(int i=0;i<n;i++)
-        demand[i]={rand()%200, rand()%200};
-
-    for(int i=0;i<cand;i++)
-        candLoc[i]={rand()%200, rand()%200};
-
-    vector<int> open;
-    vector<int> assign(n, -1);
-
-    for(int k=0;k<K;k++){
-        double bestGain=-1;
-        int bestC=-1;
-
-        for(int c=0;c<cand;c++){
-            if(find(open.begin(),open.end(),c)!=open.end()) continue;
-
-            double gain=0;
-
-            for(int i=0;i<n;i++){
-                double curDist =
-                    (assign[i]==-1 ?
-                     1e9 :
-                     dist(demand[i], candLoc[assign[i]]));
-
-                double newDist = dist(demand[i], candLoc[c]);
-
-                if(newDist < curDist)
-                    gain += (curDist - newDist);
-            }
-
-            if(gain > bestGain){
-                bestGain=gain;
-                bestC=c;
-            }
-        }
-
-        if(bestC<0) break;
-
-        open.push_back(bestC);
-
-        for(int i=0;i<n;i++){
-            double bestd=1e18;
-            int bestIdx=-1;
-
-            for(int o: open){
-                double d=dist(demand[i], candLoc[o]);
-                if(d<bestd){
-                    bestd=d;
-                    bestIdx=o;
-                }
-            }
-            assign[i]=bestIdx;
-        }
-    }
-
-    cout<<"Opened centers: "<<open.size()<<"\n";
-}
-</pre>
-
-<a href="#" class="back-btn">Back</a>
-</div>
-
-<!-- ========================================================= -->
-<!-- =================== CASE 7 =============================== -->
-<!-- ========================================================= -->
-
-<div id="case7" class="hidden case">
-
-<h2>7) Adaptive Bicycle Lane Reallocation</h2>
-
-<p><b>Problem:</b> Switch car lanes to bicycle lanes during peak cycling hours.</p>
-<p><b>Algorithm:</b> Dinic Max Flow</p>
-<p><b>Time Complexity:</b> O(E × sqrt(V))</p>
-
-<pre>
-#include <bits/stdc++.h>
-using namespace std;
-
-struct Edge{
-    int to, rev, cap;
-};
-
-struct Dinic{
-    int N;
-    vector<vector<Edge>> G;
-    vector<int> level, it;
-
-    Dinic(int n):N(n),G(n),level(n),it(n){}
-
-    void addEdge(int u,int v,int c){
-        G[u].push_back({v,(int)G[v].size(),c});
-        G[v].push_back({u,(int)G[u].size()-1,0});
-    }
-
-    bool bfs(int s,int t){
-        fill(level.begin(), level.end(), -1);
-        queue<int>q;
-        level[s]=0;
-        q.push(s);
-
-        while(!q.empty()){
-            int u=q.front(); q.pop();
-            for(auto &e:G[u]){
-                if(e.cap>0 && level[e.to]<0){
-                    level[e.to]=level[u]+1;
-                    q.push(e.to);
-                }
-            }
-        }
-        return level[t]>=0;
-    }
-
-    int dfs(int u,int t,int f){
-        if(u==t) return f;
-        for(int &i=it[u]; i<G[u].size(); i++){
-            Edge &e = G[u][i];
-            if(e.cap>0 && level[e.to]==level[u]+1){
-                int got = dfs(e.to,t, min(f,e.cap));
-                if(got){
-                    e.cap-=got;
-                    G[e.to][e.rev].cap += got;
-                    return got;
-                }
-            }
-        }
-        return 0;
-    }
-
-    int maxflow(int s,int t){
-        int flow=0, inf=1e9;
-        while(bfs(s,t)){
-            fill(it.begin(), it.end(), 0);
-            int f;
-            while(f = dfs(s,t,inf)) flow+=f;
-        }
-        return flow;
-    }
-};
-
-int main(){
-    Dinic D(6);
-
-    D.addEdge(0,1,30);
-    D.addEdge(1,2,20);
-    D.addEdge(0,3,25);
-    D.addEdge(3,2,15);
-    D.addEdge(2,5,40);
-
-    cout<<"Max flow (bike capacity): "<<D.maxflow(0,5)<<"\n";
-}
-</pre>
-
-<a href="#" class="back-btn">Back</a>
-</div>
-        <div class="case">
-    <h2>8. Urban Tree Canopy Optimization for Air Cooling and Carbon Gains</h2>
-
-    <p>
-        Problem Statement:
-        The goal is to decide which city plots should receive tree plantations.
-        Each plot has a cost of planting and a benefit score that combines heat-reduction,
-        pollution absorption, and carbon sequestration. The city has a limited budget.
-        We must maximize total urban cooling benefit while staying inside the budget.
-        This is a classic budgeted optimization problem where each plot’s benefit is submodular
-        and decreasing marginal returns apply. A greedy submodular maximization approach gives
-        a near-optimal solution with a 1 – 1/e approximation guarantee.
-    </p>
-
-    <p>
-        Why This Algorithm:
-        Pure knapsack is not enough because plots influence each other.
-        A greedy ratio-based selection handles diminishing returns well.
-        Using priority queues accelerates repeated maximum-ratio selection.
-    </p>
-
-    <p>
-        Algorithm Used:
-        Budget-constrained submodular maximization using lazy greedy approximation.
-    </p>
-
-    <p>
-        Time Complexity:
-        O(n log n) for building and maintaining a priority queue.
-        In worst case (no lazy shortcuts): O(n²).
-    </p>
-
-    <h3>C++ Implementation (Long Version)</h3>
-
-    <pre><code>
-#include &lt;bits/stdc++.h&gt;
-using namespace std;
-
-/*
- Urban Tree Canopy Optimization
- --------------------------------
- Choosing plots of land to plant trees under a budget.
- Each plot has:
-    - planting cost
-    - environmental benefit
- Using a greedy submodular approximation.
-
- LONG VERSION with many helper methods and verbose code.
-*/
-
-struct Plot {
-    int id;
-    double cost;
-    double benefit;
-    double cooling;
-    double carbon;
-    double shade;
-    double totalScore() const {
-        return benefit + cooling + carbon + shade;
-    }
-};
-
-class TreePlanner {
-private:
-    vector<Plot> plots;
-    vector<bool> used;
-    double budget;
-    double usedBudget;
-
-public:
-    TreePlanner(int n, double B) {
-        budget = B;
-        usedBudget = 0;
-        plots.reserve(n);
-        used.assign(n, false);
-
-        // generate dummy plot data
-        for(int i=0;i<n;i++){
-            Plot p;
-            p.id = i;
-            p.cost = (rand()%100) + 20;
-            p.benefit = (rand()%200)/2.0;
-            p.cooling = (rand()%150)/3.0;
-            p.carbon = (rand()%120)/4.0;
-            p.shade = (rand()%180)/3.5;
-            plots.push_back(p);
-        }
-    }
-
-    double gainRatio(int id) {
-        if(used[id]) return -1;
-        double score = plots[id].totalScore();
-        return score / plots[id].cost;
-    }
-
-    vector<int> solve() {
-        priority_queue<pair<double,int>> pq;
-        for(auto &p: plots) {
-            pq.push({ gainRatio(p.id), p.id });
-        }
-
-        vector<int> selected;
-
-        while(!pq.empty()) {
-            auto top = pq.top(); pq.pop();
-            double ratio = top.first;
-            int id = top.second;
-
-            if(used[id]) continue;
-
-            double c = plots[id].cost;
-            if(usedBudget + c <= budget) {
-                used[id] = true;
-                usedBudget += c;
-                selected.push_back(id);
-            }
-        }
-        return selected;
-    }
-
-    void printSummary(const vector<int>& sel) {
-        cout<<"Selected "<<sel.size()<<" plots\n";
-        cout<<"Budget used "<<usedBudget<<" out of "<<budget<<"\n";
-    }
-};
-
-int main(){
-    srand(time(NULL));
-    int n = 300;
-    double B = 10000;
-
-    TreePlanner planner(n, B);
-    vector<int> selected = planner.solve();
-    planner.printSummary(selected);
-
-    return 0;
-}
-    </code></pre>
-</div>
-        9.
-<div class="case">
-    <h2>9. Drone Corridor Navigation with No-Fly Zones</h2>
-
-    <p>
-        Problem Statement:
-        Cities want safe corridors for drones delivering medicines, parcels,
-        and emergency supplies. The airspace contains restricted regions:
-        government buildings, hospitals, privacy zones, crowd areas.
-        The objective is to compute a safe path that avoids no-fly regions
-        while minimizing distance + noise + exposure penalties.
-        We use a grid-based A* search with 8-direction movement.
-    </p>
-
-    <p>
-        Why This Algorithm:
-        A* is ideal because:
-        - Dijkstra is too slow for large grids
-        - BFS cannot handle weighted penalties
-        - A* leverages heuristics (Euclidean) for fast convergence
-    </p>
-
-    <p>
-        Algorithm Used:
-        A* search on a 2D grid with blocked cells.
-    </p>
-
-    <p>
-        Time Complexity:
-        Approximately O(E log V), typical for A* with a binary heap.
-    </p>
-
-    <h3>C++ Implementation (Long Version)</h3>
-
-    <pre><code>
-#include &lt;bits/stdc++.h&gt;
-using namespace std;
-
-/*
- LONG A* Pathfinding Version
- ------------------------------
- Compute drone corridor avoiding blocked zones.
- Each cell has potential noise/exposure penalty.
-*/
-
-struct Node {
-    int x, y;
-    double g, h;
-};
-
-struct cmp {
-    bool operator()(const Node &a, const Node &b) const {
-        return (a.g + a.h) > (b.g + b.h);
-    }
-};
-
-double heuristic(int x1, int y1, int x2, int y2) {
-    return hypot(x2 - x1, y2 - y1);
-}
-
-bool isValid(int x, int y, int W, int H) {
-    return x >= 0 && x < W && y >= 0 && y < H;
-}
-
-int main(){
-    int W = 250, H = 250;
-    vector<vector<int>> blocked(W, vector<int>(H, 0));
-
-    for(int i=60;i<120;i++)
-        for(int j=90;j<150;j++)
-            blocked[i][j] = 1;
-
-    pair<int,int> start = {2,2};
-    pair<int,int> target = {230,230};
-
-    vector<vector<double>> g(W, vector<double>(H, 1e18));
-    vector<vector<pair<int,int>>> parent(W, vector<pair<int,int>>(H, {-1,-1}));
-
-    priority_queue<Node, vector<Node>, cmp> pq;
-
-    g[start.first][start.second] = 0;
-    pq.push({start.first, start.second, 0, heuristic(start.first,start.second,target.first,target.second)});
-
-    int dx[8]={1,1,0,-1,-1,-1,0,1};
-    int dy[8]={0,1,1,1,0,-1,-1,-1};
-
-    while(!pq.empty()){
-        Node cur = pq.top(); pq.pop();
-
-        if(cur.x == target.first && cur.y == target.second)
-            break;
-
-        for(int k=0;k<8;k++){
-            int nx = cur.x + dx[k];
-            int ny = cur.y + dy[k];
-
-            if(!isValid(nx,ny,W,H)) continue;
-            if(blocked[nx][ny]) continue;
-
-            double moveCost = hypot(dx[k], dy[k]);
-            double exposure = ny * 0.001;
-            double newg = g[cur.x][cur.y] + moveCost + exposure;
-
-            if(newg < g[nx][ny]) {
-                g[nx][ny] = newg;
-                parent[nx][ny] = {cur.x, cur.y};
-                double h = heuristic(nx, ny, target.first, target.second);
-                pq.push({nx, ny, newg, h});
-            }
-        }
-    }
-
-    vector<pair<int,int>> path;
-    pair<int,int> cur = target;
-
-    while(cur != make_pair(-1,-1) && cur != start) {
-        path.push_back(cur);
-        cur = parent[cur.first][cur.second];
-    }
-    path.push_back(start);
-    reverse(path.begin(), path.end());
-
-    cout<<"Path length: "<<path.size()<<"\n";
-    for(auto &p: path) {
-        cout<<p.first<<" "<<p.second<<"\n";
-    }
-
-    return 0;
-}
-    </code></pre>
-</div>
-            10.
-<div class="case">
-    <h2>10. Affordable Housing Allocation & Waitlist Optimization</h2>
-
-    <p>
-        Problem Statement:
-        Thousands of applicants apply every year for limited affordable housing units.
-        Each applicant has:
-        - priority score
-        - vulnerability category
-        - waiting time
-        - preferred locations
-        The city must allocate units fairly and efficiently.
-        We use a priority-based Gale-Shapley matching algorithm to ensure fairness.
-    </p>
-
-    <p>
-        Why This Algorithm:
-        Gale-Shapley ensures:
-        - stability (no unhappy applicant-house pair)
-        - fairness with priority
-        - deterministic output
-        - handles capacity constraints
-    </p>
-
-    <p>
-        Algorithm Used:
-        Gale-Shapley Stable Matching extended for capacity constraints.
-    </p>
-
-    <p>
-        Time Complexity:
-        O(A × L) where A = applicants, L = applications per applicant.
-    </p>
-
-    <h3>C++ Implementation (Long Version)</h3>
-
-    <pre><code>
-#include &lt;bits/stdc++.h&gt;
-using namespace std;
-
-/*
- LONG Affordable Housing Allocation
- -----------------------------------
- Applicants propose to housing units using priority score.
- Housing units accept top candidates up to their capacity.
-*/
-
-struct Applicant {
-    int id;
-    vector<int> prefs;
-    int priority;
-};
-
-int main(){
-    srand(time(NULL));
-
-    int A = 600;
-    int H = 120;
-    int maxPrefs = 10;
-
-    vector<Applicant> apps(A);
-
-    for(int i=0;i<A;i++){
-        apps[i].id = i;
-        apps[i].priority = rand()%100;
-
-        for(int j=0;j<maxPrefs;j++){
-            apps[i].prefs.push_back((i+j*3)%H);
-        }
-    }
-
-    vector<int> capacity(H, 4);
-
-    vector< set<pair<int,int>> > allocated(H);
-    vector<int> nextProp(A, 0);
-    queue<int> freeA;
-
-    for(int i=0;i<A;i++) freeA.push(i);
-
-    while(!freeA.empty()){
-        int a = freeA.front(); freeA.pop();
-
-        if(nextProp[a] >= (int)apps[a].prefs.size())
-            continue;
-
-        int h = apps[a].prefs[nextProp[a]++];
-        int prio = apps[a].priority;
-
-        allocated[h].insert({-prio, a});
-
-        if((int)allocated[h].size() > capacity[h]){
-            auto worst = *prev(allocated[h].end());
-            allocated[h].erase(worst);
-
-            int out = worst.second;
-            if(out != a)
-                freeA.push(out);
-        }
-    }
-
-    vector<int> result(A,-1);
-    for(int h=0;h<H;h++){
-        for(auto &entry: allocated[h]){
-            result[entry.second] = h;
-        }
-    }
-
-    int allocatedCount = 0;
-    for(int i=0;i<A;i++){
-        if(result[i] != -1)
-            allocatedCount++;
-    }
-
-    cout<<"Total Allocated: "<<allocatedCount<<"\n";
-    return 0;
-}
-    </code></pre>
-</div>
