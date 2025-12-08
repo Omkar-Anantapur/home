@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Business Case Study 4 – Next Bus Arrival Finder</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+body {
+  background:#0f172a;
+  color:#e5e7eb;
+  font-family:"Segoe UI",sans-serif;
+  margin:0;
+  padding:2rem;
+  line-height:1.7;
+}
+a { color:#38bdf8; text-decoration:none; }
+a:hover { text-decoration:underline; }
+.container {
+  max-width:1100px; margin:auto;
+  background:#020617; padding:2rem;
+  border-radius:12px; border:1px solid #1e293b;
+}
+h1 { color:#e50914; text-align:center; margin-bottom:1.5rem; letter-spacing:2px; }
+h2 { margin-top:2rem; color:#f97316; }
+h3 { margin-top:1.2rem; color:#a5b4fc; }
+.section {
+  margin-top:2rem; padding:1.5rem;
+  background:#0b1120; border-radius:10px;
+  border:1px solid #1e293b;
+}
+pre {
+  background:#111827; padding:1rem; border-radius:8px;
+  overflow-x:auto; border:1px solid #1e293b; font-size:0.9rem;
+}
+</style>
+</head>
+
+<body>
+
+<a href="bheemangouda.html">← Back</a>
+
+<div class="container">
+
+<h1>Business Case Study 4 – Next Bus Arrival Finder</h1>
+
+<div class="section">
+<h2>1. Problem Statement</h2>
+
+<p>
+Passengers waiting at a bus stop want to know the next available bus time.  
+The city transport server stores all bus departure timings in sorted order.  
+Given the current time, the system must instantly find the next departure.
+</p>
+
+<p>
+We solve this using binary search because the data is sorted.
+</p>
+
+</div>
+
+<div class="section">
+<h2>2. Algorithm Used: Binary Search (Lower Bound)</h2>
+
+<p>
+Binary search efficiently finds the first value in a sorted list that is greater than or equal to the current time.
+This directly gives the next bus.
+</p>
+
+<ul>
+<li>List of times is sorted.</li>
+<li>Binary search finds the correct position in log time.</li>
+<li>Return bus if available, else no more buses.</li>
+</ul>
+
+</div>
+
+<div class="section">
+<h2>3. Time Complexity Explanation</h2>
+
+<pre>
+Time Complexity = O(log n)
+</pre>
+
+<p>
+Binary search divides the list into half each time.  
+Even if there are thousands of bus timings, it returns in microseconds.
+</p>
+
+</div>
+
+<div class="section">
+<h2>4. C++ Code (Long, structured, copyable)</h2>
+
+<pre><code>
+#include <bits/stdc++.h>
+using namespace std;
+
+class BusStop {
+public:
+    vector<int> departures;
+
+    void addDeparture(int t) {
+        departures.push_back(t);
+    }
+
+    void prepareSchedule() {
+        sort(departures.begin(), departures.end());
+    }
+
+    int nextBus(int currentTime) {
+        int n = departures.size();
+        int low = 0, high = n - 1;
+        int ans = -1;
+
+        while (low <= high) {
+            int mid = (low + high) / 2;
+            if (departures[mid] >= currentTime) {
+                ans = departures[mid];
+                high = mid - 1;
+            } else {
+                low = mid + 1;
+            }
+        }
+
+        return ans;
+    }
+
+    void printSchedule() {
+        cout << "Bus Schedule: ";
+        for (int t : departures) cout << t << " ";
+        cout << "\n";
+    }
+};
+
+string timeToAMPM(int t) {
+    int hour = t / 60;
+    int minute = t % 60;
+    string ap = (hour >= 12 ? "PM" : "AM");
+    if (hour > 12) hour -= 12;
+    char buff[10];
+    sprintf(buff, "%02d:%02d %s", hour, minute, ap.c_str());
+    return string(buff);
+}
+
+int main() {
+    BusStop stop;
+
+    stop.addDeparture(480);   // 8:00 AM
+    stop.addDeparture(510);   // 8:30 AM
+    stop.addDeparture(540);   // 9:00 AM
+    stop.addDeparture(600);   // 10:00 AM
+    stop.addDeparture(660);   // 11:00 AM
+    stop.addDeparture(720);   // 12:00 PM
+
+    stop.prepareSchedule();
+
+    cout << "===== BUS STOP SYSTEM =====\n\n";
+    stop.printSchedule();
+
+    int current = 525;  // 8:45 AM
+    cout << "\nCurrent Time: " << timeToAMPM(current) << "\n";
+
+    int next = stop.nextBus(current);
+
+    if (next == -1) {
+        cout << "No buses left for today.\n";
+    } else {
+        cout << "Next Bus: " << timeToAMPM(next) << "\n";
+    }
+
+    cout << "\nSystem check completed.\n";
+    return 0;
+}
+</code></pre>
+
+</div>
+
+<div class="section">
+<h2>5. Conclusion</h2>
+
+<p>
+This simple but powerful system brings instant bus arrival information to passengers.
+Binary search ensures fast retrieval, even for huge schedules.
+Perfect for real-world public transport apps like BMTC, NWKRTC, or city metro shuttles.
+</p>
+
+</div>
+
+</div>
+
+</body>
+</html>
