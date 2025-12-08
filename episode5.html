@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Business Case Study 5 – Real-Time Parking Slot Availability</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+body {
+  background:#0f172a;
+  color:#e5e7eb;
+  font-family:"Segoe UI",sans-serif;
+  margin:0;
+  padding:2rem;
+  line-height:1.7;
+}
+a { color:#38bdf8; text-decoration:none; }
+a:hover { text-decoration:underline; }
+.container {
+  max-width:1100px; margin:auto;
+  background:#020617; padding:2rem;
+  border-radius:12px; border:1px solid #1e293b;
+}
+h1 { color:#e50914; text-align:center; margin-bottom:1.5rem; letter-spacing:2px; }
+h2 { margin-top:2rem; color:#f97316; }
+h3 { margin-top:1.2rem; color:#a5b4fc; }
+.section {
+  margin-top:2rem; padding:1.5rem;
+  background:#0b1120; border-radius:10px;
+  border:1px solid #1e293b;
+}
+pre {
+  background:#111827; padding:1rem; border-radius:8px;
+  overflow-x:auto; border:1px solid #1e293b; font-size:0.9rem;
+}
+</style>
+</head>
+
+<body>
+
+<a href="bheemangouda.html">← Back</a>
+
+<div class="container">
+
+<h1>Business Case Study 5 – Real-Time Parking Slot Availability</h1>
+
+<div class="section">
+<h2>1. Problem Statement</h2>
+
+<p>
+Urban parking areas face heavy traffic.  
+Drivers waste time circling around looking for a free spot.  
+The city authorities want a system that shows real-time available slots in each parking lot:
+</p>
+
+<ul>
+<li>When a vehicle enters → free slots decrease.</li>
+<li>When a vehicle exits → free slots increase.</li>
+<li>Users must instantly check free slots through the app.</li>
+</ul>
+
+<p>
+The system must handle thousands of updates every minute across the city.
+</p>
+
+</div>
+
+<div class="section">
+<h2>2. Algorithm Used: Hash Map Direct-Access Operations</h2>
+
+<p>
+Every parking lot has an ID (string).  
+We store free slots as key → value pairs:
+</p>
+
+<pre>
+"Hubballi_Central" → 54  
+"Railway_Parking" → 12  
+"Airport_Parking" → 89
+</pre>
+
+<p>
+Using a hash map:
+</p>
+
+<ul>
+<li>Insert lot → O(1)</li>
+<li>Update slot count → O(1)</li>
+<li>Query free slots → O(1)</li>
+</ul>
+
+<p>
+This is the fastest possible structure for this problem.
+</p>
+
+</div>
+
+<div class="section">
+<h2>3. Time Complexity Explanation</h2>
+
+<pre>
+All operations (average) = O(1)
+</pre>
+
+<p>
+Even with thousands of parking lots, real-time updates are fast.  
+Worst-case can be O(n), but practically hash maps behave in constant time.
+</p>
+
+</div>
+
+<div class="section">
+<h2>4. C++ Code (Long, Realistic, Copyable)</h2>
+
+<pre><code>
+#include <bits/stdc++.h>
+using namespace std;
+
+class ParkingSystem {
+private:
+    unordered_map<string, int> lotSlots;
+    unordered_map<string, int> lotCapacity;
+
+public:
+
+    void addLot(const string& lot, int capacity) {
+        lotSlots[lot] = capacity;
+        lotCapacity[lot] = capacity;
+    }
+
+    bool parkCar(const string& lot) {
+        if (lotSlots.find(lot) == lotSlots.end()) {
+            cout << "Error: Unknown parking lot.\n";
+            return false;
+        }
+        if (lotSlots[lot] > 0) {
+            lotSlots[lot]--;
+            return true;
+        }
+        return false;
+    }
+
+    void removeCar(const string& lot) {
+        if (lotSlots.find(lot) != lotSlots.end()) {
+            if (lotSlots[lot] < lotCapacity[lot]) {
+                lotSlots[lot]++;
+            }
+        }
+    }
+
+    int getFreeSlots(const string& lot) {
+        if (lotSlots.find(lot) == lotSlots.end()) return -1;
+        return lotSlots[lot];
+    }
+
+    void printLots() {
+        cout << "===== Current Parking Lots =====\n";
+        for (auto &p : lotSlots) {
+            cout << p.first << " : " 
+                 << p.second << "/" 
+                 << lotCapacity[p.first] << " free\n";
+        }
+        cout << "=================================\n";
+    }
+};
+
+int main() {
+    ios::sync_with_stdio(false);
+    cin.tie(NULL);
+
+    ParkingSystem ps;
+
+    ps.addLot("Hubballi_Central", 100);
+    ps.addLot("Railway_Parking", 50);
+    ps.addLot("Airport_Parking", 200);
+
+    ps.printLots();
+
+    ps.parkCar("Hubballi_Central");
+    ps.parkCar("Hubballi_Central");
+    ps.parkCar("Railway_Parking");
+
+    cout << "\nAfter parking operations:\n";
+    ps.printLots();
+
+    ps.removeCar("Hubballi_Central");
+    ps.removeCar("Airport_Parking");
+
+    cout << "\nAfter exit operations:\n";
+    ps.printLots();
+
+    cout << "\nQuery free slots:\n";
+    cout << "Hubballi_Central: " << ps.getFreeSlots("Hubballi_Central") << "\n";
+    cout << "Airport_Parking: " << ps.getFreeSlots("Airport_Parking") << "\n";
+
+    return 0;
+}
+</code></pre>
+
+</div>
+
+<div class="section">
+<h2>5. Conclusion</h2>
+
+<p>
+A hash map-based parking availability system gives instant updates and real-time monitoring.
+It is scalable for large cities and perfectly fits smart-city automation models.
+</p>
+
+</div>
+
+</div>
+
+</body>
+</html>
