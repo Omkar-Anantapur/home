@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Business Case Study 9 – Matching Riders with Auto Drivers</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+body {
+  background:#0f172a;
+  color:#e5e7eb;
+  font-family:"Segoe UI",sans-serif;
+  margin:0;
+  padding:2rem;
+  line-height:1.7;
+}
+a { color:#38bdf8; text-decoration:none; }
+a:hover { text-decoration:underline; }
+.container {
+  max-width:1100px; margin:auto;
+  background:#020617; padding:2rem;
+  border-radius:12px; border:1px solid #1e293b;
+}
+h1 { color:#e50914; text-align:center; margin-bottom:1.5rem; letter-spacing:2px; }
+h2 { margin-top:2rem; color:#f97316; }
+h3 { margin-top:1.2rem; color:#a5b4fc; }
+.section {
+  margin-top:2rem; padding:1.5rem;
+  background:#0b1120; border-radius:10px;
+  border:1px solid #1e293b;
+}
+pre {
+  background:#111827; padding:1rem; border-radius:8px;
+  overflow-x:auto; border:1px solid #1e293b; font-size:0.9rem;
+}
+</style>
+</head>
+
+<body>
+
+<a href="bheemangouda.html">← Back</a>
+
+<div class="container">
+
+<h1>Business Case Study 9 – Matching Riders with Auto Drivers</h1>
+
+<div class="section">
+<h2>1. Problem Statement</h2>
+
+<p>
+In large cities, auto-rickshaw drivers and passengers often face delays because they cannot be matched quickly.  
+Riders wait at crowded points, while autos roam empty elsewhere. A smart transport system matches the nearest available auto with the waiting rider using a fast algorithm.
+</p>
+
+<p>
+Each rider and auto has a position on a 1D or 2D map. We attempt to match them in a way that minimizes pickup distance.
+</p>
+
+<p>
+A greedy two-pointer algorithm after sorting positions provides fast matching.
+</p>
+</div>
+
+<div class="section">
+<h2>2. Algorithm Used: Sorting + Two-Pointer Greedy Matching</h2>
+
+<p>
+Steps:
+</p>
+
+<ol>
+<li>Sort all rider positions.</li>
+<li>Sort all auto positions.</li>
+<li>Use two pointers and match rider i with auto j.</li>
+<li>Move both pointers simultaneously.</li>
+</ol>
+
+<p>
+The algorithm creates efficient 1-to-1 matching with minimal total distance.
+</p>
+</div>
+
+<div class="section">
+<h2>3. Time Complexity Explanation</h2>
+
+<pre>
+Sorting riders = O(n log n)
+Sorting autos  = O(m log m)
+Greedy match   = O(n)
+Total          = O(n log n + m log m)
+</pre>
+
+<p>
+This is extremely fast even for thousands of riders and autos.
+</p>
+</div>
+
+<div class="section">
+<h2>4. C++ Code (Long Version – full system with menus + validation + utilities)</h2>
+
+<pre><code>
+#include <bits/stdc++.h>
+using namespace std;
+
+struct Rider {
+    int id;
+    int position;
+};
+
+struct AutoDriver {
+    int id;
+    int position;
+};
+
+struct MatchResult {
+    int riderID;
+    int autoID;
+    int distance;
+};
+
+class MatchingSystem {
+private:
+    vector<Rider> riders;
+    vector<AutoDriver> autos;
+    vector<MatchResult> matches;
+
+public:
+
+    void addRider(int id, int pos) {
+        Rider r;
+        r.id = id;
+        r.position = pos;
+        riders.push_back(r);
+    }
+
+    void addAuto(int id, int pos) {
+        AutoDriver a;
+        a.id = id;
+        a.position = pos;
+        autos.push_back(a);
+    }
+
+    void sortData() {
+        sort(riders.begin(), riders.end(), [](Rider &a, Rider &b){
+            return a.position < b.position;
+        });
+        sort(autos.begin(), autos.end(), [](AutoDriver &a, AutoDriver &b){
+            return a.position < b.position;
+        });
+    }
+
+    void matchRidersAutos() {
+        matches.clear();
+
+        int i = 0, j = 0;
+        while (i < riders.size() and j < autos.size()) {
+            MatchResult m;
+            m.riderID = riders[i].id;
+            m.autoID = autos[j].id;
+            m.distance = abs(riders[i].position - autos[j].position);
+            matches.push_back(m);
+
+            i++;
+            j++;
+        }
+    }
+
+    void displayMatches() {
+        cout << "\n====== MATCH RESULTS ======\n";
+        for (auto &m : matches) {
+            cout << "Rider " << m.riderID
+                 << " matched with Auto " << m.autoID
+                 << " | Distance = " << m.distance << "\n";
+        }
+        cout << "===========================\n";
+    }
+
+    void displayData() {
+        cout << "\n=== RIDERS ===\n";
+        for (auto &r : riders)
+            cout << "ID " << r.id << " Pos " << r.position << "\n";
+
+        cout << "\n=== AUTOS ===\n";
+        for (auto &a : autos)
+            cout << "ID " << a.id << " Pos " << a.position << "\n";
+    }
+
+    void generateDummyData(int n) {
+        srand(time(NULL));
+        for (int i = 1; i <= n; i++) {
+            addRider(i, rand() % 500);
+            addAuto(i, rand() % 500);
+        }
+    }
+};
+
+void menu() {
+    cout << "\n===============================\n";
+    cout << " NEAREST AUTO MATCHING SYSTEM\n";
+    cout << "===============================\n";
+    cout << "1. Show Riders and Autos\n";
+    cout << "2. Match Riders and Autos\n";
+    cout << "3. View Matches\n";
+    cout << "4. Exit\n";
+    cout << "Enter choice: ";
+}
+
+int main() {
+    ios::sync_with_stdio(false);
+    cin.tie(NULL);
+
+    MatchingSystem ms;
+    ms.generateDummyData(20);
+
+    int choice;
+    while (true) {
+        menu();
+        cin >> choice;
+
+        if (choice == 1) {
+            ms.displayData();
+        }
+        else if (choice == 2) {
+            ms.sortData();
+            ms.matchRidersAutos();
+            cout << "Matching completed.\n";
+        }
+        else if (choice == 3) {
+            ms.displayMatches();
+        }
+        else if (choice == 4) {
+            cout << "Exiting...\n";
+            break;
+        }
+        else {
+            cout << "Invalid choice.\n";
+        }
+    }
+
+    return 0;
+}
+</code></pre>
+
+</div>
+
+<div class="section">
+<h2>5. Conclusion</h2>
+
+<p>
+The greedy matching algorithm helps reduce passenger waiting time and improves auto driver utilization.  
+Cities can apply this to build automated allocation platforms for fast transport.
+</p>
+
+</div>
+
+</div>
+
+</body>
+</html>
