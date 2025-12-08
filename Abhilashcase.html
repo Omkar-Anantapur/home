@@ -1,128 +1,201 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>Case Details</title>
+  <meta charset="utf-8" />
+  <title>Case — City DAA Business Case</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <style>
+    :root{
+      --bg:#020617; --panel:#07101a; --muted:#9ca3af; --accent:#f97316; --cyan:#38bdf8;
+      --steel: linear-gradient(90deg, rgba(255,255,255,0.02), rgba(255,255,255,0.06) 40%, rgba(255,255,255,0.02));
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%;margin:0;font-family:Inter, "Segoe UI", system-ui, sans-serif;background:linear-gradient(180deg,#070913,#0f172a);color:#e5e7eb}
+    a{color:var(--cyan);text-decoration:none}
+    header{display:flex;align-items:center;gap:1rem;padding:1.2rem 1.5rem;border-bottom:1px solid rgba(255,255,255,0.03)}
+    .back{display:inline-flex;align-items:center;gap:.5rem;color:var(--cyan);padding:.35rem .6rem;border-radius:8px}
+    .container{max-width:1100px;margin:1.25rem auto;padding:1rem}
+    .title-row{display:flex;align-items:center;justify-content:space-between;gap:1rem}
+    h1{margin:0;font-size:1.25rem;color:var(--cyan)}
+    .meta{color:var(--muted);font-size:0.95rem}
 
-<style>
-    body {
-        margin: 0;
-        background: #0d0d0d;
-        font-family: Arial;
-        overflow: hidden;
+    /* Zoom-in entry animation */
+    .page-wrap{transform:scale(.94);opacity:0;transition:transform .45s cubic-bezier(.2,.9,.25,1), opacity .35s;will-change:transform,opacity}
+    .page-wrap.ready{transform:scale(1);opacity:1}
+
+    /* swipe carousel */
+    .carousel{margin-top:1rem;background:var(--panel);border-radius:14px;padding:1rem;border:1px solid rgba(255,255,255,0.04);overflow:hidden;position:relative}
+    .track{
+      display:flex;gap:1rem;transition:transform .35s cubic-bezier(.22,.9,.42,1);
+      will-change:transform;
+    }
+    .panel{
+      min-width:100%;flex-shrink:0;padding:1.25rem;border-radius:10px;background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.00));
+      box-shadow:inset 0 0 0 1px rgba(255,255,255,0.01);
+      position:relative;overflow:hidden;
+    }
+    .panel h2{margin:0 0 .5rem;color:var(--accent)}
+    .panel p{color:var(--muted);margin:0;line-height:1.55}
+    .panel .code{
+      margin-top:1rem;background:#01040a;padding:0.9rem;border-radius:8px;border:1px solid rgba(255,255,255,0.035);font-family:SFMono-Regular, Menlo, monospace;font-size:0.85rem;white-space:pre-wrap;max-height:38vh;overflow:auto;
     }
 
-    .topbar {
-        padding: 15px;
-        background: #111;
-        color: white;
-        font-size: 20px;
-    }
+    /* progress dots + arrows */
+    .controls{display:flex;align-items:center;justify-content:space-between;margin-top:.9rem}
+    .dots{display:flex;gap:.4rem}
+    .dot{width:10px;height:10px;border-radius:50%;background:rgba(255,255,255,0.06);cursor:pointer;border:1px solid rgba(255,255,255,0.02)}
+    .dot.active{background:linear-gradient(90deg,var(--cyan),#7c3aed);box-shadow:0 6px 20px rgba(124,58,237,0.12)}
+    .btns{display:flex;gap:.5rem}
+    .btn{background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.03);padding:.45rem .7rem;border-radius:8px;color:var(--muted);cursor:pointer}
+    .btn:active{transform:translateY(1px)}
+    .small{font-size:0.85rem;color:var(--muted)}
 
-    .topbar a {
-        color: white;
-        text-decoration: none;
-        font-size: 18px;
-        padding: 10px 20px;
-        background: #333;
-        border-radius: 10px;
-        margin-right: 10px;
+    /* steel-shine overlay while swiping */
+    .steel-shine{
+      position:absolute;inset:0;pointer-events:none;border-radius:14px;
+      background: linear-gradient(120deg, rgba(255,255,255,0.00), rgba(255,255,255,0.06) 30%, rgba(255,255,255,0.00) 60%);
+      transform:translateX(-120%);opacity:0;transition:transform .55s ease, opacity .35s;
+      mix-blend-mode:overlay;
     }
+    .steel-shine.active{transform:translateX(40%);opacity:1}
 
-    .slides {
-        display: flex;
-        width: 400%;
-        height: calc(100vh - 60px);
-        transition: transform 0.5s ease;
+    /* copy button inside code */
+    .code-wrap{display:flex;gap:.6rem;align-items:flex-start;justify-content:space-between}
+    .copyBtn{background:transparent;border:1px solid rgba(255,255,255,0.06);padding:.25rem .5rem;border-radius:6px;color:var(--muted);cursor:pointer;font-size:.85rem}
+
+    @media (max-width:720px){
+      .panel .code{max-height:28vh}
     }
-
-    .page {
-        width: 100%;
-        padding: 40px;
-        font-size: 22px;
-        color: white;
-        overflow-y: auto;
-    }
-
-    .nav-buttons {
-        position: fixed;
-        bottom: 25px;
-        left: 50%;
-        transform: translateX(-50%);
-        display: flex;
-        gap: 20px;
-    }
-
-    button {
-        padding: 12px 22px;
-        font-size: 16px;
-        border: none;
-        border-radius: 10px;
-        cursor: pointer;
-        background: #444;
-        color: white;
-    }
-
-    button:hover {
-        background: #666;
-    }
-</style>
-
+  </style>
 </head>
 <body>
+  <header>
+    <a class="back" id="backBtn" href="index.html">← Back</a>
+    <div style="flex:1"></div>
+    <div class="small">Use ← → or swipe to navigate • <strong>Abhilash — Member 4</strong></div>
+  </header>
 
-<div class="topbar">
-    <a href="index.html">← Back</a>
-    Case 1 – Details
-</div>
-
-<div class="slides" id="slider">
-
-    <div class="page">
-        <h2>Problem</h2>
-        Place limited EV chargers while minimizing travel distance and balancing grid load.
+  <div class="container page-wrap" id="page">
+    <div class="title-row">
+      <div>
+        <h1 id="caseTitle">Business Case Title</h1>
+        <div class="meta" id="caseMeta">Algorithm • Complexity • Code</div>
+      </div>
+      <div style="text-align:right">
+        <div style="font-size:0.9rem;color:var(--muted)">Case ID: <span id="caseId">1</span></div>
+      </div>
     </div>
 
-    <div class="page">
-        <h2>Algorithm</h2>
-        k-means for placement + greedy balancing.
+    <div class="carousel" id="carousel">
+      <div class="steel-shine" id="steel"></div>
+      <div class="track" id="track" aria-live="polite">
+        <section class="panel" id="panel-problem">
+          <h2>Problem</h2>
+          <p id="problemText"></p>
+        </section>
+
+        <section class="panel" id="panel-algo">
+          <h2>Algorithm</h2>
+          <p id="algoText"></p>
+        </section>
+
+        <section class="panel" id="panel-complex">
+          <h2>Time Complexity</h2>
+          <p id="complexText"></p>
+        </section>
+
+        <section class="panel" id="panel-code">
+          <h2>Code</h2>
+          <div class="code-wrap">
+            <div class="code" id="codeBlock" tabindex="0"></div>
+            <div style="display:flex;flex-direction:column;gap:.5rem;margin-left:.6rem">
+              <button class="copyBtn" id="copyBtn">Copy</button>
+              <button class="copyBtn" id="expandBtn">Expand</button>
+            </div>
+          </div>
+        </section>
+      </div>
     </div>
 
-    <div class="page">
-        <h2>Time Complexity</h2>
-        k-means: O(I · n · k · d)
+    <div class="controls">
+      <div class="dots" id="dots"></div>
+      <div class="btns">
+        <button class="btn" id="prevBtn">← Prev</button>
+        <button class="btn" id="nextBtn">Next →</button>
+      </div>
     </div>
 
-    <div class="page">
-        <h2>Code</h2>
-        <pre>
-kmeans(points, k):
-    choose k random centers
-    repeat until stable:
-        assign points to nearest center
-        update centers
-        return centers
-        </pre>
+    <div style="margin-top:1rem;color:var(--muted);font-size:0.9rem">
+      <strong>Tips:</strong> Tap Copy for code. Use keyboard arrows to move. Steel-shine appears during swipe.
     </div>
-
-</div>
-
-<div class="nav-buttons">
-    <button onclick="slide(-1)">Prev</button>
-    <button onclick="slide(1)">Next</button>
-</div>
+  </div>
 
 <script>
-let page = 0;
+  const cases = {
+    1: {title:"Dynamic EV Charging Station Placement & Load Balancing", problem:"Place limited fast chargers to minimize driver travel distance and balance electrical load.", algo:"k-means clustering + greedy load balancing", complexity:"k-means: O(I·n·k·d). Assignment: O(n log k)", code:"// C++ code sketch\nint main(){ /* ... */ }"},
+    2: {title:"Predictive Public Health Outbreak Early Warning", problem:"Detect localized outbreak clusters using clinic visits & sewage signals.", algo:"Poisson anomaly detection + DBSCAN", complexity:"O(n log n)", code:"// C++ sketch\nvoid detect(){ /* ... */ }"},
+    3: {title:"Demand-Responsive Microtransit Routing", problem:"Route minibuses dynamically for on-demand ride requests.", algo:"Online greedy VRP insertion", complexity:"O(m·L)", code:"function insert(request){ /* ... */ }"},
+    4: {title:"Waste-Segregation Pickup Optimization", problem:"Optimize pickup schedule & routing.", algo:"Forecast + Clarke-Wright heuristic", complexity:"O(n²)", code:"// Forecast + savings heuristic"},
+    5: {title:"Energy-Efficient Streetlight Scheduling", problem:"Schedule dimming/activation to save energy.", algo:"Greedy knapsack", complexity:"O(n log n)", code:"selectLights(energyBudget){ /* ... */ }"}
+    // Add more cases up to 10...
+  };
 
-function slide(dir) {
-    page += dir;
-    if (page < 0) page = 0;
-    if (page > 3) page = 3;
-    document.getElementById("slider").style.transform = 
-        `translateX(-${page * 100}%)`;
-}
+  const urlParams = new URLSearchParams(window.location.search);
+  let cid = Number(urlParams.get('id') || 1);
+  if(!cases[cid]) cid=1;
+
+  const page = document.getElementById('page');
+  const caseTitle = document.getElementById('caseTitle');
+  const caseMeta = document.getElementById('caseMeta');
+  const caseIdEl = document.getElementById('caseId');
+  const problemText = document.getElementById('problemText');
+  const algoText = document.getElementById('algoText');
+  const complexText = document.getElementById('complexText');
+  const codeBlock = document.getElementById('codeBlock');
+
+  function loadCase(id){
+    const c = cases[id];
+    caseTitle.textContent = c.title;
+    caseMeta.textContent = c.algo;
+    caseIdEl.textContent = id;
+    problemText.textContent = c.problem;
+    algoText.textContent = c.algo;
+    complexText.textContent = c.complexity;
+    codeBlock.textContent = c.code;
+    document.title = `${id} — ${c.title}`;
+  }
+  loadCase(cid);
+  requestAnimationFrame(()=> setTimeout(()=> page.classList.add('ready'),30));
+
+  const track = document.getElementById('track');
+  const panels = Array.from(track.children);
+  let index=0;
+
+  const dotsWrap=document.getElementById('dots');
+  panels.forEach((p,i)=>{const d=document.createElement('div'); d.className='dot'; d.dataset.i=i; d.addEventListener('click',()=>goTo(i)); dotsWrap.appendChild(d);});
+  const dots=Array.from(dotsWrap.children);
+  function update(){track.style.transform=`translateX(${-index*100}%)`; dots.forEach((d,i)=>d.classList.toggle('active',i===index));}
+  function goTo(i){index=Math.max(0,Math.min(panels.length-1,i)); update();}
+  update();
+
+  document.getElementById('prevBtn').addEventListener('click',()=>goTo(index-1));
+  document.getElementById('nextBtn').addEventListener('click',()=>goTo(index+1));
+
+  window.addEventListener('keydown',(e)=>{if(e.key==='ArrowRight') goTo(index+1); if(e.key==='ArrowLeft') goTo(index-1);});
+
+  const steel=document.getElementById('steel'); let startX=0,currentX=0,isDown=false;
+  track.addEventListener('pointerdown',(e)=>{isDown=true; startX=e.clientX; track.style.transition='none'; steel.classList.add('active');});
+  window.addEventListener('pointermove',(e)=>{if(!isDown) return; currentX=e.clientX; const dx=currentX-startX; const percent=dx/carousel.clientWidth*100; track.style.transform=`translateX(${-index*100+percent}%)`;});
+  window.addEventListener('pointerup',(e)=>{if(!isDown) return; isDown=false; track.style.transition=''; steel.classList.remove('active'); const dx=e.clientX-startX; if(Math.abs(dx)>60){dx<0?goTo(index+1):goTo(index-1);}else{goTo(index);}});
+
+  document.getElementById('copyBtn').addEventListener('click', async ()=>{try{await navigator.clipboard.writeText(codeBlock.textContent); const btn=document.getElementById('copyBtn'); const prev=btn.textContent; btn.textContent='Copied!'; setTimeout(()=>btn.textContent=prev,1200);}catch(err){alert('Copy failed.');}});
+  document.getElementById('expandBtn').addEventListener('click',()=>{const w=window.open("","_blank"); w.document.write('<pre style="white-space:pre-wrap;background:#01040a;color:#e5e7eb;padding:1rem;font-family:SFMono-Regular,Menlo,monospace">'+codeBlock.textContent.replace(/</g,'&lt;')+'</pre>'); w.document.title='Code — '+cases[cid].title;});
+
+  document.getElementById('nextBtn').addEventListener('click',()=>{if(index===panels.length-1 && cid<Object.keys(cases).length) window.location.href=`case.html?id=${cid+1}`;});
+  document.getElementById('prevBtn').addEventListener('click',()=>{if(index===0 && cid>1) window.location.href=`case.html?id=${cid-1}`;});
+  document.getElementById('backBtn').addEventListener('click',()=>{page.classList.remove('ready');});
+  caseTitle.addEventListener('click',()=>goTo((index+1)%panels.length));
 </script>
-
 </body>
 </html>
+
