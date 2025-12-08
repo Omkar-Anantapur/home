@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Business Case Study 2 – Garbage Truck Route Planning</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+body {
+  background:#0f172a;
+  color:#e5e7eb;
+  font-family:"Segoe UI",sans-serif;
+  margin:0;
+  padding:2rem;
+  line-height:1.7;
+}
+a { color:#38bdf8; text-decoration:none; }
+a:hover { text-decoration:underline; }
+.container {
+  max-width:1100px; margin:auto;
+  background:#020617; padding:2rem;
+  border-radius:12px; border:1px solid #1e293b;
+}
+h1 { color:#e50914; text-align:center; margin-bottom:1.5rem; letter-spacing:2px; }
+h2 { margin-top:2rem; color:#f97316; }
+h3 { margin-top:1.2rem; color:#a5b4fc; }
+.section {
+  margin-top:2rem; padding:1.5rem;
+  background:#0b1120; border-radius:10px;
+  border:1px solid #1e293b;
+}
+pre {
+  background:#111827; padding:1rem; border-radius:8px;
+  overflow-x:auto; border:1px solid #1e293b; font-size:0.9rem;
+}
+</style>
+</head>
+
+<body>
+
+<a href="bheemangouda.html">← Back</a>
+
+<div class="container">
+
+<h1>Business Case Study 2 – Garbage Truck Route Planning</h1>
+
+<div class="section">
+<h2>1. Problem Statement</h2>
+
+<p>
+City garbage collection must be done every morning using a limited number of trucks.  
+Each truck must visit every pickup point exactly once and return to the main depot.  
+Finding the shortest route is expensive because the exact Travelling Salesman Problem is extremely slow.  
+So the city uses an approximation algorithm that provides an efficient near-optimal tour.
+</p>
+
+<p>
+We model:
+</p>
+
+<ul>
+<li>Locations as nodes.</li>
+<li>Distances between points as a matrix.</li>
+<li>Truck path must minimize travel distance.</li>
+</ul>
+
+</div>
+
+<div class="section">
+<h2>2. Algorithm Used: Nearest Neighbor Approximation for TSP</h2>
+
+<p>
+TSP exact solution takes factorial time, which is impossible for real-time systems.  
+Nearest Neighbor approximation is chosen because:
+</p>
+
+<ul>
+<li>Runs fast for any number of garbage stops.</li>
+<li>Always produces a valid tour.</li>
+<li>Easy to implement and scale.</li>
+<li>Works well when city blocks are geographically clustered.</li>
+</ul>
+
+<p>
+Start at depot → repeatedly choose the nearest unvisited node → return to depot.
+</p>
+
+</div>
+
+<div class="section">
+<h2>3. Time Complexity Explanation</h2>
+
+<p>
+Let n be number of garbage collection points.
+</p>
+
+<pre>
+Time Complexity = n²
+</pre>
+
+<p>
+Why n²?  
+For every node, we check all remaining unvisited nodes to find the nearest one.  
+This makes the algorithm simple and predictable in large city applications.
+</p>
+
+</div>
+
+<div class="section">
+<h2>4. C++ Code (Long, structured, compilable)</h2>
+
+<p>
+The following program implements complete TSP nearest-neighbor routing for garbage trucks.
+</p>
+
+<pre><code>
+#include <bits/stdc++.h>
+using namespace std;
+
+class GarbageRoute {
+public:
+    int n;
+    vector<vector<int>> dist;
+    vector<int> visited;
+
+    GarbageRoute(int nodes) {
+        n = nodes;
+        dist.assign(n, vector<int>(n, 0));
+        visited.assign(n, 0);
+    }
+
+    void setDistance(int i, int j, int d) {
+        dist[i][j] = d;
+        dist[j][i] = d;
+    }
+
+    int findNearest(int current) {
+        int bestNode = -1;
+        int bestDist = INT_MAX;
+
+        for (int i = 0; i < n; i++) {
+            if (!visited[i] && dist[current][i] < bestDist && i != current) {
+                bestDist = dist[current][i];
+                bestNode = i;
+            }
+        }
+        return bestNode;
+    }
+
+    vector<int> computeRoute(int start) {
+        vector<int> path;
+        int current = start;
+
+        visited.assign(n, 0);
+        visited[current] = 1;
+
+        path.push_back(current);
+
+        for (int step = 0; step < n - 1; step++) {
+            int nxt = findNearest(current);
+            if (nxt == -1) break;
+            visited[nxt] = 1;
+            path.push_back(nxt);
+            current = nxt;
+        }
+
+        path.push_back(start);
+        return path;
+    }
+
+    void printMatrix() {
+        cout << "Distance Matrix:\n";
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                cout << dist[i][j] << " ";
+            }
+            cout << "\n";
+        }
+    }
+
+    void printPath(const vector<int> &p) {
+        cout << "Computed Garbage Truck Route:\n";
+        for (int x : p) cout << x << " ";
+        cout << "\n";
+    }
+};
+
+int main() {
+    int nodes = 6;
+    GarbageRoute gr(nodes);
+
+    gr.setDistance(0,1,4);
+    gr.setDistance(0,2,8);
+    gr.setDistance(1,2,2);
+    gr.setDistance(1,3,6);
+    gr.setDistance(2,3,3);
+    gr.setDistance(2,4,7);
+    gr.setDistance(3,5,5);
+    gr.setDistance(4,5,2);
+
+    gr.printMatrix();
+
+    cout << "\nRunning Nearest Neighbor starting at depot (node 0)…\n";
+
+    vector<int> path = gr.computeRoute(0);
+
+    gr.printPath(path);
+
+    cout << "\nRoute complete.\n";
+    return 0;
+}
+</code></pre>
+
+</div>
+
+<div class="section">
+<h2>5. Conclusion</h2>
+
+<p>
+Nearest Neighbor gives an efficient daily-route solution.  
+The path is not always mathematically optimal, but is fast, reliable, and highly suited for city garbage truck scheduling.
+</p>
+
+</div>
+
+</div>
+
+</body>
+</html>
