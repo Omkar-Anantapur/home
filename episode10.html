@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Business Case Study 10 – Electricity Load Monitoring</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+body {
+  background:#0f172a;
+  color:#e5e7eb;
+  font-family:"Segoe UI",sans-serif;
+  margin:0;
+  padding:2rem;
+  line-height:1.7;
+}
+a { color:#38bdf8; text-decoration:none; }
+a:hover { text-decoration:underline; }
+.container {
+  max-width:1100px; margin:auto;
+  background:#020617; padding:2rem;
+  border-radius:12px; border:1px solid #1e293b;
+}
+h1 { color:#e50914; text-align:center; margin-bottom:1.5rem; letter-spacing:2px; }
+h2 { margin-top:2rem; color:#f97316; }
+h3 { margin-top:1.2rem; color:#a5b4fc; }
+.section {
+  margin-top:2rem; padding:1.5rem;
+  background:#0b1120; border-radius:10px;
+  border:1px solid #1e293b;
+}
+pre {
+  background:#111827; padding:1rem; border-radius:8px;
+  overflow-x:auto; border:1px solid #1e293b; font-size:0.9rem;
+}
+</style>
+</head>
+
+<body>
+
+<a href="bheemangouda.html">← Back</a>
+
+<div class="container">
+
+<h1>Business Case Study 10 – Electricity Load Monitoring by Zone</h1>
+
+<div class="section">
+<h2>1. Problem Statement</h2>
+
+<p>
+Power distribution companies divide a city into multiple electrical zones.  
+Each zone consumes different amounts of power depending on time, population, and load variations.  
+If the load crosses a safe limit, transformers may fail and cause outages.  
+Therefore, real-time monitoring of electricity consumption is essential.
+</p>
+
+<p>
+We need:
+</p>
+<ul>
+<li>Fast updates when zone load changes</li>
+<li>Fast queries when checking total load in a range of zones</li>
+<li>Historical tracking of load variations</li>
+</ul>
+
+<p>
+To solve this, a powerful data structure is required.  
+A segment tree allows:</p>
+
+<ul>
+<li>Range sum queries</li>
+<li>Instant updates</li>
+<li>Tree build for initial loads</li>
+</ul>
+</div>
+
+<div class="section">
+<h2>2. Algorithm Used: Segment Tree</h2>
+
+<p>
+A segment tree is a binary tree where each node stores summary information of a segment of the array.  
+For this case, each node stores the <strong>sum of loads</strong> of a zone range.
+</p>
+
+<p>Key operations:</p>
+
+<ol>
+<li>Tree Construction</li>
+<li>Point Update (load change)</li>
+<li>Range Query (total load)</li>
+</ol>
+
+<p>
+This gives high performance even with thousands of updates per second.
+</p>
+
+</div>
+
+<div class="section">
+<h2>3. Time Complexity (Detailed Explanation)</h2>
+
+<h3>Build</h3>
+<pre>O(n)</pre>
+<p>
+Tree has about 4n nodes. Building recursively touches each node once.
+</p>
+
+<h3>Update</h3>
+<pre>O(log n)</pre>
+<p>
+An update travels from root to leaf, height = log n.
+</p>
+
+<h3>Query</h3>
+<pre>O(log n)</pre>
+<p>
+A query checks at most "2 log n" nodes because it splits into two branches.
+</p>
+
+<p>
+This is far better than naive O(n) scanning for every query.
+</p>
+
+</div>
+
+<div class="section">
+<h2>4. C++ Code (Very Long Version – detailed, logged, modular, menu-driven)</h2>
+
+<pre><code>
+#include <bits/stdc++.h>
+using namespace std;
+
+class SegmentTree {
+private:
+    vector<long long> tree;
+    vector<long long> arr;
+    int n;
+
+    void build(int idx, int l, int r) {
+        if (l == r) {
+            tree[idx] = arr[l];
+            return;
+        }
+        int mid = (l + r) / 2;
+        build(idx * 2, l, mid);
+        build(idx * 2 + 1, mid + 1, r);
+        tree[idx] = tree[idx * 2] + tree[idx * 2 + 1];
+    }
+
+    long long query(int idx, int l, int r, int ql, int qr) {
+        if (qr < l || ql > r)
+            return 0;
+        if (ql <= l && r <= qr)
+            return tree[idx];
+
+        int mid = (l + r) / 2;
+        return query(idx * 2, l, mid, ql, qr)
+             + query(idx * 2 + 1, mid + 1, r, ql, qr);
+    }
+
+    void update(int idx, int l, int r, int pos, long long val) {
+        if (l == r) {
+            tree[idx] = val;
+            arr[pos] = val;
+            return;
+        }
+        int mid = (l + r) / 2;
+        if (pos <= mid)
+            update(idx * 2, l, mid, pos, val);
+        else
+            update(idx * 2 + 1, mid + 1, r, pos, val);
+
+        tree[idx] = tree[idx * 2] + tree[idx * 2 + 1];
+    }
+
+public:
+    SegmentTree(int size) {
+        n = size;
+        arr.assign(n, 0);
+        tree.assign(4 * n, 0);
+    }
+
+    void initializeWithValues() {
+        cout << "Enter " << n << " zone loads:\n";
+        for (int i = 0; i < n; i++)
+            cin >> arr[i];
+        build(1, 0, n - 1);
+    }
+
+    void printTree() {
+        cout << "Internal Tree:\n";
+        for (int i = 1; i < 2 * n; i++)
+            cout << tree[i] << " ";
+        cout << "\n";
+    }
+
+    void printLoads() {
+        cout << "Zone Loads: ";
+        for (int x : arr) cout << x << " ";
+        cout << "\n";
+    }
+
+    long long rangeQuery(int l, int r) {
+        return query(1, 0, n - 1, l, r);
+    }
+
+    void pointUpdate(int pos, long long value) {
+        update(1, 0, n - 1, pos, value);
+    }
+};
+
+class ElectricitySystem {
+private:
+    SegmentTree *seg = nullptr;
+    int zones;
+
+public:
+    void setup() {
+        cout << "Enter number of zones: ";
+        cin >> zones;
+        seg = new SegmentTree(zones);
+        seg->initializeWithValues();
+    }
+
+    void menu() {
+        cout << "\n=========== ELECTRICITY LOAD MONITOR ===========\n";
+        cout << "1. Show all zone loads\n";
+        cout << "2. Execute range load query\n";
+        cout << "3. Update zone load\n";
+        cout << "4. Print tree data\n";
+        cout << "5. Exit\n";
+        cout << "Enter choice: ";
+    }
+
+    void run() {
+        setup();
+        while (true) {
+            menu();
+            int choice;
+            cin >> choice;
+
+            if (choice == 1) {
+                seg->printLoads();
+            }
+            else if (choice == 2) {
+                int l, r;
+                cout << "Enter query range (l r): ";
+                cin >> l >> r;
+                cout << "Total Load = " << seg->rangeQuery(l, r) << "\n";
+            }
+            else if (choice == 3) {
+                int pos; long long val;
+                cout << "Enter zone index and new load: ";
+                cin >> pos >> val;
+                seg->pointUpdate(pos, val);
+                cout << "Updated.\n";
+            }
+            else if (choice == 4) {
+                seg->printTree();
+            }
+            else if (choice == 5) {
+                cout << "Exiting...\n";
+                break;
+            }
+            else {
+                cout << "Invalid choice.\n";
+            }
+        }
+    }
+};
+
+int main() {
+    ios::sync_with_stdio(false);
+    cin.tie(NULL);
+
+    ElectricitySystem system;
+    system.run();
+
+    return 0;
+}
+</code></pre>
+
+</div>
+
+<div class="section">
+<h2>5. Conclusion</h2>
+
+<p>
+Segment trees make large-scale load monitoring extremely fast.  
+Power systems performing real-time monitoring and alerting can use this efficiently,  
+especially when thousands of updates and queries happen every minute.
+</p>
+
+<p>
+The model ensures the power grid remains stable, avoiding overload and failures.
+</p>
+</div>
+
+</div>
+
+</body>
+</html>
