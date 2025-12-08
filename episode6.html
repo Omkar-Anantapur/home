@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Business Case Study 6 – Water Supply Reachability Detection</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+body {
+  background:#0f172a;
+  color:#e5e7eb;
+  font-family:"Segoe UI",sans-serif;
+  margin:0;
+  padding:2rem;
+  line-height:1.7;
+}
+a { color:#38bdf8; text-decoration:none; }
+a:hover { text-decoration:underline; }
+.container {
+  max-width:1100px; margin:auto;
+  background:#020617; padding:2rem;
+  border-radius:12px; border:1px solid #1e293b;
+}
+h1 { color:#e50914; text-align:center; margin-bottom:1.5rem; letter-spacing:2px; }
+h2 { margin-top:2rem; color:#f97316; }
+h3 { margin-top:1.2rem; color:#a5b4fc; }
+.section {
+  margin-top:2rem; padding:1.5rem;
+  background:#0b1120; border-radius:10px;
+  border:1px solid #1e293b;
+}
+pre {
+  background:#111827; padding:1rem; border-radius:8px;
+  overflow-x:auto; border:1px solid #1e293b; font-size:0.9rem;
+}
+</style>
+</head>
+
+<body>
+
+<a href="bheemangouda.html">← Back</a>
+
+<div class="container">
+
+<h1>Business Case Study 6 – Water Supply Reachability Detection</h1>
+
+<div class="section">
+<h2>1. Problem Statement</h2>
+
+<p>
+The city water department needs to verify whether a house is properly connected to the main water supply line.
+The water distribution system forms a network of:
+</p>
+
+<ul>
+<li>Main tank (source)</li>
+<li>Area distribution points</li>
+<li>Street pipelines</li>
+<li>Individual houses</li>
+</ul>
+
+<p>
+If any part of the pipeline is disconnected, the house may not receive water.
+Thus, the system must check if a house is reachable from the main tank.
+</p>
+
+<p>
+This is a perfect application of Depth-First Search (DFS) or Breadth-First Search (BFS) in a graph.
+</p>
+
+</div>
+
+<div class="section">
+<h2>2. Algorithm Used: Depth-First Search (DFS)</h2>
+
+<p>
+The pipeline network is modeled as an undirected graph:
+</p>
+
+<ul>
+<li>Nodes = pipeline junctions, streets, houses, tanks</li>
+<li>Edges = water pipeline connections</li>
+</ul>
+
+<p>
+We start DFS from Main Tank and visit all reachable nodes.  
+If the target house is visited → it receives water.  
+If not → house is disconnected.
+</p>
+
+</div>
+
+<div class="section">
+<h2>3. Time Complexity Explanation</h2>
+
+<pre>
+DFS Time Complexity = O(V + E)
+</pre>
+
+<p>
+Where V = number of nodes (houses, streets, junctions)  
+and E = pipeline connections  
+The algorithm is linear and very fast even for thousands of houses.
+</p>
+
+</div>
+
+<div class="section">
+<h2>4. C++ Code (Long, Fully Runnable)</h2>
+
+<pre><code>
+#include <bits/stdc++.h>
+using namespace std;
+
+class WaterNetwork {
+public:
+    unordered_map<string, vector<string>> graph;
+    unordered_set<string> visited;
+
+    void addConnection(const string& a, const string& b) {
+        graph[a].push_back(b);
+        graph[b].push_back(a);
+    }
+
+    void dfs(const string& node) {
+        visited.insert(node);
+        for (auto &nbr : graph[node]) {
+            if (!visited.count(nbr)) {
+                dfs(nbr);
+            }
+        }
+    }
+
+    bool hasWater(const string& mainTank, const string& house) {
+        visited.clear();
+        dfs(mainTank);
+        return visited.count(house);
+    }
+
+    void printNetwork() {
+        cout << "===== Water Pipeline Network =====\n";
+        for (auto &p : graph) {
+            cout << p.first << " connected to: ";
+            for (auto &n : p.second) cout << n << " ";
+            cout << "\n";
+        }
+        cout << "===================================\n";
+    }
+};
+
+int main() {
+    ios::sync_with_stdio(false);
+    cin.tie(NULL);
+
+    WaterNetwork wn;
+
+    wn.addConnection("Main_Tank", "AreaA");
+    wn.addConnection("AreaA", "Street1");
+    wn.addConnection("Street1", "House_12");
+    wn.addConnection("Street1", "House_15");
+    wn.addConnection("AreaA", "Street2");
+    wn.addConnection("Street2", "House_21");
+
+    wn.printNetwork();
+
+    cout << "\nChecking water supply:\n";
+
+    string house1 = "House_12";
+    string house2 = "House_99";
+
+    cout << house1 << ": ";
+    if (wn.hasWater("Main_Tank", house1))
+        cout << "Water supply available\n";
+    else
+        cout << "No supply (Disconnected)\n";
+
+    cout << house2 << ": ";
+    if (wn.hasWater("Main_Tank", house2))
+        cout << "Water supply available\n";
+    else
+        cout << "No supply (Disconnected)\n";
+
+    cout << "\nSystem test complete.\n";
+    return 0;
+}
+</code></pre>
+
+</div>
+
+<div class="section">
+<h2>5. Conclusion</h2>
+
+<p>
+DFS ensures accurate and fast detection of connectivity in the city water supply network.  
+This approach works perfectly for smart-city monitoring, leak detection, and consumer support systems.
+</p>
+
+</div>
+
+</div>
+
+</body>
+</html>
