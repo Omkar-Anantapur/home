@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Business Case Study 3 – Nearest Hospital Finder (Emergency Response)</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+body {
+  background:#0f172a;
+  color:#e5e7eb;
+  font-family:"Segoe UI",sans-serif;
+  margin:0;
+  padding:2rem;
+  line-height:1.7;
+}
+a { color:#38bdf8; text-decoration:none; }
+a:hover { text-decoration:underline; }
+.container {
+  max-width:1100px; margin:auto;
+  background:#020617; padding:2rem;
+  border-radius:12px; border:1px solid #1e293b;
+}
+h1 { color:#e50914; text-align:center; margin-bottom:1.5rem; letter-spacing:2px; }
+h2 { margin-top:2rem; color:#f97316; }
+h3 { margin-top:1.2rem; color:#a5b4fc; }
+.section {
+  margin-top:2rem; padding:1.5rem;
+  background:#0b1120; border-radius:10px;
+  border:1px solid #1e293b;
+}
+pre {
+  background:#111827; padding:1rem; border-radius:8px;
+  overflow-x:auto; border:1px solid #1e293b; font-size:0.9rem;
+}
+</style>
+</head>
+
+<body>
+
+<a href="bheemangouda.html">← Back</a>
+
+<div class="container">
+
+<h1>Business Case Study 3 – Nearest Hospital Finder</h1>
+
+<div class="section">
+<h2>1. Problem Statement</h2>
+
+<p>
+During an accident, the emergency control room must immediately locate the nearest hospital that can be reached
+from the accident spot. The city road network is large and contains thousands of intersections.
+Response must be instant because the first few minutes are critical.
+</p>
+
+<p>
+We model:
+</p>
+
+<ul>
+<li>City junctions as nodes.</li>
+<li>Roads as edges.</li>
+<li>Hospitals marked as special nodes.</li>
+</ul>
+
+<p>
+Because all roads are treated as equal (unweighted), BFS is the fastest algorithm to find the nearest reachable hospital.
+</p>
+
+</div>
+
+<div class="section">
+<h2>2. Algorithm Used: Breadth-First Search (BFS)</h2>
+
+<p>
+BFS explores all nodes level by level.  
+This helps identify the nearest hospital in the minimum number of edges.
+</p>
+
+<ul>
+<li>Start from accident location.</li>
+<li>Scan neighbors first.</li>
+<li>Stop instantly when first hospital is found.</li>
+</ul>
+
+<p>
+This guarantees shortest-path in unweighted graph.
+</p>
+
+</div>
+
+<div class="section">
+<h2>3. Time Complexity Explanation</h2>
+
+<p>
+Let V be the number of junctions and E be the number of roads.
+</p>
+
+<pre>
+Time Complexity = O(V + E)
+</pre>
+
+<p>
+Reason:
+</p>
+
+<ul>
+<li>Each node is visited at most once.</li>
+<li>Each road is checked at most once.</li>
+<li>Perfect for real-time emergency routing.</li>
+</ul>
+
+</div>
+
+<div class="section">
+<h2>4. C++ Code (Long, structured, clean)</h2>
+
+<pre><code>
+#include <bits/stdc++.h>
+using namespace std;
+
+// Class to represent the emergency response system
+class EmergencyNetwork {
+public:
+    int n;
+    vector<vector<int>> graph;
+    vector<int> hospital;
+
+    EmergencyNetwork(int nodes) {
+        n = nodes;
+        graph.assign(n, vector<int>());
+        hospital.assign(n, 0);
+    }
+
+    void addRoad(int u, int v) {
+        graph[u].push_back(v);
+        graph[v].push_back(u);
+    }
+
+    void markHospital(int node) {
+        hospital[node] = 1;
+    }
+
+    int nearestHospital(int src) {
+        queue<int> q;
+        vector<int> visited(n, 0);
+
+        q.push(src);
+        visited[src] = 1;
+
+        while (!q.empty()) {
+            int u = q.front();
+            q.pop();
+
+            if (hospital[u] == 1) {
+                return u;
+            }
+
+            for (int v : graph[u]) {
+                if (!visited[v]) {
+                    visited[v] = 1;
+                    q.push(v);
+                }
+            }
+        }
+
+        return -1;
+    }
+
+    void printGraph() {
+        cout << "Road Network:\n";
+        for (int i = 0; i < n; i++) {
+            cout << i << ": ";
+            for (int v : graph[i]) cout << v << " ";
+            cout << "\n";
+        }
+    }
+
+    void printHospitals() {
+        cout << "Hospitals at nodes: ";
+        for (int i = 0; i < n; i++) {
+            if (hospital[i]) cout << i << " ";
+        }
+        cout << "\n";
+    }
+};
+
+int main() {
+    int nodes = 10;
+    EmergencyNetwork en(nodes);
+
+    en.addRoad(0, 1);
+    en.addRoad(1, 2);
+    en.addRoad(2, 3);
+    en.addRoad(3, 4);
+    en.addRoad(1, 5);
+    en.addRoad(5, 6);
+    en.addRoad(6, 7);
+    en.addRoad(2, 8);
+    en.addRoad(8, 9);
+
+    en.markHospital(4);
+    en.markHospital(7);
+
+    cout << "======= City Emergency Network =======\n";
+    en.printGraph();
+    en.printHospitals();
+
+    int accidentSpot = 0;
+    cout << "\nAccident at node: " << accidentSpot << "\n";
+
+    int nearest = en.nearestHospital(accidentSpot);
+
+    if (nearest == -1) {
+        cout << "No reachable hospital found.\n";
+    } else {
+        cout << "Nearest hospital found at node: " << nearest << "\n";
+    }
+
+    cout << "\nEmergency response completed.\n";
+    return 0;
+}
+</code></pre>
+
+</div>
+
+<div class="section">
+<h2>5. Conclusion</h2>
+
+<p>
+BFS provides a guaranteed shortest-distance hospital in unweighted road networks.
+It is fast, deterministic, and perfect for healthcare emergency systems.
+Every smart city system uses BFS for immediate nearest-service lookup.
+</p>
+
+</div>
+
+</div>
+
+</body>
+</html>
