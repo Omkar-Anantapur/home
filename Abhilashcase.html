@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Case Details</title>
+
+<style>
+    body {
+        margin: 0;
+        background: #0d0d0d;
+        font-family: Arial;
+        overflow: hidden;
+    }
+
+    .topbar {
+        padding: 15px;
+        background: #111;
+        color: white;
+        font-size: 20px;
+    }
+
+    .topbar a {
+        color: white;
+        text-decoration: none;
+        font-size: 18px;
+        padding: 10px 20px;
+        background: #333;
+        border-radius: 10px;
+        margin-right: 10px;
+    }
+
+    .slides {
+        display: flex;
+        width: 400%;
+        height: calc(100vh - 60px);
+        transition: transform 0.5s ease;
+    }
+
+    .page {
+        width: 100%;
+        padding: 40px;
+        font-size: 22px;
+        color: white;
+        overflow-y: auto;
+    }
+
+    .nav-buttons {
+        position: fixed;
+        bottom: 25px;
+        left: 50%;
+        transform: translateX(-50%);
+        display: flex;
+        gap: 20px;
+    }
+
+    button {
+        padding: 12px 22px;
+        font-size: 16px;
+        border: none;
+        border-radius: 10px;
+        cursor: pointer;
+        background: #444;
+        color: white;
+    }
+
+    button:hover {
+        background: #666;
+    }
+</style>
+
+</head>
+<body>
+
+<div class="topbar">
+    <a href="index.html">← Back</a>
+    Case 1 – Details
+</div>
+
+<div class="slides" id="slider">
+
+    <div class="page">
+        <h2>Problem</h2>
+        Place limited EV chargers while minimizing travel distance and balancing grid load.
+    </div>
+
+    <div class="page">
+        <h2>Algorithm</h2>
+        k-means for placement + greedy balancing.
+    </div>
+
+    <div class="page">
+        <h2>Time Complexity</h2>
+        k-means: O(I · n · k · d)
+    </div>
+
+    <div class="page">
+        <h2>Code</h2>
+        <pre>
+kmeans(points, k):
+    choose k random centers
+    repeat until stable:
+        assign points to nearest center
+        update centers
+        return centers
+        </pre>
+    </div>
+
+</div>
+
+<div class="nav-buttons">
+    <button onclick="slide(-1)">Prev</button>
+    <button onclick="slide(1)">Next</button>
+</div>
+
+<script>
+let page = 0;
+
+function slide(dir) {
+    page += dir;
+    if (page < 0) page = 0;
+    if (page > 3) page = 3;
+    document.getElementById("slider").style.transform = 
+        `translateX(-${page * 100}%)`;
+}
+</script>
+
+</body>
+</html>
