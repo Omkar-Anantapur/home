@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Business Cases</title>
+<style>
+    body {
+        margin: 0;
+        background: #0d0d0d;
+        font-family: Arial, sans-serif;
+        color: #fff;
+        display: flex;
+        justify-content: center;
+    }
+
+    .container {
+        margin-top: 60px;
+        width: 90%;
+        max-width: 1100px;
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        gap: 25px;
+    }
+
+    .card {
+        background: #111;
+        padding: 30px;
+        border-radius: 20px;
+        text-align: center;
+        font-size: 22px;
+        cursor: pointer;
+        border: 1px solid #2a2a2a;
+        position: relative;
+        overflow: hidden;
+        transition: transform 0.3s ease;
+    }
+
+    .card:hover {
+        transform: scale(1.05);
+    }
+
+    /* Shine effect */
+    .card::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(120deg, transparent, rgba(255,255,255,0.3), transparent);
+        transition: 0.5s;
+    }
+
+    .card:hover::before {
+        left: 100%;
+    }
+
+    a {
+        text-decoration: none;
+        color: white;
+    }
+
+    .footer {
+        text-align: center;
+        margin-top: 35px;
+        font-size: 14px;
+        opacity: 0.7;
+    }
+</style>
+</head>
+<body>
+
+<div class="container">
+
+    <a href="case.html">
+        <div class="card">Case 1</div>
+    </a>
+
+    <a href="case.html">
+        <div class="card">Case 2</div>
+    </a>
+
+    <a href="case.html">
+        <div class="card">Case 3</div>
+    </a>
+
+    <a href="case.html">
+        <div class="card">Case 4</div>
+    </a>
+
+</div>
+
+<div class="footer">Abhilash – Member 4</div>
+
+</body>
+</html>
