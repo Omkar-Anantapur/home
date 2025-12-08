@@ -2,101 +2,37 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Abhilash – Business Case</title>
+<title>Abhilash – Business Case Study</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <style>
-  body {
-    margin:0; padding:2rem;
-    font-family:"Segoe UI",sans-serif;
-    background:#020617;
-    color:#e5e7eb;
-  }
-
-  a.back {
-    display:inline-block;
-    margin-bottom:1rem;
-    color:#38bdf8;
-    text-decoration:none;
-  }
-  a.back:hover { text-decoration:underline; }
-
-  h1 { color:#e50914; text-align:center; margin-bottom:2rem; }
-
-  .carousel-container {
-    max-width:900px; margin:auto;
-    display:flex; overflow-x:hidden; position:relative;
-  }
-
-  .panel {
-    min-width:100%; background:rgba(255,255,255,0.08);
-    border:1px solid rgba(255,255,255,0.25);
-    border-radius:16px; padding:2rem; box-sizing:border-box;
-    transition:0.3s;
-  }
-
-  h2 { color:#e50914; margin-bottom:1rem; }
-
-  pre {
-    background: rgba(0,0,0,0.4);
-    padding:1rem; border-radius:12px;
-    overflow-x:auto; max-height:400px;
-  }
-
-  button.copy-btn, button.expand-btn {
-    margin-top:1rem; margin-right:0.5rem;
-    padding:0.5rem 1rem;
-    background:#e50914; border:none; border-radius:8px; color:#fff;
-    cursor:pointer; transition:0.3s;
-  }
-  button.copy-btn:hover, button.expand-btn:hover { background:#ff1f3f; }
-
-  .navigation {
-    margin-top:2rem; text-align:center;
-  }
-
-  .navigation a {
-    display:inline-block; margin:0 1rem;
-    padding:0.5rem 1rem; border-radius:8px;
-    background:rgba(255,255,255,0.08); color:#e50914; text-decoration:none;
-    transition:0.3s;
-  }
-  .navigation a:hover { background:#e50914; color:#fff; }
+body { margin:0; font-family:"Segoe UI",sans-serif; background:#020617; color:#e5e7eb; }
+header { text-align:center; padding:2rem; background:rgba(0,0,0,0.6); border-bottom:1px solid rgba(255,255,255,0.1);}
+header h1 { color:#e50914; letter-spacing:3px; margin-bottom:0.5rem; }
+header p { color:#9ca3af; margin:0; }
+.carousel-container { max-width:900px; margin:2rem auto; overflow-x:auto; scroll-snap-type:x mandatory; display:flex; }
+.panel { min-width:100%; scroll-snap-align:start; background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.25); border-radius:16px; padding:2rem; margin-right:1rem; }
+pre { background:rgba(0,0,0,0.4); padding:1rem; border-radius:12px; overflow-x:auto; max-height:400px; }
+button { margin-top:1rem; padding:0.5rem 1rem; background:#e50914; border:none; border-radius:8px; color:#fff; cursor:pointer; }
+button:hover { background:#ff1f3f; }
+a.back { display:inline-block; margin:2rem; color:#38bdf8; text-decoration:none; }
+a.back:hover { text-decoration:underline; }
 </style>
 </head>
 <body>
 
 <a class="back" href="index.html">← Back to Home</a>
 
-<h1 id="case-title">Business Case</h1>
+<header>
+  <h1 id="case-title">Business Case Study</h1>
+  <p>Swipe panels or use arrow keys to navigate</p>
+</header>
 
-<div class="carousel-container">
-  <div class="panel" id="problem-panel">
-    <h2>Problem</h2>
-    <p id="problem-text"></p>
-  </div>
-  <div class="panel" id="algorithm-panel">
-    <h2>Algorithm Used</h2>
-    <p id="algorithm-text"></p>
-  </div>
-  <div class="panel" id="complexity-panel">
-    <h2>Time Complexity</h2>
-    <p id="complexity-text"></p>
-  </div>
-  <div class="panel" id="code-panel">
-    <h2>C++ Code</h2>
-    <pre id="code-text"></pre>
-    <button class="copy-btn" onclick="copyCode()">Copy Code</button>
-    <button class="expand-btn" onclick="expandCode()">Expand Code</button>
-  </div>
-</div>
-
-<div class="navigation">
-  <a id="prev-case" href="#">← Previous</a>
-  <a id="next-case" href="#">Next →</a>
+<div class="carousel-container" id="carousel">
+  <!-- Panels will be injected dynamically -->
 </div>
 
 <script>
+// All 10 C++ case studies
 const cases = [
   {
     title:"Business Case 1: Dynamic EV Charger Placement",
@@ -109,7 +45,7 @@ const cases = [
 using namespace std;
 
 struct Point { double x,y; };
-double distance(Point a, Point b) { return sqrt((a.x-b.x)*(a.x-b.x)+(a.y-b.y)*(a.y-b.y)); }
+double distance(Point a, Point b) { return sqrt((a.x-b.x)(a.x-b.x)+(a.y-b.y)(a.y-b.y)); }
 
 int main() {
     vector<Point> demandPoints = {{1,1},{2,3},{4,5},{6,7}};
@@ -285,43 +221,25 @@ int main(){
     head->forward[0]=n1; head->forward[1]=n1;
     cout<<"Skip List Example"<<endl;
 }`},
-];
+];// Get id from URL
+const params = new URLSearchParams(window.location.search);
+const id = parseInt(params.get("id")) || 1; // default to 1
 
-// Load case from URL param ?id=
-function getCaseId() {
-  const urlParams = new URLSearchParams(window.location.search);
-  let id = parseInt(urlParams.get('id'));
-  if(isNaN(id) || id<1 || id>cases.length) id=1;
-  return id-1;
-}
+const selectedCase = cases[id - 1];
+document.getElementById("case-title").textContent = selectedCase.title;
 
-let currentCase = getCaseId();
-function loadCase(id){
-  const c = cases[id];
-  document.getElementById('case-title').innerText = c.title;
-  document.getElementById('problem-text').innerText = c.problem;
-  document.getElementById('algorithm-text').innerText = c.algorithm;
-  document.getElementById('complexity-text').innerText = c.complexity;
-  document.getElementById('code-text').innerText = c.code;
+const carousel = document.getElementById("carousel");
 
-  // Update prev/next links
-  document.getElementById('prev-case').href = "case.html?id="+(id==0?cases.length:id);
-  document.getElementById('next-case').href = "case.html?id="+(id==cases.length-1?1:id+2);
-}
-
-function copyCode(){
-  const code = document.getElementById('code-text').innerText;
-  navigator.clipboard.writeText(code);
-  alert('Code copied to clipboard!');
-}
-
-function expandCode(){
-  const codeEl = document.getElementById('code-text');
-  if(codeEl.style.maxHeight==="none") codeEl.style.maxHeight="400px";
-  else codeEl.style.maxHeight="none";
-}
-
-loadCase(currentCase);
+// Create panels
+["Problem", "Algorithm", "Complexity", "Code"].forEach(section => {
+  const panel = document.createElement("div");
+  panel.className = "panel";
+  if(section === "Problem") panel.innerHTML = <h2>${section}</h2><p>${selectedCase.problem}</p>;
+  if(section === "Algorithm") panel.innerHTML = <h2>${section}</h2><p>${selectedCase.algorithm}</p>;
+  if(section === "Complexity") panel.innerHTML = <h2>${section}</h2><p>${selectedCase.complexity}</p>;
+  if(section === "Code") panel.innerHTML = <h2>${section}</h2><pre>${selectedCase.code}</pre>;
+  carousel.appendChild(panel);
+});
 </script>
 
 </body>
