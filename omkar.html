@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Business Case Episodes 1–10</title>
+<title>Smart City Episodes 1–10</title>
 <style>
     body{
         font-family: Arial, sans-serif;
@@ -69,237 +69,427 @@
 
     <!-- EPISODE 1 -->
     <div class="episode">
-        <h2>Episode 1: Disaster Evacuation Routing & Shelter Assignment</h2>
+        <h2>Episode 1: Smart Water Pipeline Leak Localization Using Pressure Sensors</h2>
         <div class="section-title">Problem</div>
-        <p>
-            During floods, earthquakes, or fires, the goal is to route people from buildings 
-            to safe shelters while avoiding blocked roads and respecting shelter capacities — 
-            minimizing total travel time.
-        </p>
+        <p>Given pressure readings from sensors across a water network, detect the most likely leak segment minimizing false positives.</p>
         <div class="section-title">Algorithm Used</div>
-        <p>
-            Graph-based Min-Cost Max-Flow:
-            <ul>
-                <li>Nodes = buildings + junctions + shelters</li>
-                <li>Edges = roads (cost = travel time, capacity = people)</li>
-            </ul>
-        </p>
+        <p>Graph-based residual minimization using least-squares error on pipe segments, tested via greedy selection of segment with highest anomaly score.</p>
         <div class="section-title">Time Complexity</div>
-        <p>O(F · E log V) using successive shortest path, F = evacuees, E = edges, V = nodes</p>
+        <p>Error evaluation O(E), repeated for each candidate segment → O(E²).</p>
         <div class="section-title">C++ Code</div>
         <pre>
-// See Episode 1 code skeleton (min-cost max-flow)
 #include &lt;bits/stdc++.h&gt;
 using namespace std;
-struct Edge { int to, rev, cap; double cost; };
-struct MCMF { /* ... */ };
-int main(){ /* ... */ return 0; }
+
+int main() {
+    int E; cin&gt;&gt;E;
+    vector&lt;double&gt; pressure(E), expected(E);
+    for(int i=0;i&lt;E;i++) cin&gt;&gt;pressure[i];
+    for(int i=0;i&lt;E;i++) cin&gt;&gt;expected[i];
+
+    int best = -1; 
+    double bestErr = -1;
+
+    for(int i=0;i&lt;E;i++){
+        double err = fabs(pressure[i] - expected[i]);
+        if(err &gt; bestErr){
+            bestErr = err;
+            best = i;
+        }
+    }
+
+    cout&lt;&lt;"Most likely leak at segment: "&lt;&lt;best&lt;&lt;"\n";
+}
         </pre>
-        <div class="section-title">Conclusion / Impact</div>
-        <p>
-            Provides real-time evacuation routing adapting to blocked roads and shelter capacities, 
-            reducing casualties and improving emergency response.
-        </p>
+        <div class="section-title">Conclusion</div>
+        <p>Quickly identifies suspicious pipe sections so field teams can investigate sooner, reducing water losses.</p>
     </div>
 
     <!-- EPISODE 2 -->
     <div class="episode">
-        <h2>Episode 2: Dynamic Ambulance & Fire Station Repositioning</h2>
+        <h2>Episode 2: Smart Bus Frequency Optimization Based on Demand Curves</h2>
         <div class="section-title">Problem</div>
-        <p>
-            Continuously reposition ambulances and fire tenders to minimize expected response time 
-            based on live incident risk maps.
-        </p>
+        <p>Adjust bus frequency per route to meet varying hour-wise demand while minimizing operating cost and wait time.</p>
         <div class="section-title">Algorithm Used</div>
-        <p>
-            Repeated p-median/facility location with greedy + swap local search heuristic.
-        </p>
+        <p>Dynamic knapsack allocating bus trips to hourly demand segments.</p>
         <div class="section-title">Time Complexity</div>
-        <p>O(I · p · n), I = iterations, p = number of bases, n = demand points</p>
+        <p>DP: O(H * B) where H = hours, B = total bus trips.</p>
         <div class="section-title">C++ Code</div>
         <pre>
-// Core swap-based p-median heuristic
 #include &lt;bits/stdc++.h&gt;
 using namespace std;
-using P = pair&lt;double,double&gt;;
-int main(){ /* ... */ return 0; }
+
+int main(){
+    int H=24, B=100;
+    vector&lt;int&gt; demand(H);
+    for(int &amp;d:demand) d = rand()%100+20;
+
+    vector&lt;vector&lt;int&gt;&gt; dp(H+1, vector&lt;int&gt;(B+1, 0));
+    for(int i=1;i&lt;=H;i++){
+        for(int b=0;b&lt;=B;b++){
+            dp[i][b] = dp[i-1][b];
+            if(b&gt;=1)
+                dp[i][b] = max(dp[i][b], dp[i-1][b-1] + demand[i-1]);
+        }
+    }
+    cout&lt;&lt;"Max demand served: "&lt;&lt;dp[H][B]&lt;&lt;"\n";
+}
         </pre>
-        <div class="section-title">Conclusion / Impact</div>
-        <p>
-            Lets emergency services reposition fleets dynamically, significantly reducing response times.
-        </p>
+        <div class="section-title">Conclusion</div>
+        <p>Produces cost-effective frequency plans that automatically scale with real ridership.</p>
     </div>
 
     <!-- EPISODE 3 -->
     <div class="episode">
-        <h2>Episode 3: Smart Public Toilet Network Placement & Cleaning Routing</h2>
+        <h2>Episode 3: Urban Noise Pollution Hotspot Detection</h2>
         <div class="section-title">Problem</div>
-        <p>
-            Decide locations for public toilets and cleaning routes to minimize walking distance and cleaning cost.
-        </p>
+        <p>Identify the most critical noise hotspots from distributed sound sensors.</p>
         <div class="section-title">Algorithm Used</div>
-        <p>Max-cover greedy for placement, Clarke–Wright savings heuristic for cleaning routing.</p>
+        <p>Spatial clustering using grid-based density heatmap + connected component labeling.</p>
         <div class="section-title">Time Complexity</div>
-        <p>Placement: O(B·n²), Routing: O(m²)</p>
+        <p>Grid fill O(N), hotspot detection O(GR * GC).</p>
         <div class="section-title">C++ Code</div>
         <pre>
 #include &lt;bits/stdc++.h&gt;
 using namespace std;
-using P=pair&lt;double,double&gt;;
-int main(){ /* ... */ return 0; }
+
+int main(){
+    int R=50,C=50;
+    vector&lt;vector&lt;int&gt;&gt; grid(R, vector&lt;int&gt;(C));
+    for(int i=0;i&lt;R;i++)
+        for(int j=0;j&lt;C;j++)
+            grid[i][j] = rand()%120;
+
+    vector&lt;vector&lt;bool&gt;&gt; vis(R, vector&lt;bool&gt;(C,false));
+    int dr[4]={1,-1,0,0}, dc[4]={0,0,1,-1};
+
+    int clusters=0;
+    for(int i=0;i&lt;R;i++){
+        for(int j=0;j&lt;C;j++){
+            if(grid[i][j]&gt;80 &amp;&amp; !vis[i][j]){
+                clusters++;
+                queue&lt;pair&lt;int,int&gt;&gt;q;
+                q.push({i,j});
+                vis[i][j]=true;
+                while(!q.empty()){
+                    auto [x,y]=q.front(); q.pop();
+                    for(int k=0;k&lt;4;k++){
+                        int nx=x+dr[k], ny=y+dc[k];
+                        if(nx&gt;=0 &amp;&amp; ny&gt;=0 &amp;&amp; nx&lt;R &amp;&amp; ny&lt;C &amp;&amp; !vis[nx][ny] &amp;&amp; grid[nx][ny]&gt;80){
+                            vis[nx][ny]=true;
+                            q.push({nx,ny});
+                        }
+                    }
+                }
+            }
+        }
+    }
+    cout&lt;&lt;"Noise hotspots: "&lt;&lt;clusters&lt;&lt;"\n";
+}
         </pre>
-        <div class="section-title">Conclusion / Impact</div>
-        <p>Optimized public toilet placement and cleaning improves hygiene and gender safety.</p>
+        <div class="section-title">Conclusion</div>
+        <p>Helps cities enforce noise regulations and plan sound barriers effectively.</p>
     </div>
 
     <!-- EPISODE 4 -->
     <div class="episode">
-        <h2>Episode 4: Power Outage Restoration Prioritization Under Capacity Limits</h2>
+        <h2>Episode 4: City Fleet Fuel Consumption Optimization (Garbage Trucks, Buses)</h2>
         <div class="section-title">Problem</div>
-        <p>
-            Choose feeders to restore under transformer capacity limits to maximize critical load served.
-        </p>
+        <p>Assign optimal refueling points to city vehicles to minimize downtime and fuel cost.</p>
         <div class="section-title">Algorithm Used</div>
-        <p>0–1 Knapsack DP (weight = feeder MW, value = criticality)</p>
+        <p>Min-cost bipartite matching between vehicles and fuel stations (Hungarian algorithm).</p>
         <div class="section-title">Time Complexity</div>
-        <p>O(F · C), F = feeders, C = capacity units</p>
+        <p>O(n³).</p>
         <div class="section-title">C++ Code</div>
         <pre>
 #include &lt;bits/stdc++.h&gt;
 using namespace std;
-struct Feeder{int id,mw,value;};
-int main(){ /* ... */ return 0; }
+
+int main(){
+    int n=20;
+    vector&lt;vector&lt;int&gt;&gt; cost(n, vector&lt;int&gt;(n));
+    for(int i=0;i&lt;n;i++)
+        for(int j=0;j&lt;n;j++)
+            cost[i][j] = rand()%100 + abs(i-j);
+
+    vector&lt;int&gt; u(n+1), v(n+1), p(n+1), way(n+1);
+    for(int i=1;i&lt;=n;i++){
+        p[0] = i;
+        vector&lt;int&gt; minv(n+1, 1e9);
+        vector&lt;char&gt; used(n+1,false);
+        int j0=0;
+        do{
+            used[j0]=true;
+            int i0=p[j0], delta=1e9, j1=0;
+            for(int j=1;j&lt;=n;j++) if(!used[j]){
+                int cur = cost[i0-1][j-1] - u[i0] - v[j];
+                if(cur &lt; minv[j]) minv[j] = cur, way[j] = j0;
+                if(minv[j] &lt; delta) delta = minv[j], j1=j;
+            }
+            for(int j=0;j&lt;=n;j++){
+                if(used[j]) u[p[j]] += delta, v[j] -= delta;
+                else minv[j] -= delta;
+            }
+            j0=j1;
+        } while(p[j0]!=0);
+        do{
+            int j1=way[j0];
+            p[j0]=p[j1];
+            j0=j1;
+        } while(j0);
+    }
+
+    cout&lt;&lt;"Optimal refueling cost: "&lt;&lt;-v[0]&lt;&lt;"\n";
+}
         </pre>
-        <div class="section-title">Conclusion / Impact</div>
-        <p>Automatically prioritizes critical feeders for restoration under grid limits.</p>
+        <div class="section-title">Conclusion</div>
+        <p>Reduces operational cost for municipal fleets and minimizes vehicle downtime.</p>
     </div>
 
     <!-- EPISODE 5 -->
     <div class="episode">
-        <h2>Episode 5: Shared E-Bike / Scooter Fleet Rebalancing</h2>
+        <h2>Episode 5: Public Wi-Fi Load Distribution & Handoff Optimization</h2>
         <div class="section-title">Problem</div>
-        <p>
-            Rebalance e-bike/scooter stations to avoid shortages or overflow with minimal truck travel.
-        </p>
+        <p>Balance load among public Wi-Fi hotspots as users move across the city.</p>
         <div class="section-title">Algorithm Used</div>
-        <p>Transportation / min-cost flow model (surplus → deficit stations).</p>
+        <p>Dynamic load balancing using min-heap + signal-distance weighted assignment.</p>
         <div class="section-title">Time Complexity</div>
-        <p>O(F · E log V), F = bikes moved</p>
+        <p>User assignment O(log H) per connection.</p>
         <div class="section-title">C++ Code</div>
         <pre>
 #include &lt;bits/stdc++.h&gt;
 using namespace std;
-struct Edge{int to,rev,cap;double cost;};
-struct MCMF{ /* ... */ };
-int main(){ /* ... */ return 0; }
+
+int main(){
+    int H=10, U=200;
+    vector&lt;int&gt; load(H,0);
+    priority_queue&lt;pair&lt;int,int&gt;, vector&lt;pair&lt;int,int&gt;&gt;, greater&lt;&gt;&gt; pq;
+    for(int i=0;i&lt;H;i++) pq.push({0,i});
+
+    for(int u=0;u&lt;U;u++){
+        auto [ld,id] = pq.top(); pq.pop();
+        ld++; load[id]=ld;
+        pq.push({ld,id});
+    }
+    cout&lt;&lt;"Max hotspot load: "&lt;&lt;pq.top().first&lt;&lt;"\n";
+}
         </pre>
-        <div class="section-title">Conclusion / Impact</div>
-        <p>Turns chaotic fleets into reliable first/last-mile transit, improving ridership and revenue.</p>
+        <div class="section-title">Conclusion</div>
+        <p>Ensures stable public Wi-Fi performance even during crowd surges (stadiums, markets).</p>
     </div>
 
     <!-- EPISODE 6 -->
     <div class="episode">
-        <h2>Episode 6: City-Wide Public Siren / PA Speaker Placement</h2>
+        <h2>Episode 6: Citywide Water Tanker Deployment Optimization</h2>
         <div class="section-title">Problem</div>
-        <p>
-            Place sirens/PA speakers to cover maximum population under a fixed device budget.
-        </p>
+        <p>Decide which neighborhoods receive water tankers first during shortages to minimize unmet demand.</p>
         <div class="section-title">Algorithm Used</div>
-        <p>Maximum coverage greedy algorithm (iterative largest marginal coverage).</p>
+        <p>Greedy max-ratio coverage: demand served per route time.</p>
         <div class="section-title">Time Complexity</div>
-        <p>O(B · n · m)</p>
+        <p>O(n log n) sorting.</p>
         <div class="section-title">C++ Code</div>
         <pre>
 #include &lt;bits/stdc++.h&gt;
 using namespace std;
-using P=pair&lt;double,double&gt;;
-int main(){ /* ... */ return 0; }
+
+int main(){
+    int n; cin&gt;&gt;n;
+    vector&lt;pair&lt;double,double&gt;&gt; area(n); // {demand, travelTime}
+    for(int i=0;i&lt;n;i++) cin&gt;&gt;area[i].first&gt;&gt;area[i].second;
+
+    sort(area.begin(), area.end(), [](auto &a, auto &b){
+        return (a.first/a.second) &gt; (b.first/b.second);
+    });
+
+    double served=0;
+    for(int i=0;i&lt;n;i++) served += area[i].first;
+
+    cout&lt;&lt;"Total demand served: "&lt;&lt;served&lt;&lt;"\n";
+}
         </pre>
-        <div class="section-title">Conclusion / Impact</div>
-        <p>Maximizes city-wide audible alerts with minimal installation cost.</p>
+        <div class="section-title">Conclusion</div>
+        <p>Improves fairness and efficiency during emergency water shortages.</p>
     </div>
 
     <!-- EPISODE 7 -->
     <div class="episode">
-        <h2>Episode 7: Urban Public Wi-Fi Hotspot Placement</h2>
+        <h2>Episode 7: Optimal Placement of EV Battery Recycling Bins</h2>
         <div class="section-title">Problem</div>
-        <p>Place limited Wi-Fi hotspots to maximize coverage, prioritizing underserved neighborhoods.</p>
+        <p>Place limited battery recycling bins to maximize population coverage and safe disposal rates.</p>
         <div class="section-title">Algorithm Used</div>
-        <p>Bi-criteria weighted k-median solved via greedy facility opening.</p>
+        <p>Max coverage greedy (subset coverage).</p>
         <div class="section-title">Time Complexity</div>
-        <p>O(K · n · m)</p>
+        <p>O(K * n * m)</p>
         <div class="section-title">C++ Code</div>
         <pre>
 #include &lt;bits/stdc++.h&gt;
 using namespace std;
-using P=pair&lt;double,double&gt;;
-int main(){ /* ... */ return 0; }
+
+int main(){
+    int n=300,m=60,K=15;
+    vector&lt;pair&lt;double,double&gt;&gt; pop(n), cand(m);
+    vector&lt;double&gt; w(n);
+
+    for(int i=0;i&lt;n;i++){ 
+        pop[i]={rand()%100, rand()%100};
+        w[i]=rand()%50+10;
+    }
+    for(int i=0;i&lt;m;i++)
+        cand[i]={rand()%100, rand()%100};
+
+    vector&lt;bool&gt; covered(n,false);
+    vector&lt;int&gt; chosen;
+
+    for(int k=0;k&lt;K;k++){
+        int best=-1; double bestGain=0;
+        for(int c=0;c&lt;m;c++){
+            if(find(chosen.begin(),chosen.end(),c)!=chosen.end()) continue;
+            double gain=0;
+            for(int i=0;i&lt;n;i++)
+                if(!covered[i] &amp;&amp; hypot(pop[i].first-cand[c].first, pop[i].second-cand[c].second)&lt;=30)
+                    gain+=w[i];
+            if(gain&gt;bestGain){bestGain=gain; best=c;}
+        }
+        if(best==-1) break;
+        chosen.push_back(best);
+        for(int i=0;i&lt;n;i++)
+            if(hypot(pop[i].first-cand[best].first, pop[i].second-cand[best].second)&lt;=30)
+                covered[i]=true;
+    }
+
+    double tot=0;
+    for(int i=0;i&lt;n;i++) if(covered[i]) tot+=w[i];
+
+    cout&lt;&lt;"Covered demand: "&lt;&lt;tot&lt;&lt;"\n";
+}
         </pre>
-        <div class="section-title">Conclusion / Impact</div>
-        <p>Optimizes digital-inclusion investments, targeting connectivity gaps effectively.</p>
+        <div class="section-title">Conclusion</div>
+        <p>Supports circular economy goals and reduces battery pollution hotspots.</p>
     </div>
 
     <!-- EPISODE 8 -->
     <div class="episode">
-        <h2>Episode 8: Optimal Rainwater Harvesting Tank Placement & Sizing</h2>
+        <h2>Episode 8: Smart Flood Gate Control for River Basins</h2>
         <div class="section-title">Problem</div>
-        <p>Decide which buildings to equip with rainwater tanks to maximize captured water under budget.</p>
+        <p>Control floodgates to minimize downstream flooding while releasing enough water upstream.</p>
         <div class="section-title">Algorithm Used</div>
-        <p>0–1 Knapsack DP over building-size options.</p>
+        <p>Linear programming approximation: greedy water release respecting downstream capacity.</p>
         <div class="section-title">Time Complexity</div>
-        <p>O(M · B), M = total options, B = budget units</p>
+        <p>O(n log n).</p>
         <div class="section-title">C++ Code</div>
         <pre>
 #include &lt;bits/stdc++.h&gt;
 using namespace std;
-struct Option{int id,cost; double capture;};
-int main(){ /* ... */ return 0; }
+
+int main(){
+    int n; cin&gt;&gt;n;
+    vector&lt;pair&lt;int,int&gt;&gt; gates(n); // {maxRelease, downstreamCap}
+    for(int i=0;i&lt;n;i++) cin&gt;&gt;gates[i].first&gt;&gt;gates[i].second;
+
+    sort(gates.begin(), gates.end(), [](auto &a, auto &b){
+        return a.second &lt; b.second;
+    });
+
+    int total=0;
+    for(auto &g: gates){
+        int r = min(g.first, g.second - total);
+        if(r&gt;0) total+=r;
+    }
+
+    cout&lt;&lt;"Total safe release: "&lt;&lt;total&lt;&lt;"\n";
+}
         </pre>
-        <div class="section-title">Conclusion / Impact</div>
-        <p>Optimizes water harvesting, showing where tanks save maximum freshwater per rupee.</p>
+        <div class="section-title">Conclusion</div>
+        <p>Prevents urban river flooding using data-driven floodgate schedules.</p>
     </div>
 
     <!-- EPISODE 9 -->
     <div class="episode">
-        <h2>Episode 9: Dynamic Crowd Management in Metro Stations & Event Venues</h2>
+        <h2>Episode 9: Urban EV Charger Queue Prediction</h2>
         <div class="section-title">Problem</div>
-        <p>Compute one-way flows and recommended routes in real-time to avoid crowding.</p>
+        <p>Predict EV charger wait times during peak hours.</p>
         <div class="section-title">Algorithm Used</div>
-        <p>Graph-based multi-commodity max flow approximation (Dinic).</p>
+        <p>M/M/1 queue model fit + exponential smoothing for arrival rate forecasting.</p>
         <div class="section-title">Time Complexity</div>
-        <p>O(E · √V) per max flow; repeated over subflows/time slices.</p>
+        <p>O(T) for smoothing.</p>
         <div class="section-title">C++ Code</div>
         <pre>
 #include &lt;bits/stdc++.h&gt;
 using namespace std;
-struct Edge{int to,rev,cap;};
-struct Dinic{ /* ... */ };
-int main(){ /* ... */ return 0; }
+
+int main(){
+    vector&lt;double&gt; arrivals = {5,7,9,12,11,10};
+    double mu = 15; // service rate
+    double alpha = 0.3;
+
+    double lambda = arrivals[0];
+    for(double a: arrivals)
+        lambda = alpha*a + (1-alpha)*lambda;
+
+    if(lambda &gt;= mu){
+        cout&lt;&lt;"Overloaded: infinite queue expected\n";
+    } else {
+        double W = 1.0/(mu - lambda);
+        cout&lt;&lt;"Expected wait time: "&lt;&lt;W&lt;&lt;"\n";
+    }
+}
         </pre>
-        <div class="section-title">Conclusion / Impact</div>
-        <p>Real-time crowd safety checks for metros and event organizers, preventing crushes.</p>
+        <div class="section-title">Conclusion</div>
+        <p>Helps EV drivers plan charging and cities decide where to add new chargers.</p>
     </div>
 
     <!-- EPISODE 10 -->
     <div class="episode">
-        <h2>Episode 10: CCTV Camera Placement for Maximum Coverage with Minimal Overlap</h2>
+        <h2>Episode 10: Intelligent Pothole Repair Crew Routing</h2>
         <div class="section-title">Problem</div>
-        <p>Place CCTV cameras to maximize street and open-space coverage while minimizing redundancy.</p>
+        <p>Route repair crews to fix potholes with minimal travel time and maximum impact score.</p>
         <div class="section-title">Algorithm Used</div>
-        <p>Lazy greedy submodular maximization on discretized grid cells.</p>
+        <p>Greedy impact-per-distance routing, similar to orienteering heuristic.</p>
         <div class="section-title">Time Complexity</div>
-        <p>Naive: O(K · m · g), with lazy PQ often faster.</p>
+        <p>O(n²).</p>
         <div class="section-title">C++ Code</div>
         <pre>
 #include &lt;bits/stdc++.h&gt;
 using namespace std;
-int main(){ /* ... */ return 0; }
+
+double d(pair&lt;int,int&gt;a, pair&lt;int,int&gt;b){return hypot(a.first-b.first,a.second-b.second);}
+
+int main(){
+    int n; cin&gt;&gt;n;
+    vector&lt;pair&lt;int,int&gt;&gt; pts(n);
+    vector&lt;int&gt; impact(n);
+
+    for(int i=0;i&lt;n;i++){
+        cin&gt;&gt;pts[i].first&gt;&gt;pts[i].second&gt;&gt;impact[i];
+    }
+
+    int start=0;
+    vector&lt;bool&gt; used(n,false);
+    used[start]=true;
+
+    int cur=start;
+    double totalImpact=0;
+
+    for(int step=1;step&lt;n;step++){
+        double bestScore=-1; int best=-1;
+        for(int i=0;i&lt;n;i++){
+            if(!used[i]){
+                double score = impact[i] / (d(pts[cur],pts[i]) + 1);
+                if(score &gt; bestScore){ bestScore=score; best=i; }
+            }
+        }
+        if(best==-1) break;
+        used[best]=true; cur=best;
+        totalImpact += impact[best];
+    }
+
+    cout&lt;&lt;"Total impact repaired: "&lt;&lt;totalImpact&lt;&lt;"\n";
+}
         </pre>
-        <div class="section-title">Conclusion / Impact</div>
-        <p>Optimized CCTV planning, maximizing safety while respecting privacy/no-surveillance zones.</p>
+        <div class="section-title">Conclusion</div>
+        <p>Improves road quality faster by intelligently routing limited repair crews.</p>
     </div>
 
-    <!-- END OF EPISODES -->
 </div>
 
 </body>
