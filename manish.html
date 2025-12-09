@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Environmental Monitoring – 10 Episodes</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: #eef2f3;
+        }
+        h1, h2, h3 {
+            color: #222;
+        }
+        .episode {
+            background: #ffffffcc;
+            margin: 20px;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px #00000020;
+            backdrop-filter: blur(6px);
+        }
+        pre {
+            background: #111;
+            color: #0f0;
+            padding: 15px;
+            overflow-x: auto;
+            border-radius: 10px;
+        }
+        .title {
+            background: #0e71eb;
+            color: white;
+            padding: 12px;
+            font-size: 22px;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+<body>
+
+<h1 style="text-align:center; padding:20px; background:#0e71eb; color:white;">
+    10 EPISODE – SMART CITY ENVIRONMENTAL MONITORING
+</h1>
+
+<!-- EPISODE 1 -->
+<div class="episode">
+    <div class="title">EPISODE 1 – Real-Time AQI Prediction & Pollution Monitoring</div>
+    <h2>What It Means</h2>
+    <p>This system continuously measures air quality and predicts future AQI values using historical sensor data.</p>
+
+    <h2>Why It Is Necessary</h2>
+    <p>Air pollution causes respiratory diseases; AQI prediction allows preventive actions and alerts.</p>
+
+    <h2>C++ Code</h2>
+    <pre>
+#include &lt;bits/stdc++.h&gt;
+using namespace std;
+
+int main() {
+    int n;
+    cin >> n;
+    vector<double> aqi(n);
+
+    for(int i = 0; i < n; i++)
+        cin >> aqi[i];
+
+    double sx=0, sy=0, sxy=0, sxx=0;
+    for(int i = 0; i < n; i++) {
+        sx += i;
+        sy += aqi[i];
+        sxy += i * aqi[i];
+        sxx += i * i;
+    }
+
+    double b = (n*sxy - sx*sy) / (n*sxx - sx*sx);
+    double a = (sy - b*sx) / n;
+
+    int h;
+    cin >> h;
+
+    cout << "Predicted AQI: " << a + b*(n+h) << endl;
+}
+    </pre>
+
+    <h3>Sensors / Input</h3>
+    <ul>
+        <li>PMS5003, SDS011</li>
+        <li>MQ-135, MQ-7</li>
+        <li>ESP32 Data Upload</li>
+    </ul>
+</div>
+
+<!-- EPISODE 2 -->
+<div class="episode">
+    <div class="title">EPISODE 2 – Smart Industrial Emission Violation Detection</div>
+    <h2>What It Means</h2>
+    <p>Monitors chimney gas pollution & detects abnormal emissions.</p>
+
+    <h2>Why Necessary</h2>
+    <p>Prevents illegal night-time pollution & protects public health.</p>
+
+    <h2>C++ Code</h2>
+    <pre>
+#include &lt;bits/stdc++.h&gt;
+using namespace std;
+
+int main() {
+    int n;
+    cin >> n;
+
+    vector<double> e(n);
+    for(int i = 0; i < n; i++) cin >> e[i];
+
+    double mean = accumulate(e.begin(), e.end(), 0.0) / n;
+    double var = 0;
+    for(double x : e) var += (x-mean)*(x-mean);
+
+    double sd = sqrt(var/n);
+
+    for(int i = 0; i < n; i++)
+        if(fabs(e[i] - mean) > 3 * sd)
+            cout << "Violation at sensor " << i << endl;
+}
+    </pre>
+</div>
+
+<!-- EPISODE 3 -->
+<div class="episode">
+    <div class="title">EPISODE 3 – Urban Heat Island & Green Cover Optimization</div>
+
+    <h2>C++ Code</h2>
+    <pre>
+#include &lt;bits/stdc++.h&gt;
+using namespace std;
+
+int main() {
+    int n, k;
+    cin >> n >> k;
+
+    vector<double> temp(n);
+    for(int i = 0; i < n; i++) cin >> temp[i];
+
+    vector<double> cent(k);
+    for(int i = 0; i < k; i++) cent[i] = temp[i];
+
+    vector<int> lbl(n);
+
+    for(int it = 0; it < 20; it++) {
+        for(int i = 0; i < n; i++) {
+            double best = 1e9;
+            for(int j = 0; j < k; j++)
+                if(abs(temp[i]-cent[j]) < best) {
+                    best = abs(temp[i]-cent[j]);
+                    lbl[i] = j;
+                }
+        }
+
+        vector<double> sum(k), cnt(k);
+        for(int i = 0; i < n; i++) {
+            sum[lbl[i]] += temp[i];
+            cnt[lbl[i]]++;
+        }
+
+        for(int j = 0; j < k; j++)
+            cent[j] = sum[j]/cnt[j];
+    }
+
+    int hot = max_element(cent.begin(), cent.end()) - cent.begin();
+    cout << "Hottest Cluster: " << hot << endl;
+}
+    </pre>
+</div>
+
+<!-- EPISODE 4 -->
+<div class="episode">
+    <div class="title">EPISODE 4 – Smart Water Leakage & Theft Detection</div>
+
+    <h2>C++ Code</h2>
+    <pre>
+#include &lt;bits/stdc++.h&gt;
+using namespace std;
+
+int main() {
+    double inlet, outlet;
+    cin >> inlet >> outlet;
+
+    if(inlet - outlet > 5)
+        cout << "Leak Detected\n";
+    else
+        cout << "Normal Flow\n";
+}
+    </pre>
+</div>
+
+<!-- EPISODE 5 -->
+<div class="episode">
+    <div class="title">EPISODE 5 – Flood Prediction & Drainage Monitoring</div>
+
+    <h2>C++ Code</h2>
+    <pre>
+#include &lt;bits/stdc++.h&gt;
+using namespace std;
+
+int main() {
+    double rain, drainCapacity;
+    cin >> rain >> drainCapacity;
+
+    if(rain > drainCapacity)
+        cout << "Flood Risk High\n";
+    else
+        cout << "Flood Risk Low\n";
+}
+    </pre>
+</div>
+
+<!-- EPISODE 6 -->
+<div class="episode">
+    <div class="title">EPISODE 6 – Smart Noise Pollution Control</div>
+
+    <h2>C++ Code</h2>
+    <pre>
+#include &lt;bits/stdc++.h&gt;
+using namespace std;
+
+int main() {
+    int n;
+    cin >> n;
+
+    vector<double> s(n);
+    for(int i = 0; i < n; i++) cin >> s[i];
+
+    double sum = 0;
+    for(double x : s) sum += x*x;
+
+    double rms = sqrt(sum/n);
+
+    if(rms > 0.6)
+        cout << "Noise Violation\n";
+    else
+        cout << "Normal\n";
+}
+    </pre>
+</div>
+
+<!-- EPISODE 7 -->
+<div class="episode">
+    <div class="title">EPISODE 7 – Carbon Emission Tracking System</div>
+
+    <h2>C++ Code</h2>
+    <pre>
+#include &lt;bits/stdc++.h&gt;
+using namespace std;
+
+int main() {
+    int n;
+    cin >> n;
+
+    unordered_map<string,double> co2;
+
+    for(int i = 0; i < n; i++) {
+        string zone;
+        double val;
+        cin >> zone >> val;
+        co2[zone] += val;
+    }
+
+    for(auto &x : co2)
+        cout << x.first << " " << x.second << endl;
+}
+    </pre>
+</div>
+
+<!-- EPISODE 8 -->
+<div class="episode">
+    <div class="title">EPISODE 8 – Groundwater Level Prediction</div>
+
+    <h2>C++ Code</h2>
+    <pre>
+#include &lt;bits/stdc++.h&gt;
+using namespace std;
+
+int main() {
+    int n;
+    cin >> n;
+
+    vector<double> lvl(n);
+    for(int i = 0; i < n; i++) cin >> lvl[i];
+
+    double slope = (lvl[n-1] - lvl[0]) / n;
+    cout << "Projected Drop Next Year: " << slope*12 << endl;
+}
+    </pre>
+</div>
+
+<!-- EPISODE 9 -->
+<div class="episode">
+    <div class="title">EPISODE 9 – Pollution-Aware Route for Schools & Hospitals</div>
+
+    <h2>C++ Code</h2>
+    <pre>
+#include &lt;bits/stdc++.h&gt;
+using namespace std;
+
+int main() {
+    int V, E;
+    cin >> V >> E;
+
+    vector<vector<pair<int,int>>> g(V);
+    for(int i = 0; i < E; i++) {
+        int u,v,w;
+        cin >> u >> v >> w;
+        g[u].push_back({v,w});
+        g[v].push_back({u,w});
+    }
+
+    int s, d;
+    cin >> s >> d;
+
+    vector<int> dist(V, 1e9);
+    priority_queue<pair<int,int>, vector<pair<int,int>>, greater<>> pq;
+
+    dist[s] = 0;
+    pq.push({0,s});
+
+    while(!pq.empty()) {
+        auto [cd,u] = pq.top(); pq.pop();
+        for(auto &e : g[u]) {
+            if(dist[e.first] > cd + e.second) {
+                dist[e.first] = cd + e.second;
+                pq.push({dist[e.first], e.first});
+            }
+        }
+    }
+
+    cout << "Min Pollution Path: " << dist[d] << endl;
+}
+    </pre>
+</div>
+
+<!-- EPISODE 10 -->
+<div class="episode">
+    <div class="title">EPISODE 10 – Smart Construction Dust Control</div>
+
+    <h2>C++ Code</h2>
+    <pre>
+#include &lt;bits/stdc++.h&gt;
+using namespace std;
+
+int main() {
+    int totalPixels, dustPixels;
+    cin >> totalPixels >> dustPixels;
+
+    double ratio = (double)dustPixels / totalPixels;
+
+    if(ratio > 0.02)
+        cout << "Dust Violation\n";
+    else
+        cout << "Normal\n";
+}
+    </pre>
+</div>
+
+</body>
+</html>
