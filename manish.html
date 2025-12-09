@@ -1,72 +1,106 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Environmental Monitoring – 10 Episodes</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background: #eef2f3;
-        }
-        h1, h2, h3 {
-            color: #222;
-        }
-        .episode {
-            background: #ffffffcc;
-            margin: 20px;
-            padding: 20px;
-            border-radius: 12px;
-            box-shadow: 0 4px 10px #00000020;
-            backdrop-filter: blur(6px);
-        }
-        pre {
-            background: #111;
-            color: #0f0;
-            padding: 15px;
-            overflow-x: auto;
-            border-radius: 10px;
-        }
-        .title {
-            background: #0e71eb;
-            color: white;
-            padding: 12px;
-            font-size: 22px;
-            border-radius: 8px;
-        }
-    </style>
+<meta charset="UTF-8">
+<title>Manish – Episodes</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+body{
+    margin:0;
+    font-family:"Segoe UI",sans-serif;
+    background:#020617;
+    color:#e5e7eb;
+}
+h1{text-align:center;margin-top:30px;color:#e50914}
+.case-buttons{
+    max-width:900px;
+    margin:30px auto;
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:20px;
+}
+.case-btn{
+    padding:20px;
+    background:rgba(255,255,255,0.08);
+    border:1px solid rgba(255,255,255,0.25);
+    border-radius:14px;
+    text-align:center;
+    cursor:pointer;
+    transition:.3s;
+}
+.case-btn:hover{
+    transform:translateY(-4px);
+    border-color:#e50914;
+    box-shadow:0 0 20px rgba(229,9,20,0.4);
+}
+.case-content{
+    display:none;
+    max-width:900px;
+    margin:40px auto;
+    background:rgba(255,255,255,0.08);
+    border:1px solid rgba(255,255,255,0.2);
+    padding:20px;
+    border-radius:14px;
+}
+pre{
+    background:black;
+    padding:15px;
+    border-radius:12px;
+    overflow-x:auto;
+    white-space:pre-wrap;
+}
+</style>
+
+<script>
+function openCase(n){
+    document.querySelectorAll(".case-content").forEach(c=>c.style.display="none");
+    document.getElementById("c"+n).style.display="block";
+    window.scrollTo(0,0);
+}
+</script>
 </head>
+
 <body>
 
-<h1 style="text-align:center; padding:20px; background:#0e71eb; color:white;">
-    10 EPISODE – SMART CITY ENVIRONMENTAL MONITORING
-</h1>
+<h1>Manish – Episodes (1–10)</h1>
 
-<!-- EPISODE 1 -->
-<div class="episode">
-    <div class="title">EPISODE 1 – Real-Time AQI Prediction & Pollution Monitoring</div>
-    <h2>What It Means</h2>
-    <p>This system continuously measures air quality and predicts future AQI values using historical sensor data.</p>
+<div class="case-buttons">
+<script>
+for(let i=1;i<=10;i++){
+    document.write(`<div class='case-btn' onclick='openCase(${i})'>Episode ${i}</div>`);
+}
+</script>
+</div>
 
-    <h2>Why It Is Necessary</h2>
-    <p>Air pollution causes respiratory diseases; AQI prediction allows preventive actions and alerts.</p>
+<!-- ========================================================= -->
+<!-- ================= EPISODE 1 ============================== -->
+<!-- ========================================================= -->
 
-    <h2>C++ Code</h2>
-    <pre>
+<div id="c1" class="case-content">
+<h2>Episode 1 – REAL-TIME AQI PREDICTION & POLLUTION MONITORING</h2>
+
+<p><b>What It Means</b></p>
+<p>This system continuously measures air quality across the city and predicts future AQI values using historical sensor data.</p>
+
+<p><b>Why It Is Necessary</b></p>
+<p>Air pollution causes respiratory diseases and reduces life expectancy. Early AQI prediction allows governments to restrict traffic, regulate factories, and issue public health alerts in advance.</p>
+
+<p><b>C++ Code (Dynamic Input)</b></p>
+<pre>
 #include &lt;bits/stdc++.h&gt;
 using namespace std;
 
 int main() {
     int n;
-    cin >> n;
-    vector<double> aqi(n);
+    cin &gt;&gt; n;
+    vector&lt;double&gt; aqi(n);
 
-    for(int i = 0; i < n; i++)
-        cin >> aqi[i];
+    for(int i = 0; i &lt; n; i++)
+        cin &gt;&gt; aqi[i];
 
     double sx=0, sy=0, sxy=0, sxx=0;
-    for(int i = 0; i < n; i++) {
+    for(int i = 0; i &lt; n; i++) {
         sx += i;
         sy += aqi[i];
         sxy += i * aqi[i];
@@ -77,40 +111,47 @@ int main() {
     double a = (sy - b*sx) / n;
 
     int h;
-    cin >> h;
+    cin &gt;&gt; h;
 
-    cout << "Predicted AQI: " << a + b*(n+h) << endl;
+    cout &lt;&lt; "Predicted AQI: " &lt;&lt; a + b*(n+h) &lt;&lt; endl;
 }
-    </pre>
+</pre>
 
-    <h3>Sensors / Input</h3>
-    <ul>
-        <li>PMS5003, SDS011</li>
-        <li>MQ-135, MQ-7</li>
-        <li>ESP32 Data Upload</li>
-    </ul>
+<p><b>Algorithm & Code Working</b></p>
+<p>Uses <b>Linear Regression</b> to model AQI trend and predict future value in <b>O(n)</b> time. The code computes regression coefficients and forecasts AQI for the requested future hour.</p>
+
+<p><b>Sensors / Input Source</b></p>
+<ul>
+  <li><b>PM2.5 &amp; PM10 Laser Sensors (PMS5003, SDS011)</b></li>
+  <li><b>Gas Sensors (MQ-135, MQ-7)</b></li>
+  <li>Data sent via <b>ESP32 + WiFi/GSM</b> to server → C++ program reads from DB/CSV.</li>
+</ul>
 </div>
 
-<!-- EPISODE 2 -->
-<div class="episode">
-    <div class="title">EPISODE 2 – Smart Industrial Emission Violation Detection</div>
-    <h2>What It Means</h2>
-    <p>Monitors chimney gas pollution & detects abnormal emissions.</p>
+<!-- ========================================================= -->
+<!-- ================= EPISODE 2 ============================== -->
+<!-- ========================================================= -->
 
-    <h2>Why Necessary</h2>
-    <p>Prevents illegal night-time pollution & protects public health.</p>
+<div id="c2" class="case-content">
+<h2>Episode 2 – SMART INDUSTRIAL EMISSION VIOLATION DETECTION</h2>
 
-    <h2>C++ Code</h2>
-    <pre>
+<p><b>What It Means</b></p>
+<p>This system monitors factory chimney gases and detects abnormal pollution release automatically.</p>
+
+<p><b>Why It Is Necessary</b></p>
+<p>Illegal industrial emissions are a major contributor to urban air pollution. Automated detection prevents night-time violations and protects public health.</p>
+
+<p><b>C++ Code</b></p>
+<pre>
 #include &lt;bits/stdc++.h&gt;
 using namespace std;
 
 int main() {
     int n;
-    cin >> n;
+    cin &gt;&gt; n;
 
-    vector<double> e(n);
-    for(int i = 0; i < n; i++) cin >> e[i];
+    vector&lt;double&gt; e(n);
+    for(int i = 0; i &lt; n; i++) cin &gt;&gt; e[i];
 
     double mean = accumulate(e.begin(), e.end(), 0.0) / n;
     double var = 0;
@@ -118,207 +159,337 @@ int main() {
 
     double sd = sqrt(var/n);
 
-    for(int i = 0; i < n; i++)
-        if(fabs(e[i] - mean) > 3 * sd)
-            cout << "Violation at sensor " << i << endl;
+    for(int i = 0; i &lt; n; i++)
+        if(fabs(e[i] - mean) &gt; 3 * sd)
+            cout &lt;&lt; "Violation at sensor " &lt;&lt; i &lt;&lt; endl;
 }
-    </pre>
+</pre>
+
+<p><b>Algorithm &amp; Code Working</b></p>
+<p>Uses <b>Z-Score Anomaly Detection</b> to flag emission spikes beyond 3σ. Runs in <b>O(n)</b> time.</p>
+
+<p><b>Sensors / Input</b></p>
+<ul>
+  <li><b>MQ-7 (CO), MQ-136 (SO₂), NO₂ electro-chemical sensors</b></li>
+  <li>Data via <b>GSM to pollution control server</b></li>
+</ul>
 </div>
 
-<!-- EPISODE 3 -->
-<div class="episode">
-    <div class="title">EPISODE 3 – Urban Heat Island & Green Cover Optimization</div>
+<!-- ========================================================= -->
+<!-- ================= EPISODE 3 ============================== -->
+<!-- ========================================================= -->
 
-    <h2>C++ Code</h2>
-    <pre>
+<div id="c3" class="case-content">
+<h2>Episode 3 – URBAN HEAT ISLAND &amp; GREEN COVER OPTIMIZATION</h2>
+
+<p><b>What It Means</b></p>
+<p>Identifies extreme heat zones in the city and suggests green cover locations.</p>
+
+<p><b>Why It Is Necessary</b></p>
+<p>High urban temperatures increase electricity load and cause heat strokes. Green planning reduces city temperature naturally.</p>
+
+<p><b>C++ Code</b></p>
+<pre>
 #include &lt;bits/stdc++.h&gt;
 using namespace std;
 
 int main() {
     int n, k;
-    cin >> n >> k;
+    cin &gt;&gt; n &gt;&gt; k;
 
-    vector<double> temp(n);
-    for(int i = 0; i < n; i++) cin >> temp[i];
+    vector&lt;double&gt; temp(n);
+    for(int i = 0; i &lt; n; i++) cin &gt;&gt; temp[i];
 
-    vector<double> cent(k);
-    for(int i = 0; i < k; i++) cent[i] = temp[i];
+    vector&lt;double&gt; cent(k);
+    for(int i = 0; i &lt; k; i++) cent[i] = temp[i];
 
-    vector<int> lbl(n);
+    vector&lt;int&gt; lbl(n);
 
-    for(int it = 0; it < 20; it++) {
-        for(int i = 0; i < n; i++) {
+    for(int it = 0; it &lt; 20; it++) {
+        for(int i = 0; i &lt; n; i++) {
             double best = 1e9;
-            for(int j = 0; j < k; j++)
-                if(abs(temp[i]-cent[j]) < best) {
+            for(int j = 0; j &lt; k; j++)
+                if(abs(temp[i]-cent[j]) &lt; best) {
                     best = abs(temp[i]-cent[j]);
                     lbl[i] = j;
                 }
         }
 
-        vector<double> sum(k), cnt(k);
-        for(int i = 0; i < n; i++) {
+        vector&lt;double&gt; sum(k), cnt(k);
+        for(int i = 0; i &lt; n; i++) {
             sum[lbl[i]] += temp[i];
             cnt[lbl[i]]++;
         }
 
-        for(int j = 0; j < k; j++)
+        for(int j = 0; j &lt; k; j++)
             cent[j] = sum[j]/cnt[j];
     }
 
     int hot = max_element(cent.begin(), cent.end()) - cent.begin();
-    cout << "Hottest Cluster: " << hot << endl;
+    cout &lt;&lt; "Hottest Cluster: " &lt;&lt; hot &lt;&lt; endl;
 }
-    </pre>
+</pre>
+
+<p><b>Algorithm &amp; Code Working</b></p>
+<p>Uses <b>K-Means Clustering</b> to group city zones by temperature. Complexity <b>O(n·k·iter)</b>.</p>
+
+<p><b>Sensors / Input</b></p>
+<ul>
+  <li>Thermal sensors</li>
+  <li>Satellite data (Landsat/MODIS)</li>
+  <li>Weather stations</li>
+</ul>
 </div>
 
-<!-- EPISODE 4 -->
-<div class="episode">
-    <div class="title">EPISODE 4 – Smart Water Leakage & Theft Detection</div>
+<!-- ========================================================= -->
+<!-- ================= EPISODE 4 ============================== -->
+<!-- ========================================================= -->
 
-    <h2>C++ Code</h2>
-    <pre>
+<div id="c4" class="case-content">
+<h2>Episode 4 – SMART WATER LEAKAGE &amp; THEFT DETECTION</h2>
+
+<p><b>What It Means</b></p>
+<p>Detects hidden pipe leaks and illegal water connections.</p>
+
+<p><b>Why It Is Necessary</b></p>
+<p>Cities lose 30–40% of water due to leakages. Early detection saves millions of liters.</p>
+
+<p><b>C++ Code</b></p>
+<pre>
 #include &lt;bits/stdc++.h&gt;
 using namespace std;
 
 int main() {
     double inlet, outlet;
-    cin >> inlet >> outlet;
+    cin &gt;&gt; inlet &gt;&gt; outlet;
 
-    if(inlet - outlet > 5)
-        cout << "Leak Detected\n";
+    if(inlet - outlet &gt; 5)
+        cout &lt;&lt; "Leak Detected\n";
     else
-        cout << "Normal Flow\n";
+        cout &lt;&lt; "Normal Flow\n";
 }
-    </pre>
+</pre>
+
+<p><b>Algorithm &amp; Code Working</b></p>
+<p>Uses <b>Flow Balance Equation</b> in <b>O(1)</b> time.</p>
+
+<p><b>Sensors / Input</b></p>
+<ul>
+  <li>Ultrasonic Flow Sensors</li>
+  <li>Pipe pressure sensors</li>
+  <li>Data from <b>DMA meters</b></li>
+</ul>
 </div>
 
-<!-- EPISODE 5 -->
-<div class="episode">
-    <div class="title">EPISODE 5 – Flood Prediction & Drainage Monitoring</div>
+<!-- ========================================================= -->
+<!-- ================= EPISODE 5 ============================== -->
+<!-- ========================================================= -->
 
-    <h2>C++ Code</h2>
-    <pre>
+<div id="c5" class="case-content">
+<h2>Episode 5 – FLOOD PREDICTION &amp; DRAINAGE MONITORING</h2>
+
+<p><b>What It Means</b></p>
+<p>Predicts urban floods using rainfall and drainage capacity.</p>
+
+<p><b>Why It Is Necessary</b></p>
+<p>Urban floods cause massive property and life loss every year.</p>
+
+<p><b>C++ Code</b></p>
+<pre>
 #include &lt;bits/stdc++.h&gt;
 using namespace std;
 
 int main() {
     double rain, drainCapacity;
-    cin >> rain >> drainCapacity;
+    cin &gt;&gt; rain &gt;&gt; drainCapacity;
 
-    if(rain > drainCapacity)
-        cout << "Flood Risk High\n";
+    if(rain &gt; drainCapacity)
+        cout &lt;&lt; "Flood Risk High\n";
     else
-        cout << "Flood Risk Low\n";
+        cout &lt;&lt; "Flood Risk Low\n";
 }
-    </pre>
+</pre>
+
+<p><b>Algorithm &amp; Code Working</b></p>
+<p>Uses <b>Threshold-Based Predictive Modeling</b> in <b>O(1)</b> time.</p>
+
+<p><b>Sensors / Input</b></p>
+<ul>
+  <li>Rain gauge</li>
+  <li>Drain water level sensors</li>
+  <li>Soil moisture sensors</li>
+</ul>
 </div>
 
-<!-- EPISODE 6 -->
-<div class="episode">
-    <div class="title">EPISODE 6 – Smart Noise Pollution Control</div>
+<!-- ========================================================= -->
+<!-- ================= EPISODE 6 ============================== -->
+<!-- ========================================================= -->
 
-    <h2>C++ Code</h2>
-    <pre>
+<div id="c6" class="case-content">
+<h2>Episode 6 – SMART NOISE POLLUTION CONTROL</h2>
+
+<p><b>What It Means</b></p>
+<p>Monitors sound levels in sensitive zones like hospitals and schools.</p>
+
+<p><b>Why It Is Necessary</b></p>
+<p>Noise pollution causes stress, sleep disorders, and heart problems.</p>
+
+<p><b>C++ Code</b></p>
+<pre>
 #include &lt;bits/stdc++.h&gt;
 using namespace std;
 
 int main() {
     int n;
-    cin >> n;
+    cin &gt;&gt; n;
 
-    vector<double> s(n);
-    for(int i = 0; i < n; i++) cin >> s[i];
+    vector&lt;double&gt; s(n);
+    for(int i = 0; i &lt; n; i++) cin &gt;&gt; s[i];
 
     double sum = 0;
     for(double x : s) sum += x*x;
 
     double rms = sqrt(sum/n);
 
-    if(rms > 0.6)
-        cout << "Noise Violation\n";
+    if(rms &gt; 0.6)
+        cout &lt;&lt; "Noise Violation\n";
     else
-        cout << "Normal\n";
+        cout &lt;&lt; "Normal\n";
 }
-    </pre>
+</pre>
+
+<p><b>Algorithm &amp; Code Working</b></p>
+<p>Uses <b>RMS (Root Mean Square) Energy Detection</b> in <b>O(n)</b> time.</p>
+
+<p><b>Sensors / Input</b></p>
+<ul>
+  <li>SPL / MEMS microphone sensors</li>
+  <li>Data fed every second</li>
+</ul>
 </div>
 
-<!-- EPISODE 7 -->
-<div class="episode">
-    <div class="title">EPISODE 7 – Carbon Emission Tracking System</div>
+<!-- ========================================================= -->
+<!-- ================= EPISODE 7 ============================== -->
+<!-- ========================================================= -->
 
-    <h2>C++ Code</h2>
-    <pre>
+<div id="c7" class="case-content">
+<h2>Episode 7 – CARBON EMISSION TRACKING SYSTEM</h2>
+
+<p><b>What It Means</b></p>
+<p>Tracks carbon emissions zone-wise for climate compliance.</p>
+
+<p><b>Why It Is Necessary</b></p>
+<p>Helps cities meet carbon reduction targets and manage carbon credits.</p>
+
+<p><b>C++ Code</b></p>
+<pre>
 #include &lt;bits/stdc++.h&gt;
 using namespace std;
 
 int main() {
     int n;
-    cin >> n;
+    cin &gt;&gt; n;
 
-    unordered_map<string,double> co2;
+    unordered_map&lt;string,double&gt; co2;
 
-    for(int i = 0; i < n; i++) {
+    for(int i = 0; i &lt; n; i++) {
         string zone;
         double val;
-        cin >> zone >> val;
+        cin &gt;&gt; zone &gt;&gt; val;
         co2[zone] += val;
     }
 
     for(auto &x : co2)
-        cout << x.first << " " << x.second << endl;
+        cout &lt;&lt; x.first &lt;&lt; " " &lt;&lt; x.second &lt;&lt; endl;
 }
-    </pre>
+</pre>
+
+<p><b>Algorithm &amp; Code Working</b></p>
+<p>Uses <b>Hash-Based Aggregation</b> with <b>O(n)</b> time.</p>
+
+<p><b>Input Source</b></p>
+<ul>
+  <li>Vehicle emission data</li>
+  <li>Factory fuel usage</li>
+  <li>Smart energy meters</li>
+</ul>
 </div>
 
-<!-- EPISODE 8 -->
-<div class="episode">
-    <div class="title">EPISODE 8 – Groundwater Level Prediction</div>
+<!-- ========================================================= -->
+<!-- ================= EPISODE 8 ============================== -->
+<!-- ========================================================= -->
 
-    <h2>C++ Code</h2>
-    <pre>
+<div id="c8" class="case-content">
+<h2>Episode 8 – GROUNDWATER LEVEL PREDICTION</h2>
+
+<p><b>What It Means</b></p>
+<p>Forecasts groundwater depletion trends.</p>
+
+<p><b>Why It Is Necessary</b></p>
+<p>Prevents future water crises and uncontrolled borewell drilling.</p>
+
+<p><b>C++ Code</b></p>
+<pre>
 #include &lt;bits/stdc++.h&gt;
 using namespace std;
 
 int main() {
     int n;
-    cin >> n;
+    cin &gt;&gt; n;
 
-    vector<double> lvl(n);
-    for(int i = 0; i < n; i++) cin >> lvl[i];
+    vector&lt;double&gt; lvl(n);
+    for(int i = 0; i &lt; n; i++) cin &gt;&gt; lvl[i];
 
     double slope = (lvl[n-1] - lvl[0]) / n;
-    cout << "Projected Drop Next Year: " << slope*12 << endl;
+    cout &lt;&lt; "Projected Drop Next Year: " &lt;&lt; slope*12 &lt;&lt; endl;
 }
-    </pre>
+</pre>
+
+<p><b>Algorithm &amp; Code Working</b></p>
+<p>Uses <b>Linear Trend Projection</b> in <b>O(n)</b> time.</p>
+
+<p><b>Sensors / Input</b></p>
+<ul>
+  <li>Borewell level probes</li>
+  <li>Groundwater monitoring stations</li>
+</ul>
 </div>
 
-<!-- EPISODE 9 -->
-<div class="episode">
-    <div class="title">EPISODE 9 – Pollution-Aware Route for Schools & Hospitals</div>
+<!-- ========================================================= -->
+<!-- ================= EPISODE 9 ============================== -->
+<!-- ========================================================= -->
 
-    <h2>C++ Code</h2>
-    <pre>
+<div id="c9" class="case-content">
+<h2>Episode 9 – POLLUTION-AWARE ROUTE FOR SCHOOLS &amp; HOSPITALS</h2>
+
+<p><b>What It Means</b></p>
+<p>Finds least-polluted paths for ambulances and school buses.</p>
+
+<p><b>Why It Is Necessary</b></p>
+<p>Reduces harmful exposure to children and elderly.</p>
+
+<p><b>C++ Code</b></p>
+<pre>
 #include &lt;bits/stdc++.h&gt;
 using namespace std;
 
 int main() {
     int V, E;
-    cin >> V >> E;
+    cin &gt;&gt; V &gt;&gt; E;
 
-    vector<vector<pair<int,int>>> g(V);
-    for(int i = 0; i < E; i++) {
+    vector&lt;vector&lt;pair&lt;int,int&gt;&gt;&gt; g(V);
+    for(int i = 0; i &lt; E; i++) {
         int u,v,w;
-        cin >> u >> v >> w;
+        cin &gt;&gt; u &gt;&gt; v &gt;&gt; w;
         g[u].push_back({v,w});
         g[v].push_back({u,w});
     }
 
     int s, d;
-    cin >> s >> d;
+    cin &gt;&gt; s &gt;&gt; d;
 
-    vector<int> dist(V, 1e9);
-    priority_queue<pair<int,int>, vector<pair<int,int>>, greater<>> pq;
+    vector&lt;int&gt; dist(V, 1e9);
+    priority_queue&lt;pair&lt;int,int&gt;, vector&lt;pair&lt;int,int&gt;&gt;, greater&lt;&gt;&gt; pq;
 
     dist[s] = 0;
     pq.push({0,s});
@@ -326,39 +497,68 @@ int main() {
     while(!pq.empty()) {
         auto [cd,u] = pq.top(); pq.pop();
         for(auto &e : g[u]) {
-            if(dist[e.first] > cd + e.second) {
+            if(dist[e.first] &gt; cd + e.second) {
                 dist[e.first] = cd + e.second;
                 pq.push({dist[e.first], e.first});
             }
         }
     }
 
-    cout << "Min Pollution Path: " << dist[d] << endl;
+    cout &lt;&lt; "Min Pollution Path: " &lt;&lt; dist[d] &lt;&lt; endl;
 }
-    </pre>
+</pre>
+
+<p><b>Algorithm &amp; Code Working</b></p>
+<p>Uses <b>Dijkstra’s Algorithm</b> with <b>O(E log V)</b> complexity.</p>
+
+<p><b>Input Source</b></p>
+<ul>
+  <li>Road network</li>
+  <li>Live AQI per road</li>
+  <li>GPS traffic data</li>
+</ul>
 </div>
 
-<!-- EPISODE 10 -->
-<div class="episode">
-    <div class="title">EPISODE 10 – Smart Construction Dust Control</div>
+<!-- ========================================================= -->
+<!-- ================= EPISODE 10 ============================= -->
+<!-- ========================================================= -->
 
-    <h2>C++ Code</h2>
-    <pre>
+<div id="c10" class="case-content">
+<h2>Episode 10 – SMART CONSTRUCTION DUST CONTROL</h2>
+
+<p><b>What It Means</b></p>
+<p>Detects construction dust using camera and PM sensors.</p>
+
+<p><b>Why It Is Necessary</b></p>
+<p>Construction dust is a major PM10/PM2.5 contributor.</p>
+
+<p><b>C++ Code</b></p>
+<pre>
 #include &lt;bits/stdc++.h&gt;
 using namespace std;
 
 int main() {
     int totalPixels, dustPixels;
-    cin >> totalPixels >> dustPixels;
+    cin &gt;&gt; totalPixels &gt;&gt; dustPixels;
 
     double ratio = (double)dustPixels / totalPixels;
 
-    if(ratio > 0.02)
-        cout << "Dust Violation\n";
+    if(ratio &gt; 0.02)
+        cout &lt;&lt; "Dust Violation\n";
     else
-        cout << "Normal\n";
+        cout &lt;&lt; "Normal\n";
 }
-    </pre>
+</pre>
+
+<p><b>Algorithm &amp; Code Working</b></p>
+<p>Uses <b>Pixel Ratio Threshold Classification</b> in <b>O(1)</b> time.</p>
+
+<p><b>Sensors / Input</b></p>
+<ul>
+  <li>CCTV camera</li>
+  <li>PM10 dust sensors</li>
+  <li>Image processing system</li>
+</ul>
 </div>
 
 </body>
