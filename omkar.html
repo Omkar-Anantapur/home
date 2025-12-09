@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Business Case Episodes 1–10</title>
+<style>
+    body{
+        font-family: Arial, sans-serif;
+        background:#e6f0f3;
+        margin:0;
+        padding:0;
+    }
+    .container{
+        width: 95%;
+        max-width:1200px;
+        margin: auto;
+        padding: 20px;
+    }
+    .episode{
+        background: rgba(255,255,255,0.85);
+        backdrop-filter: blur(8px);
+        border-radius: 15px;
+        margin: 20px 0;
+        padding: 25px;
+        box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+        transition: transform 0.3s;
+    }
+    .episode:hover{
+        transform: translateY(-5px);
+    }
+    h2{
+        color:#2c3e50;
+        margin-bottom: 10px;
+    }
+    .section-title{
+        font-size:18px;
+        font-weight:bold;
+        margin-top:20px;
+        color:#34495e;
+    }
+    p, ul{
+        color:#2c3e50;
+        line-height:1.5;
+    }
+    pre{
+        background:#222;
+        color:#0f0;
+        padding:15px;
+        border-radius:8px;
+        overflow-x:auto;
+    }
+    .back-home{
+        display:inline-block;
+        margin-top:15px;
+        padding:8px 15px;
+        background:#3498db;
+        color:white;
+        border-radius:8px;
+        text-decoration:none;
+        font-weight:bold;
+    }
+</style>
+</head>
+<body>
+
+<div class="container">
+    <!-- BACK TO HOME BUTTON -->
+    <a class="back-home" href="index.html">← Back to Home</a>
+
+    <!-- EPISODE 1 -->
+    <div class="episode">
+        <h2>Episode 1: Disaster Evacuation Routing & Shelter Assignment</h2>
+        <div class="section-title">Problem</div>
+        <p>
+            During floods, earthquakes, or fires, the goal is to route people from buildings 
+            to safe shelters while avoiding blocked roads and respecting shelter capacities — 
+            minimizing total travel time.
+        </p>
+        <div class="section-title">Algorithm Used</div>
+        <p>
+            Graph-based Min-Cost Max-Flow:
+            <ul>
+                <li>Nodes = buildings + junctions + shelters</li>
+                <li>Edges = roads (cost = travel time, capacity = people)</li>
+            </ul>
+        </p>
+        <div class="section-title">Time Complexity</div>
+        <p>O(F · E log V) using successive shortest path, F = evacuees, E = edges, V = nodes</p>
+        <div class="section-title">C++ Code</div>
+        <pre>
+// See Episode 1 code skeleton (min-cost max-flow)
+#include &lt;bits/stdc++.h&gt;
+using namespace std;
+struct Edge { int to, rev, cap; double cost; };
+struct MCMF { /* ... */ };
+int main(){ /* ... */ return 0; }
+        </pre>
+        <div class="section-title">Conclusion / Impact</div>
+        <p>
+            Provides real-time evacuation routing adapting to blocked roads and shelter capacities, 
+            reducing casualties and improving emergency response.
+        </p>
+    </div>
+
+    <!-- EPISODE 2 -->
+    <div class="episode">
+        <h2>Episode 2: Dynamic Ambulance & Fire Station Repositioning</h2>
+        <div class="section-title">Problem</div>
+        <p>
+            Continuously reposition ambulances and fire tenders to minimize expected response time 
+            based on live incident risk maps.
+        </p>
+        <div class="section-title">Algorithm Used</div>
+        <p>
+            Repeated p-median/facility location with greedy + swap local search heuristic.
+        </p>
+        <div class="section-title">Time Complexity</div>
+        <p>O(I · p · n), I = iterations, p = number of bases, n = demand points</p>
+        <div class="section-title">C++ Code</div>
+        <pre>
+// Core swap-based p-median heuristic
+#include &lt;bits/stdc++.h&gt;
+using namespace std;
+using P = pair&lt;double,double&gt;;
+int main(){ /* ... */ return 0; }
+        </pre>
+        <div class="section-title">Conclusion / Impact</div>
+        <p>
+            Lets emergency services reposition fleets dynamically, significantly reducing response times.
+        </p>
+    </div>
+
+    <!-- EPISODE 3 -->
+    <div class="episode">
+        <h2>Episode 3: Smart Public Toilet Network Placement & Cleaning Routing</h2>
+        <div class="section-title">Problem</div>
+        <p>
+            Decide locations for public toilets and cleaning routes to minimize walking distance and cleaning cost.
+        </p>
+        <div class="section-title">Algorithm Used</div>
+        <p>Max-cover greedy for placement, Clarke–Wright savings heuristic for cleaning routing.</p>
+        <div class="section-title">Time Complexity</div>
+        <p>Placement: O(B·n²), Routing: O(m²)</p>
+        <div class="section-title">C++ Code</div>
+        <pre>
+#include &lt;bits/stdc++.h&gt;
+using namespace std;
+using P=pair&lt;double,double&gt;;
+int main(){ /* ... */ return 0; }
+        </pre>
+        <div class="section-title">Conclusion / Impact</div>
+        <p>Optimized public toilet placement and cleaning improves hygiene and gender safety.</p>
+    </div>
+
+    <!-- EPISODE 4 -->
+    <div class="episode">
+        <h2>Episode 4: Power Outage Restoration Prioritization Under Capacity Limits</h2>
+        <div class="section-title">Problem</div>
+        <p>
+            Choose feeders to restore under transformer capacity limits to maximize critical load served.
+        </p>
+        <div class="section-title">Algorithm Used</div>
+        <p>0–1 Knapsack DP (weight = feeder MW, value = criticality)</p>
+        <div class="section-title">Time Complexity</div>
+        <p>O(F · C), F = feeders, C = capacity units</p>
+        <div class="section-title">C++ Code</div>
+        <pre>
+#include &lt;bits/stdc++.h&gt;
+using namespace std;
+struct Feeder{int id,mw,value;};
+int main(){ /* ... */ return 0; }
+        </pre>
+        <div class="section-title">Conclusion / Impact</div>
+        <p>Automatically prioritizes critical feeders for restoration under grid limits.</p>
+    </div>
+
+    <!-- EPISODE 5 -->
+    <div class="episode">
+        <h2>Episode 5: Shared E-Bike / Scooter Fleet Rebalancing</h2>
+        <div class="section-title">Problem</div>
+        <p>
+            Rebalance e-bike/scooter stations to avoid shortages or overflow with minimal truck travel.
+        </p>
+        <div class="section-title">Algorithm Used</div>
+        <p>Transportation / min-cost flow model (surplus → deficit stations).</p>
+        <div class="section-title">Time Complexity</div>
+        <p>O(F · E log V), F = bikes moved</p>
+        <div class="section-title">C++ Code</div>
+        <pre>
+#include &lt;bits/stdc++.h&gt;
+using namespace std;
+struct Edge{int to,rev,cap;double cost;};
+struct MCMF{ /* ... */ };
+int main(){ /* ... */ return 0; }
+        </pre>
+        <div class="section-title">Conclusion / Impact</div>
+        <p>Turns chaotic fleets into reliable first/last-mile transit, improving ridership and revenue.</p>
+    </div>
+
+    <!-- EPISODE 6 -->
+    <div class="episode">
+        <h2>Episode 6: City-Wide Public Siren / PA Speaker Placement</h2>
+        <div class="section-title">Problem</div>
+        <p>
+            Place sirens/PA speakers to cover maximum population under a fixed device budget.
+        </p>
+        <div class="section-title">Algorithm Used</div>
+        <p>Maximum coverage greedy algorithm (iterative largest marginal coverage).</p>
+        <div class="section-title">Time Complexity</div>
+        <p>O(B · n · m)</p>
+        <div class="section-title">C++ Code</div>
+        <pre>
+#include &lt;bits/stdc++.h&gt;
+using namespace std;
+using P=pair&lt;double,double&gt;;
+int main(){ /* ... */ return 0; }
+        </pre>
+        <div class="section-title">Conclusion / Impact</div>
+        <p>Maximizes city-wide audible alerts with minimal installation cost.</p>
+    </div>
+
+    <!-- EPISODE 7 -->
+    <div class="episode">
+        <h2>Episode 7: Urban Public Wi-Fi Hotspot Placement</h2>
+        <div class="section-title">Problem</div>
+        <p>Place limited Wi-Fi hotspots to maximize coverage, prioritizing underserved neighborhoods.</p>
+        <div class="section-title">Algorithm Used</div>
+        <p>Bi-criteria weighted k-median solved via greedy facility opening.</p>
+        <div class="section-title">Time Complexity</div>
+        <p>O(K · n · m)</p>
+        <div class="section-title">C++ Code</div>
+        <pre>
+#include &lt;bits/stdc++.h&gt;
+using namespace std;
+using P=pair&lt;double,double&gt;;
+int main(){ /* ... */ return 0; }
+        </pre>
+        <div class="section-title">Conclusion / Impact</div>
+        <p>Optimizes digital-inclusion investments, targeting connectivity gaps effectively.</p>
+    </div>
+
+    <!-- EPISODE 8 -->
+    <div class="episode">
+        <h2>Episode 8: Optimal Rainwater Harvesting Tank Placement & Sizing</h2>
+        <div class="section-title">Problem</div>
+        <p>Decide which buildings to equip with rainwater tanks to maximize captured water under budget.</p>
+        <div class="section-title">Algorithm Used</div>
+        <p>0–1 Knapsack DP over building-size options.</p>
+        <div class="section-title">Time Complexity</div>
+        <p>O(M · B), M = total options, B = budget units</p>
+        <div class="section-title">C++ Code</div>
+        <pre>
+#include &lt;bits/stdc++.h&gt;
+using namespace std;
+struct Option{int id,cost; double capture;};
+int main(){ /* ... */ return 0; }
+        </pre>
+        <div class="section-title">Conclusion / Impact</div>
+        <p>Optimizes water harvesting, showing where tanks save maximum freshwater per rupee.</p>
+    </div>
+
+    <!-- EPISODE 9 -->
+    <div class="episode">
+        <h2>Episode 9: Dynamic Crowd Management in Metro Stations & Event Venues</h2>
+        <div class="section-title">Problem</div>
+        <p>Compute one-way flows and recommended routes in real-time to avoid crowding.</p>
+        <div class="section-title">Algorithm Used</div>
+        <p>Graph-based multi-commodity max flow approximation (Dinic).</p>
+        <div class="section-title">Time Complexity</div>
+        <p>O(E · √V) per max flow; repeated over subflows/time slices.</p>
+        <div class="section-title">C++ Code</div>
+        <pre>
+#include &lt;bits/stdc++.h&gt;
+using namespace std;
+struct Edge{int to,rev,cap;};
+struct Dinic{ /* ... */ };
+int main(){ /* ... */ return 0; }
+        </pre>
+        <div class="section-title">Conclusion / Impact</div>
+        <p>Real-time crowd safety checks for metros and event organizers, preventing crushes.</p>
+    </div>
+
+    <!-- EPISODE 10 -->
+    <div class="episode">
+        <h2>Episode 10: CCTV Camera Placement for Maximum Coverage with Minimal Overlap</h2>
+        <div class="section-title">Problem</div>
+        <p>Place CCTV cameras to maximize street and open-space coverage while minimizing redundancy.</p>
+        <div class="section-title">Algorithm Used</div>
+        <p>Lazy greedy submodular maximization on discretized grid cells.</p>
+        <div class="section-title">Time Complexity</div>
+        <p>Naive: O(K · m · g), with lazy PQ often faster.</p>
+        <div class="section-title">C++ Code</div>
+        <pre>
+#include &lt;bits/stdc++.h&gt;
+using namespace std;
+int main(){ /* ... */ return 0; }
+        </pre>
+        <div class="section-title">Conclusion / Impact</div>
+        <p>Optimized CCTV planning, maximizing safety while respecting privacy/no-surveillance zones.</p>
+    </div>
+
+    <!-- END OF EPISODES -->
+</div>
+
+</body>
+</html>
