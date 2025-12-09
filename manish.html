@@ -2,96 +2,276 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<title>Business Case Studies – Member 1</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Business Case Episodes</title>
+
 <style>
-/* SAME STYLE – NO CHANGES */
+:root {
+  --bg: #020617;
+  --glass: rgba(255,255,255,0.08);
+  --glass-strong: rgba(255,255,255,0.14);
+  --border: rgba(255,255,255,0.25);
+  --text: #e5e7eb;
+  --muted: #9ca3af;
+  --accent: #e50914;
+  --glow: rgba(229,9,20,0.6);
+}
+
+* { box-sizing: border-box; margin:0; padding:0; font-family:"Segoe UI",sans-serif; }
 body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-    background: #0e0e0e;
-    color: #fff;
+  background:var(--bg);
+  color:var(--text);
+  padding:28px 20px;
 }
-header {
-    background: #111;
-    padding: 20px;
-    text-align: center;
-    font-size: 30px;
-    font-weight: bold;
-    letter-spacing: 1px;
+
+/* header / home */
+.top-row {
+  max-width:1100px;
+  margin:0 auto 20px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:12px;
 }
+.title {
+  font-size:20px;
+  letter-spacing:1px;
+  color:var(--text);
+}
+.home-btn {
+  display:inline-block;
+  padding:8px 12px;
+  background:var(--glass);
+  border-radius:10px;
+  border:1px solid var(--border);
+  color:var(--text);
+  text-decoration:none;
+}
+.home-btn:hover { border-color:var(--accent); color:var(--accent); }
+
+/* layout: two columns, left contains cases 1-5, right 6-10 */
 .container {
-    padding: 20px;
+  max-width:1100px;
+  margin:0 auto;
+  display:grid;
+  grid-template-columns: 1fr 1fr;
+  gap:20px;
 }
-.episode-btn {
-    background: #222;
-    padding: 15px;
-    border-radius: 6px;
-    margin: 10px 0;
-    cursor: pointer;
-    font-size: 20px;
-    transition: 0.3s;
+
+/* column boxes */
+.col {
+  display:flex;
+  flex-direction:column;
+  gap:16px;
 }
-.episode-btn:hover {
-    background: #333;
+
+/* each case card */
+.case-card{
+  background:var(--glass);
+  border-radius:16px;
+  padding:18px;
+  border:1px solid var(--border);
+  backdrop-filter: blur(8px);
+  transition:transform .22s ease, box-shadow .22s ease, border-color .22s ease;
+  cursor:pointer;
 }
-.episode-content {
-    display: none;
-    background: #1a1a1a;
-    padding: 20px;
-    margin-top: 10px;
-    border-left: 4px solid #0af;
+.case-card:hover{
+  transform: translateY(-6px);
+  border-color: var(--accent);
+  box-shadow: 0 10px 30px var(--glow);
 }
-pre {
-    background: #000;
-    padding: 15px;
-    overflow-x: auto;
-    border-radius: 6px;
-    border: 1px solid #444;
+.case-title{
+  font-weight:600;
+  color:var(--text);
+  margin-bottom:8px;
+}
+.case-sub{
+  font-size:0.92rem;
+  color:var(--muted);
+}
+
+/* popup overlay */
+.popup {
+  position:fixed;
+  inset:0;
+  display:none;
+  align-items:center;
+  justify-content:center;
+  background: rgba(0,0,0,0.6);
+  z-index:9999;
+  padding:24px;
+  backdrop-filter: blur(6px);
+}
+
+/* popup card */
+.popup-card{
+  width:100%;
+  max-width:900px;
+  max-height:92vh;
+  overflow:auto;
+  background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));
+  border-radius:22px;
+  border:1px solid var(--border);
+  padding:22px;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.6), 0 0 30px var(--glow);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+/* content formatting inside popup */
+.popup-card h2 { color:var(--accent); margin-bottom:10px; }
+.popup-card h3 { margin-top:14px; margin-bottom:6px; color:var(--text); }
+.popup-card p, .popup-card li, .popup-card pre {
+  color:var(--text);
+  line-height:1.45;
+  font-size:0.95rem;
+}
+.popup-card ul { margin-left:18px; margin-top:6px; }
+.popup-card pre {
+  background:#000;
+  padding:12px;
+  border-radius:10px;
+  overflow:auto;
+  white-space:pre-wrap;
+  margin-top:8px;
+}
+
+/* footer controls in popup */
+.controls {
+  display:flex;
+  gap:10px;
+  margin-top:14px;
+  align-items:center;
+}
+.btn {
+  padding:8px 12px;
+  border-radius:10px;
+  border:none;
+  cursor:pointer;
+  font-weight:600;
+}
+.close-btn {
+  background:var(--accent);
+  color:white;
+  border:0;
+}
+.back-home {
+  background:var(--glass);
+  color:var(--text);
+  border:1px solid var(--border);
+  text-decoration:none;
+  padding:8px 12px;
+  border-radius:10px;
+}
+.back-home:hover { color:var(--accent); border-color:var(--accent); }
+
+/* responsive */
+@media (max-width:900px){
+  .container { grid-template-columns: 1fr; }
+  .top-row { flex-direction:column; align-items:flex-start; gap:12px; }
 }
 </style>
-
-<script>
-// SAME JS – NO CHANGES
-function toggle(id) {
-    var box = document.getElementById(id);
-    box.style.display = (box.style.display === "block") ? "none" : "block";
-}
-</script>
-
 </head>
 <body>
 
-<header>Business Case Episodes (1–10)</header>
+<div class="top-row">
+  <div class="title"><strong>Business Case Studies</strong> — Manish</div>
+  <div>
+    <a class="home-btn" href="index.html">← Back to Home</a>
+  </div>
+</div>
 
 <div class="container">
+  <!-- LEFT column: cases 1-5 -->
+  <div class="col" id="left-col">
 
-<!-- CASE 1 -->
-<div class="episode-btn" onclick="toggle('c1')">⭐ BUSINESS CASE 1 — Smart Billboard Advertisement Allocation Optimizer</div>
-<div id="c1" class="episode-content">
-<h2>1. What it means</h2>
-<p>Optimizes the allocation of digital billboards to advertisers to maximize revenue while ensuring fair exposure time.</p>
+    <div class="case-card" data-case="1">
+      <div class="case-title">1 — Smart Billboard Advertisement Allocation Optimizer</div>
+      <div class="case-sub">Optimizes allocation of digital billboards to maximize revenue & fairness.</div>
+    </div>
 
-<h2>2. Why it is necessary</h2>
-<ul>
-<li>Prevents overbooking of popular billboards</li>
-<li>Ensures advertisers get fair time share</li>
-<li>Maximizes city revenue</li>
-<li>Helps schedule thousands of ads daily</li>
-</ul>
+    <div class="case-card" data-case="2">
+      <div class="case-title">2 — Municipal Document Digitization Load Balancer</div>
+      <div class="case-sub">Distributes scanning workload among servers to avoid overload.</div>
+    </div>
 
-<h2>3. Decision Flow</h2>
-<p>Ad Requests → Sort by Profit/Duration → Greedy Slot Selection → Final Schedule</p>
+    <div class="case-card" data-case="3">
+      <div class="case-title">3 — Public Feedback Clustering & Issue Prioritizer</div>
+      <div class="case-sub">Groups citizen complaints and produces prioritized issue list.</div>
+    </div>
 
-<h2>4. C++ Code</h2>
-<pre>
-#include &lt;bits/stdc++.h&gt;
+    <div class="case-card" data-case="4">
+      <div class="case-title">4 — Festival Crowd Movement Simulation & Exit Optimization</div>
+      <div class="case-sub">Simulates crowd flow to identify safe exits and bottlenecks.</div>
+    </div>
+
+    <div class="case-card" data-case="5">
+      <div class="case-title">5 — Drone Battery Swapping Station Optimization</div>
+      <div class="case-sub">Finds best locations for drone battery swap stations.</div>
+    </div>
+
+  </div>
+
+  <!-- RIGHT column: cases 6-10 -->
+  <div class="col" id="right-col">
+
+    <div class="case-card" data-case="6">
+      <div class="case-title">6 — Smart Emergency Broadcast Channel Optimization</div>
+      <div class="case-sub">Selects minimal channel set to reach maximum population in an emergency.</div>
+    </div>
+
+    <div class="case-card" data-case="7">
+      <div class="case-title">7 — City Library Dynamic Book Rebalancing System</div>
+      <div class="case-sub">Optimizes book distribution across libraries to balance demand.</div>
+    </div>
+
+    <div class="case-card" data-case="8">
+      <div class="case-title">8 — Smart Disaster Inventory Positioning</div>
+      <div class="case-sub">Position emergency kits to minimize worst-case response time.</div>
+    </div>
+
+    <div class="case-card" data-case="9">
+      <div class="case-title">9 — Smart Heatwave Shelter Capacity Planner</div>
+      <div class="case-sub">Ensures shelters can safely accommodate predicted population.</div>
+    </div>
+
+    <div class="case-card" data-case="10">
+      <div class="case-title">10 — Job Fair Candidate–Company Matching System</div>
+      <div class="case-sub">Matches job seekers to companies based on preferences & skills.</div>
+    </div>
+
+  </div>
+</div>
+
+<!-- Hidden full contents for each case (formatted exactly like you provided, without leading stars) -->
+<!-- We'll keep them in the DOM to avoid escaping issues -->
+<div id="case-contents" style="display:none;">
+
+  <!-- CASE 1 -->
+  <div id="content-1">
+    <h2>BUSINESS CASE 1 — Smart Billboard Advertisement Allocation Optimizer</h2>
+
+    <h3>1. What it means</h3>
+    <p>Optimizes the allocation of digital billboards to advertisers to maximize revenue while ensuring fair exposure time.</p>
+
+    <h3>2. Why it is necessary</h3>
+    <ul>
+      <li>Prevents overbooking of popular billboards</li>
+      <li>Ensures advertisers get fair time share</li>
+      <li>Maximizes city revenue</li>
+      <li>Helps schedule thousands of ads daily</li>
+    </ul>
+
+    <h3>3. Decision Flow</h3>
+    <p>Ad Requests → Sort by Profit/Duration → Greedy Slot Selection → Final Schedule</p>
+
+    <h3>4. C++ Code</h3>
+    <pre><code>#include &lt;bits/stdc++.h&gt;
 using namespace std;
 
 int main() {
     int n, T;
     cin >> n >> T;
-    vector&lt;pair&lt;double,int&gt;&gt; ads;
+    vector&lt;pair&lt;double,int&gt;&gt; ads; // {profit per time, time}
 
     for(int i=0;i&lt;n;i++){
         double p; int t;
@@ -107,39 +287,39 @@ int main() {
             used += a.second;
         }
     }
-    cout << "Used time: " << used;
+    cout &lt;&lt; "Used time: " &lt;&lt; used;
 }
-</pre>
+</code></pre>
 
-<h2>5. Algorithm Used</h2>
-<p>Greedy interval scheduling based on profit/time ratio.</p>
+    <h3>5. Algorithm Used</h3>
+    <p>Greedy interval scheduling based on profit/time ratio.</p>
 
-<h2>6. How code works</h2>
-<p>Sort ads by profitability per second, keep selecting until time runs out.</p>
+    <h3>6. How code works</h3>
+    <p>Sort ads by profitability per second, keep selecting until time runs out.</p>
 
-<h2>7. Input Sources</h2>
-<p>Advertising platform logs, billboard availability database.</p>
-</div>
+    <h3>7. Input Sources</h3>
+    <p>Advertising platform logs, billboard availability database.</p>
+  </div>
 
-<!-- CASE 2 -->
-<div class="episode-btn" onclick="toggle('c2')">⭐ BUSINESS CASE 2 — Municipal Document Digitization Load Balancer</div>
-<div id="c2" class="episode-content">
-<h2>1. What it means</h2>
-<p>Distributes scanning workload among servers so no server is overloaded.</p>
+  <!-- CASE 2 -->
+  <div id="content-2">
+    <h2>BUSINESS CASE 2 — Municipal Document Digitization Load Balancer</h2>
 
-<h2>2. Why it is necessary</h2>
-<ul>
-<li>Large cities scan millions of documents</li>
-<li>Prevents server slowdown</li>
-<li>Ensures timely digitization</li>
-</ul>
+    <h3>1. What it means</h3>
+    <p>Distributes scanning workload among servers so no server is overloaded.</p>
 
-<h2>3. Decision Flow</h2>
-<p>Document Sizes → Min-Heap of Servers → Assign to Lightest Loaded</p>
+    <h3>2. Why it is necessary</h3>
+    <ul>
+      <li>Large cities scan millions of documents</li>
+      <li>Prevents server slowdown</li>
+      <li>Ensures timely digitization</li>
+    </ul>
 
-<h2>4. C++ Code</h2>
-<pre>
-#include &lt;bits/stdc++.h&gt;
+    <h3>3. Decision Flow</h3>
+    <p>Document Sizes → Min-Heap of Servers → Assign to Lightest Loaded</p>
+
+    <h3>4. C++ Code</h3>
+    <pre><code>#include &lt;bits/stdc++.h&gt;
 using namespace std;
 
 int main(){
@@ -157,40 +337,39 @@ int main(){
     }
 
     auto res = pq.top();
-    cout << "Max load on server: " << res.first;
+    cout &lt;&lt; "Max load on server: " &lt;&lt; res.first;
 }
-</pre>
+</code></pre>
 
-<h2>5. Algorithm Used</h2>
-<p>Greedy load balancing using min-heap.</p>
+    <h3>5. Algorithm Used</h3>
+    <p>Greedy load balancing with min-heap.</p>
 
-<h2>6. How code works</h2>
-<p>Always assigns next document to the server with lowest load.</p>
+    <h3>6. How code works</h3>
+    <p>Always assigns next document to the server with lowest current load.</p>
 
-<h2>7. Input Sources</h2>
-<p>Document sizes, server performance data.</p>
-</div>
+    <h3>7. Input Sources</h3>
+    <p>Document sizes, server performance data.</p>
+  </div>
 
-<!-- CASE 3 -->
-<div class="episode-btn" onclick="toggle('c3')">⭐ BUSINESS CASE 3 — Public Feedback Clustering & Issue Prioritizer</div>
-<div id="c3" class="episode-content">
+  <!-- CASE 3 -->
+  <div id="content-3">
+    <h2>BUSINESS CASE 3 — Public Feedback Clustering & Issue Prioritizer</h2>
 
-<h2>1. What it means</h2>
-<p>Automatically groups similar citizen complaints and ranks the most common issues.</p>
+    <h3>1. What it means</h3>
+    <p>Automatically groups similar citizen complaints and ranks the most common issues.</p>
 
-<h2>2. Why it is necessary</h2>
-<ul>
-<li>Prevents backlog</li>
-<li>Helps the city identify common issues</li>
-<li>Automates complaint categorization</li>
-</ul>
+    <h3>2. Why it is necessary</h3>
+    <ul>
+      <li>Prevents backlog</li>
+      <li>Helps the city know common problems</li>
+      <li>Automates manual sorting</li>
+    </ul>
 
-<h2>3. Decision Flow</h2>
-<p>TF-IDF → K-Means → Rank by Cluster Size</p>
+    <h3>3. Decision Flow</h3>
+    <p>TF-IDF → K-Means Clustering → Rank by Cluster Size → Priority List</p>
 
-<h2>4. C++ Code</h2>
-<pre>
-#include &lt;bits/stdc++.h&gt;
+    <h3>4. C++ Code (Simplified cluster sizing)</h3>
+    <pre><code>#include &lt;bits/stdc++.h&gt;
 using namespace std;
 
 int main(){
@@ -202,40 +381,39 @@ int main(){
     for(int x: cluster) count[x]++;
 
     int best = max_element(count.begin(), count.end()) - count.begin();
-    cout << "Top priority cluster: " << best;
+    cout &lt;&lt; "Top priority cluster: " &lt;&lt; best;
 }
-</pre>
+</code></pre>
 
-<h2>5. Algorithm Used</h2>
-<p>K-means clustering + frequency ranking.</p>
+    <h3>5. Algorithm Used</h3>
+    <p>K-means clustering + frequency ranking.</p>
 
-<h2>6. How code works</h2>
-<p>Counts how many complaints belong to each cluster, picks biggest.</p>
+    <h3>6. How code works</h3>
+    <p>Counts how many complaints belong to each cluster, picks biggest cluster.</p>
 
-<h2>7. Input Sources</h2>
-<p>Citizen app feedback, social media text mining.</p>
-</div>
+    <h3>7. Input Sources</h3>
+    <p>Citizen app feedback, social media text mining.</p>
+  </div>
 
-<!-- CASE 4 -->
-<div class="episode-btn" onclick="toggle('c4')">⭐ BUSINESS CASE 4 — Festival Crowd Movement Simulation & Exit Optimization</div>
-<div id="c4" class="episode-content">
+  <!-- CASE 4 -->
+  <div id="content-4">
+    <h2>BUSINESS CASE 4 — Festival Crowd Movement Simulation & Exit Optimization</h2>
 
-<h2>1. What it means</h2>
-<p>Simulates crowd movement and optimizes emergency exit locations.</p>
+    <h3>1. What it means</h3>
+    <p>Simulates crowd flow during festivals to identify safe exit points.</p>
 
-<h2>2. Why it is necessary</h2>
-<ul>
-<li>Prevents stampedes</li>
-<li>Improves emergency planning</li>
-<li>Detects bottlenecks</li>
-</ul>
+    <h3>2. Why it is necessary</h3>
+    <ul>
+      <li>Prevents stampedes</li>
+      <li>Optimizes emergency exits</li>
+      <li>Helps police plan crowd control</li>
+    </ul>
 
-<h2>3. Decision Flow</h2>
-<p>Grid → BFS → Bottleneck Detection → Exit Optimization</p>
+    <h3>3. Decision Flow</h3>
+    <p>Grid Map → BFS Flow Simulation → Detect Bottlenecks → Add/Shift Exits</p>
 
-<h2>4. C++ Code</h2>
-<pre>
-#include &lt;bits/stdc++.h&gt;
+    <h3>4. C++ Code</h3>
+    <pre><code>#include &lt;bits/stdc++.h&gt;
 using namespace std;
 
 int main(){
@@ -262,40 +440,39 @@ int main(){
         }
     }
 
-    cout << "Max crowd distance: " << dist[n-1][n-1];
+    cout &lt;&lt; "Max crowd distance: " &lt;&lt; dist[n-1][n-1];
 }
-</pre>
+</code></pre>
 
-<h2>5. Algorithm Used</h2>
-<p>BFS for crowd flow simulation.</p>
+    <h3>5. Algorithm Used</h3>
+    <p>BFS for crowd-flow simulation.</p>
 
-<h2>6. How code works</h2>
-<p>Computes time for crowd to reach exits → identifies bottlenecks.</p>
+    <h3>6. How code works</h3>
+    <p>Calculates how long it takes for crowd to reach exit; larger values mean bottlenecks.</p>
 
-<h2>7. Input Sources</h2>
-<p>CCTV heatmaps, pedestrian sensors.</p>
-</div>
+    <h3>7. Input Sources</h3>
+    <p>CCTV heatmaps, pedestrian sensors.</p>
+  </div>
 
-<!-- CASE 5 -->
-<div class="episode-btn" onclick="toggle('c5')">⭐ BUSINESS CASE 5 — Drone Battery Swapping Station Optimization</div>
-<div id="c5" class="episode-content">
+  <!-- CASE 5 -->
+  <div id="content-5">
+    <h2>BUSINESS CASE 5 — Drone Battery Swapping Station Optimization</h2>
 
-<h2>1. What it means</h2>
-<p>Finds optimal drone battery swapping station locations.</p>
+    <h3>1. What it means</h3>
+    <p>Finds best places to install drone battery swap stations for delivery drones.</p>
 
-<h2>2. Why it is necessary</h2>
-<ul>
-<li>Reduces drone downtime</li>
-<li>Ensures large coverage</li>
-<li>Supports drone delivery operations</li>
-</ul>
+    <h3>2. Why it is necessary</h3>
+    <ul>
+      <li>Reduces drone downtime</li>
+      <li>Ensures large coverage area</li>
+      <li>Critical for e-governance drone operations</li>
+    </ul>
 
-<h2>3. Decision Flow</h2>
-<p>Drone Routes → K-Median → Station Placement</p>
+    <h3>3. Decision Flow</h3>
+    <p>Drone Routes → K-Median Clustering → Final Station Coordinates</p>
 
-<h2>4. C++ Code</h2>
-<pre>
-#include &lt;bits/stdc++.h&gt;
+    <h3>4. C++ Code (Simplified center selection)</h3>
+    <pre><code>#include &lt;bits/stdc++.h&gt;
 using namespace std;
 
 double dist(pair&lt;int,int&gt;a,pair&lt;int,int&gt;b){
@@ -303,49 +480,48 @@ double dist(pair&lt;int,int&gt;a,pair&lt;int,int&gt;b){
 }
 
 int main(){
-    int n; cin>>n;
+    int n; cin&gt;&gt;n;
     vector&lt;pair&lt;int,int&gt;&gt; pts(n);
-    for(auto &p:pts) cin>>p.first>>p.second;
+    for(auto &p:pts) cin&gt;&gt;p.first&gt;&gt;p.second;
 
     pair&lt;int,int&gt; center = pts[rand()%n];
 
     double total=0;
     for(auto &p:pts) total+=dist(center,p);
 
-    cout<<"Cost: "<<total;
+    cout&lt;&lt;"Cost: "&lt;&lt;total;
 }
-</pre>
+</code></pre>
 
-<h2>5. Algorithm Used</h2>
-<p>K-median (approximation)</p>
+    <h3>5. Algorithm Used</h3>
+    <p>k-median approximation (center selection heuristic).</p>
 
-<h2>6. How code works</h2>
-<p>Selects a center, computes distance cost.</p>
+    <h3>6. How code works</h3>
+    <p>Chooses a center and computes distance sum (station cost).</p>
 
-<h2>7. Input Sources</h2>
-<p>Drone route data.</p>
-</div>
+    <h3>7. Input Sources</h3>
+    <p>Drone route data from city delivery logs.</p>
+  </div>
 
-<!-- CASE 6 -->
-<div class="episode-btn" onclick="toggle('c6')">⭐ BUSINESS CASE 6 — Smart Emergency Broadcast Channel Optimization</div>
-<div id="c6" class="episode-content">
+  <!-- CASE 6 -->
+  <div id="content-6">
+    <h2>BUSINESS CASE 6 — Smart Emergency Broadcast Channel Optimization</h2>
 
-<h2>1. What it means</h2>
-<p>Selects minimal channels to cover maximum population.</p>
+    <h3>1. What it means</h3>
+    <p>Selects minimal set of communication channels (SMS, WhatsApp, FM, sirens) to reach maximum population during emergencies.</p>
 
-<h2>2. Why it is necessary</h2>
-<ul>
-<li>Ensures alerts reach maximum people</li>
-<li>Reduces communication delays</li>
-<li>Prevents network overload</li>
-</ul>
+    <h3>2. Why it is necessary</h3>
+    <ul>
+      <li>Ensures timely alerts</li>
+      <li>Reduces panic</li>
+      <li>Prevents network overload</li>
+    </ul>
 
-<h2>3. Decision Flow</h2>
-<p>Coverage Data → Greedy Selection → Sufficient Coverage?</p>
+    <h3>3. Decision Flow</h3>
+    <p>Population Coverage Data → Greedy Selection → Enough Coverage?</p>
 
-<h2>4. C++ Code</h2>
-<pre>
-#include &lt;bits/stdc++.h&gt;
+    <h3>4. C++ Code</h3>
+    <pre><code>#include &lt;bits/stdc++.h&gt;
 using namespace std;
 
 int main() {
@@ -359,52 +535,51 @@ int main() {
     for(int i=0;i&lt;n;i++) pq.push({reach[i], i});
 
     int covered=0;
-    while(!pq.empty() && covered &lt; target){
+    while(!pq.empty() && covered < target){
         auto [r,id] = pq.top(); pq.pop();
         covered += r;
-        cout << "Channel " << id << "\n";
+        cout &lt;&lt; "Channel " &lt;&lt; id &lt;&lt; "\n";
     }
 }
-</pre>
+</code></pre>
 
-<h2>5. Algorithm Used</h2>
-<p>Greedy set-cover style picking.</p>
+    <h3>5. Algorithm Used</h3>
+    <p>Greedy set cover approximation.</p>
 
-<h2>6. How code works</h2>
-<p>Selects channel covering maximum people first.</p>
+    <h3>6. How code works</h3>
+    <p>Repeatedly picks channel covering max people.</p>
 
-<h2>7. Input Sources</h2>
-<p>Telecom coverage, app usage.</p>
-</div>
+    <h3>7. Input Sources</h3>
+    <p>Telecom coverage maps, app activity data.</p>
+  </div>
 
-<!-- CASE 7 -->
-<div class="episode-btn" onclick="toggle('c7')">⭐ BUSINESS CASE 7 — City Library Dynamic Book Rebalancing System</div>
-<div id="c7" class="episode-content">
+  <!-- CASE 7 -->
+  <div id="content-7">
+    <h2>BUSINESS CASE 7 — City Library Dynamic Book Rebalancing System</h2>
 
-<h2>1. What it means</h2>
-<p>Balances book inventory across libraries based on demand.</p>
+    <h3>1. What it means</h3>
+    <p>Optimizes distribution of popular books across libraries so demand is balanced.</p>
 
-<h2>2. Why it is necessary</h2>
-<ul>
-<li>Prevents popular book shortages</li>
-<li>Reduces movement cost</li>
-<li>Improves citizen satisfaction</li>
-</ul>
+    <h3>2. Why it is necessary</h3>
+    <ul>
+      <li>Prevents shortages of popular books</li>
+      <li>Reduces logistical cost</li>
+      <li>Improves citizen satisfaction</li>
+    </ul>
 
-<h2>3. Decision Flow</h2>
-<p>Demand → Min-cost Flow → Rebalancing</p>
+    <h3>3. Decision Flow</h3>
+    <p>Demand per Library → Min-Cost Flow → Move Books</p>
 
-<h2>4. C++ Code</h2>
-<pre>
-#include &lt;bits/stdc++.h&gt;
+    <h3>4. C++ Code (Simplified supply-demand balancing)</h3>
+    <pre><code>#include &lt;bits/stdc++.h&gt;
 using namespace std;
 
 int main(){
-    int n; cin>>n;
+    int n; cin&gt;&gt;n;
     vector&lt;int&gt; need(n), have(n);
 
-    for(int &x: need) cin>>x;
-    for(int &x: have) cin>>x;
+    for(int &x: need) cin&gt;&gt;x;
+    for(int &x: have) cin&gt;&gt;x;
 
     sort(need.begin(), need.end());
     sort(have.begin(), have.end());
@@ -413,51 +588,50 @@ int main(){
     for(int i=0;i&lt;n;i++)
         moves += abs(need[i] - have[i]);
 
-    cout << "Books to move: " << moves;
+    cout &lt;&lt; "Books to move: " &lt;&lt; moves;
 }
-</pre>
+</code></pre>
 
-<h2>5. Algorithm Used</h2>
-<p>Greedy matching (sorted arrays)</p>
+    <h3>5. Algorithm Used</h3>
+    <p>Greedy matching (sorted arrays).</p>
 
-<h2>6. How code works</h2>
-<p>Matches supply to demand with minimal moves.</p>
+    <h3>6. How code works</h3>
+    <p>Matches inventory to demand minimizing movement.</p>
 
-<h2>7. Input Sources</h2>
-<p>Library request data.</p>
-</div>
+    <h3>7. Input Sources</h3>
+    <p>Library book popularity data.</p>
+  </div>
 
-<!-- CASE 8 -->
-<div class="episode-btn" onclick="toggle('c8')">⭐ BUSINESS CASE 8 — Smart Disaster Inventory Positioning</div>
-<div id="c8" class="episode-content">
+  <!-- CASE 8 -->
+  <div id="content-8">
+    <h2>BUSINESS CASE 8 — Smart Disaster Inventory Positioning</h2>
 
-<h2>1. What it means</h2>
-<p>Places emergency kits to minimize worst-case response time.</p>
+    <h3>1. What it means</h3>
+    <p>Places emergency kits across the city to minimize worst-case response time.</p>
 
-<h2>2. Why it is necessary</h2>
-<ul>
-<li>Saves lives</li>
-<li>Reduces travel time</li>
-<li>Ensures fair coverage</li>
-</ul>
+    <h3>2. Why it is necessary</h3>
+    <ul>
+      <li>Saves lives during disasters</li>
+      <li>Reduces travel time for rescue teams</li>
+      <li>Ensures equitable access</li>
+    </ul>
 
-<h2>3. Decision Flow</h2>
-<p>Binary Search → Coverage Feasibility</p>
+    <h3>3. Decision Flow</h3>
+    <p>Binary Search on Radius → BFS Coverage Check → Feasible?</p>
 
-<h2>4. C++ Code</h2>
-<pre>
-#include &lt;bits/stdc++.h&gt;
+    <h3>4. C++ Code</h3>
+    <pre><code>#include &lt;bits/stdc++.h&gt;
 using namespace std;
 
-bool feasible(int r, vector&lt;int&gt;& pts){
+bool feasible(int r, vector&lt;int&gt;&amp; pts){
     for(int x : pts) if(x > r) return false;
     return true;
 }
 
 int main(){
-    int n; cin>>n;
+    int n; cin&gt;&gt;n;
     vector&lt;int&gt; pts(n);
-    for(int &x:pts) cin>>x;
+    for(int &x:pts) cin&gt;&gt;x;
 
     int l=1, r=100000, ans=-1;
     while(l<=r){
@@ -466,43 +640,40 @@ int main(){
         else l=mid+1;
     }
 
-    cout<<"Min radius: "<<ans;
+    cout&lt;&lt;"Min radius: "&lt;&lt;ans;
 }
-</pre>
+</code></pre>
 
-<h2>5. Algorithm Used</h2>
-<p>Binary search for minimax radius.</p>
+    <h3>5. Algorithm Used</h3>
+    <p>Binary search for minimax radius.</p>
 
-<h2>6. How code works</h2>
-<p>Checks if all points can be covered within radius r.</p>
+    <h3>6. How code works</h3>
+    <p>Finds smallest r that covers all demand points.</p>
 
-<h2>7. Input Sources</h2>
-<p>Risk maps, warehouse locations.</p>
-</div>
+    <h3>7. Input Sources</h3>
+    <p>Disaster risk maps, warehouse locations.</p>
+  </div>
 
-<!-- CASE 9 -->
-<div class="episode-btn" onclick="toggle('c9')">⭐ BUSINESS CASE 9 — Smart Heatwave Shelter Capacity Planner</div>
-<div id="c9" class="episode-content">
+  <!-- CASE 9 -->
+  <div id="content-9">
+    <h2>BUSINESS CASE 9 — Smart Heatwave Shelter Capacity Planner</h2>
 
-<h2>1. What it means</h2>
-<p>Ensures shelters can safely host predicted population during heatwaves.</p>
+    <h3>1. What it means</h3>
+    <p>Ensures heatwave shelters can safely accommodate predicted population.</p>
 
-<h2>2. Why it is necessary</h2>
-<ul>
-<li>Prevents overcrowding</li>
-<li>Saves lives</li>
-<li>Improves allocation</li>
-</ul>
+    <h3>2. Why it is necessary</h3>
+    <ul>
+      <li>Prevents deaths, overcrowding, and chaos.</li>
+    </ul>
 
-<h2>3. Decision Flow</h2>
-<p>Sort → Binary Search → Feasibility Assignment</p>
+    <h3>3. Decision Flow</h3>
+    <p>Sort Demands + Capacities → Binary Search → Feasibility Match</p>
 
-<h2>4. C++ Code</h2>
-<pre>
-#include &lt;bits/stdc++.h&gt;
+    <h3>4. C++ Code</h3>
+    <pre><code>#include &lt;bits/stdc++.h&gt;
 using namespace std;
 
-bool canAssign(vector&lt;int&gt;& pop, vector&lt;int&gt;& cap, int limit){
+bool canAssign(vector&lt;int&gt;&amp; pop, vector&lt;int&gt;&amp; cap, int limit){
     int i=0,j=0;
     while(i&lt;pop.size() && j&lt;cap.size()){
         if(pop[i] <= limit && cap[j] >= pop[i]) i++, j++;
@@ -512,11 +683,11 @@ bool canAssign(vector&lt;int&gt;& pop, vector&lt;int&gt;& cap, int limit){
 }
 
 int main(){
-    int n,m; cin>>n>>m;
+    int n,m; cin&gt;&gt;n&gt;&gt;m;
     vector&lt;int&gt; pop(n), cap(m);
 
-    for(int &x: pop) cin>>x;
-    for(int &x: cap) cin>>x;
+    for(int &x: pop) cin&gt;&gt;x;
+    for(int &x: cap) cin&gt;&gt;x;
 
     sort(pop.begin(), pop.end());
     sort(cap.begin(), cap.end());
@@ -527,62 +698,113 @@ int main(){
         if(canAssign(pop,cap,mid)) ans=mid, r=mid-1;
         else l=mid+1;
     }
-    cout<<"Max people per shelter: "<<ans;
+    cout&lt;&lt;"Max people per shelter: "&lt;&lt;ans;
 }
-</pre>
+</code></pre>
 
-<h2>5. Algorithm Used</h2>
-<p>Binary search + greedy matching.</p>
+    <h3>5. Algorithm Used</h3>
+    <p>Binary search + greedy matching.</p>
 
-<h2>6. How code works</h2>
-<p>Finds smallest max-capacity limit for safe assignment.</p>
+    <h3>6. How code works</h3>
+    <p>Finds smallest max-capacity limit that allows safe assignment.</p>
 
-<h2>7. Input Sources</h2>
-<p>IMD forecast, shelter database.</p>
-</div>
+    <h3>7. Input Sources</h3>
+    <p>IMD heatwave forecast, shelter database.</p>
+  </div>
 
-<!-- CASE 10 -->
-<div class="episode-btn" onclick="toggle('c10')">⭐ BUSINESS CASE 10 — Job Fair Candidate–Company Matching System</div>
-<div id="c10" class="episode-content">
+  <!-- CASE 10 -->
+  <div id="content-10">
+    <h2>BUSINESS CASE 10 — Job Fair Candidate–Company Matching System</h2>
 
-<h2>1. What it means</h2>
-<p>Matches candidates with companies efficiently.</p>
+    <h3>1. What it means</h3>
+    <p>Matches job seekers to companies based on preferences and skills.</p>
 
-<h2>2. Why it is necessary</h2>
-<ul>
-<li>Ensures fair opportunities</li>
-<li>Reduces queue time</li>
-<li>Improves company satisfaction</li>
-</ul>
+    <h3>2. Why it is necessary</h3>
+    <ul>
+      <li>Ensures fair job opportunities</li>
+      <li>Reduces queue time at job fairs</li>
+      <li>Helps companies find best candidates</li>
+    </ul>
 
-<h2>3. Decision Flow</h2>
-<p>Preferences → Stable Matching → Final Assignment</p>
+    <h3>3. Decision Flow</h3>
+    <p>Candidate Preferences + Company Slots → Stable Matching → Final Allocation</p>
 
-<h2>4. C++ Code</h2>
-<pre>
-#include &lt;bits/stdc++.h&gt;
+    <h3>4. C++ Code</h3>
+    <pre><code>#include &lt;bits/stdc++.h&gt;
 using namespace std;
 
 int main(){
-    int n; cin>>n;
+    int n; cin&gt;&gt;n;
     vector&lt;int&gt; pref(n);
-    for(int &x: pref) cin>>x;
+    for(int &x: pref) cin&gt;&gt;x;
 
     sort(pref.begin(), pref.end());
-    cout << "First assigned: " << pref[0];
+    cout &lt;&lt; "First assigned: " &lt;&lt; pref[0];
 }
-</pre>
+</code></pre>
 
-<h2>5. Algorithm Used</h2>
-<p>Stable matching (simplified)</p>
+    <h3>5. Algorithm Used</h3>
+    <p>Stable matching principles (simplified selection demo).</p>
 
-<h2>6. How code works</h2>
-<p>Sorts candidates and assigns highest priority first.</p>
+    <h3>6. How code works</h3>
+    <p>Sorts candidates by priority and assigns highest available.</p>
 
-<h2>7. Input Sources</h2>
-<p>Candidate profiles, company requirements.</p>
+    <h3>7. Input Sources</h3>
+    <p>Candidate profiles, company requirements.</p>
+  </div>
+
 </div>
 
+<!-- POPUP overlay -->
+<div id="popup" class="popup" onclick="onOverlayClick(event)">
+  <div class="popup-card" id="popup-card" role="dialog" aria-modal="true">
+    <div id="popup-content"></div>
+
+    <div class="controls">
+      <button class="btn close-btn" id="closeBtn">Close</button>
+      <a class="back-home" href="index.html">Back to Home</a>
+    </div>
+  </div>
 </div>
+
+<script>
+// attach click listeners to cards
+document.querySelectorAll('.case-card').forEach(card=>{
+  card.addEventListener('click', ()=>{
+    const id = card.getAttribute('data-case');
+    openCase(id);
+  });
+});
+
+function openCase(id){
+  const contentNode = document.getElementById('content-' + id);
+  const popup = document.getElementById('popup');
+  const popupContent = document.getElementById('popup-content');
+  popupContent.innerHTML = contentNode.innerHTML;
+  popup.style.display = 'flex';
+  // scroll to top of content
+  document.getElementById('popup-card').scrollTop = 0;
+  // trap focus? (simple)
+  document.getElementById('closeBtn').focus();
+}
+
+function closePopup(){
+  document.getElementById('popup').style.display = 'none';
+}
+
+document.getElementById('closeBtn').addEventListener('click', closePopup);
+
+// close when clicking overlay (but not when clicking inside the card)
+function onOverlayClick(e){
+  const card = document.getElementById('popup-card');
+  if (!card.contains(e.target)) closePopup();
+}
+
+// allow Esc to close
+document.addEventListener('keydown', (e)=>{
+  if(e.key === 'Escape') closePopup();
+});
+</script>
+
 </body>
 </html>
