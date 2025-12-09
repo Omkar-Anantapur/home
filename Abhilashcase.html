@@ -50,11 +50,6 @@ pre{
     overflow-x:auto;
     white-space:pre-wrap;
 }
-.back{
-    display:inline-block;
-    margin-top:20px;
-    color:#38bdf8;
-}
 </style>
 
 <script>
@@ -79,14 +74,22 @@ for(let i=1;i<=10;i++){
 </div>
 
 <!-- ========================================================= -->
-<!-- =============== CASE 1 ================================== -->
+<!-- ================= CASE 1 ================================ -->
 <!-- ========================================================= -->
 
 <div id="c1" class="case-content">
 <h2>1) Dynamic EV Charging Station Placement</h2>
-<p><b>Problem:</b> Optimal placement of EV charging stations to minimize driver travel distance and balance loads.</p>
-<p><b>Algorithm:</b> K-means + Greedy Load Assignment</p>
-<p><b>Time Complexity:</b> O(I * n * k)</p>
+
+<p><b>Problem Statement:</b>  
+Cities need to install EV charging stations so that drivers travel minimum distance and electrical load across substations stays balanced.</p>
+
+<p><b>Algorithm Used:</b> K-Means Clustering + Greedy Load Balancing</p>
+
+<p><b>Time Complexity:</b>  
+K-Means: O(I × n × k)</p>
+
+<p><b>Conclusion:</b>  
+Provides optimal cluster-based station placement and avoids overload using a secondary greedy assignment.</p>
 
 <pre>
 #include <bits/stdc++.h>
@@ -156,13 +159,21 @@ int main(){
 
 
 <!-- ========================================================= -->
-<!-- =============== CASE 2 ================================== -->
+<!-- ================= CASE 2 ================================ -->
 <!-- ========================================================= -->
 
 <div id="c2" class="case-content">
 <h2>2) Public Health Outbreak Detection</h2>
-<p><b>Algorithm:</b> DBSCAN + Temporal Window</p>
+
+<p><b>Problem Statement:</b>  
+Detect disease outbreak clusters using clinic visit data, temporal windows, and geospatial grouping.</p>
+
+<p><b>Algorithm Used:</b> DBSCAN (Spatial) + Temporal Window Filtering</p>
+
 <p><b>Time Complexity:</b> O(n log n)</p>
+
+<p><b>Conclusion:</b>  
+This method automatically detects emerging hotspots without supervision.</p>
 
 <pre>
 #include <bits/stdc++.h>
@@ -221,14 +232,23 @@ int main(){
 </pre>
 </div>
 
+
 <!-- ========================================================= -->
-<!-- =============== CASE 3 ================================== -->
+<!-- ================= CASE 3 ================================ -->
 <!-- ========================================================= -->
 
 <div id="c3" class="case-content">
-<h2>3) On-demand Microtransit Routing</h2>
+<h2>3) On-Demand Microtransit Routing</h2>
 
-<p><b>Algorithm:</b> Greedy VRP Insertion</p>
+<p><b>Problem Statement:</b>  
+Allocate dynamic requests to minibuses so wait time remains minimal.</p>
+
+<p><b>Algorithm Used:</b> Greedy VRP Insertion</p>
+
+<p><b>Time Complexity:</b> O(m × L)</p>
+
+<p><b>Conclusion:</b>  
+A simple but effective real-time heuristic for medium-scale transit systems.</p>
 
 <pre>
 #include <bits/stdc++.h>
@@ -266,182 +286,262 @@ int main(){
 }
 </pre>
 </div>
-
-<!-- ========================================================= -->
-<!-- =============== CASE 4 ================================== -->
+        <!-- ========================================================= -->
+<!-- ================= CASE 4 ================================ -->
 <!-- ========================================================= -->
 
 <div id="c4" class="case-content">
-<h2>4) Waste Collection Optimization</h2>
+<h2>4) Waste Collection Route Optimization</h2>
 
-<p><b>Algorithm:</b> Clarke–Wright Savings</p>
+<p><b>Problem Statement:</b>  
+City garbage trucks must collect waste from bins whose fill-level changes daily.  
+Goal is to reduce fuel & time by merging nearby stops and forming efficient routes.</p>
+
+<p><b>Algorithm Used:</b> Clarke–Wright Savings Heuristic</p>
+
+<p><b>Time Complexity:</b> O(n²)</p>
+
+<p><b>Conclusion:</b>  
+A classical VRP heuristic that merges routes based on maximum “savings” and reduces total travel distance.</p>
 
 <pre>
 #include <bits/stdc++.h>
 using namespace std;
 
-struct Node{int id; double x,y; int demand;};
-double dist(Node&a,Node&b){return hypot(a.x-b.x,a.y-b.y);}
+struct Node{
+    int id;
+    double x,y;
+    int demand;
+};
+
+double dist(Node&a, Node&b){
+    return hypot(a.x-b.x, a.y-b.y);
+}
 
 int main(){
     Node depot={0,50,50,0};
     int n=25;
-    vector<Node> N;
+
+    vector<Node> nodes;
     for(int i=1;i<=n;i++)
-        N.push_back({i,rand()%100,rand()%100,rand()%20+10});
+        nodes.push_back({i, rand()%100, rand()%100, rand()%25+10});
 
-    int cap=260;
-    struct R{vector<int> seq; int load;};
+    int capacity=250;
 
-    map<int,R> routes;
-    for(auto &x:N) routes[x.id]={{x.id},x.demand};
+    struct Route{ vector<int> seq; int load; };
+    map<int,Route> routes;
 
-    vector<tuple<double,int,int>> S;
-    for(int i=0;i<n;i++)for(int j=i+1;j<n;j++){
-        double s=dist(depot,N[i])+dist(depot,N[j])-dist(N[i],N[j]);
-        S.push_back({s,N[i].id,N[j].id});
+    for(auto &nd:nodes)
+        routes[nd.id]={{nd.id}, nd.demand};
+
+    vector<tuple<double,int,int>> savings;
+
+    for(int i=0;i<n;i++){
+        for(int j=i+1;j<n;j++){
+            double s = dist(depot,nodes[i]) + dist(depot,nodes[j]) - dist(nodes[i],nodes[j]);
+            savings.push_back({s,nodes[i].id,nodes[j].id});
+        }
     }
-    sort(S.begin(),S.end(),greater<>());
 
-    for(auto&t:S){
-        double s; int a,b; tie(s,a,b)=t;
-        int ra=-1,rb=-1;
+    sort(savings.begin(), savings.end(), greater<>());
+
+    for(auto &sv : savings){
+        double s; int a,b;
+        tie(s,a,b)=sv;
+
+        int ra=-1, rb=-1;
+
         for(auto &r:routes){
             auto &seq=r.second.seq;
             if(seq.front()==a || seq.back()==a) ra=r.first;
             if(seq.front()==b || seq.back()==b) rb=r.first;
         }
-        if(ra<0||rb<0||ra==rb) continue;
 
-        if(routes[ra].load + routes[rb].load <= cap){
-            auto merged=routes[ra].seq;
-            merged.insert(merged.end(),routes[rb].seq.begin(),routes[rb].seq.end());
-            routes[ra].seq=merged;
-            routes[ra].load+=routes[rb].load;
+        if(ra<0 || rb<0 || ra==rb) continue;
+
+        if(routes[ra].load + routes[rb].load <= capacity){
+            vector<int> merged = routes[ra].seq;
+            merged.insert(merged.end(), routes[rb].seq.begin(), routes[rb].seq.end());
+            routes[ra].seq = merged;
+            routes[ra].load += routes[rb].load;
             routes.erase(rb);
         }
     }
-    cout<<"Routes: "<<routes.size()<<"\n";
+
+    cout<<"Final routes: "<<routes.size()<<"\n";
 }
 </pre>
 </div>
 
+
+
 <!-- ========================================================= -->
-<!-- =============== CASE 5 ================================== -->
+<!-- ================= CASE 5 ================================ -->
 <!-- ========================================================= -->
 
 <div id="c5" class="case-content">
-<h2>5) Smart Streetlight Energy Allocation</h2>
+<h2>5) Smart Streetlight Energy Optimization</h2>
 
-<p><b>Algorithm:</b> Greedy by safety-per-energy</p>
+<p><b>Problem Statement:</b>  
+City wants to choose which streetlights stay ON during low-traffic hours to ensure safety while saving energy.</p>
+
+<p><b>Algorithm Used:</b> Greedy Selection by (Safety Benefit / Energy Cost)</p>
+
+<p><b>Time Complexity:</b> O(n log n)</p>
+
+<p><b>Conclusion:</b>  
+Maximizes safety coverage within fixed energy budget using simple greedy ratio sorting.</p>
 
 <pre>
 #include <bits/stdc++.h>
 using namespace std;
 
-struct Slot{int id,energy; double safety;};
+struct Slot{
+    int id;
+    int energy;
+    double safety;
+};
 
 int main(){
-    int n=120,b=1500;
-    vector<Slot> S;
-    for(int i=0;i<n;i++)
-        S.push_back({i,rand()%20+5,(rand()%100)/100.0});
+    int n=150;
+    int budget=1600;
 
-    sort(S.begin(),S.end(),
-        [](auto&a,auto&b){
-            return (a.safety/a.energy) > (b.safety/b.energy);
-        }
-    );
+    vector<Slot> lamps;
+    for(int i=0;i<n;i++)
+        lamps.push_back({i, rand()%25+8, (rand()%100)/100.0});
+
+    sort(lamps.begin(), lamps.end(),
+         [](auto&a, auto&b){
+             return (a.safety/a.energy) > (b.safety/b.energy);
+         });
 
     int used=0;
-    vector<int> ON;
+    vector<int> on;
 
-    for(auto&s:S){
-        if(used+s.energy <= b){
-            used+=s.energy;
-            ON.push_back(s.id);
+    for(auto &s: lamps){
+        if(used + s.energy <= budget){
+            used += s.energy;
+            on.push_back(s.id);
         }
     }
-    cout<<"Lights ON: "<<ON.size()<<"\n";
+
+    cout<<"Lights ON: "<<on.size()<<"\n";
 }
 </pre>
 </div>
 
+
+
 <!-- ========================================================= -->
-<!-- =============== CASE 6 ================================== -->
+<!-- ================= CASE 6 ================================ -->
 <!-- ========================================================= -->
 
 <div id="c6" class="case-content">
 <h2>6) Micro-Fulfillment Center Placement</h2>
 
-<p><b>Algorithm:</b> Greedy Facility Opening</p>
+<p><b>Problem Statement:</b>  
+E-commerce companies need local fulfillment centers to minimize delivery time.</p>
+
+<p><b>Algorithm Used:</b> Greedy Facility Location (k-Median Approximation)</p>
+
+<p><b>Time Complexity:</b> O(n × k)</p>
+
+<p><b>Conclusion:</b>  
+Greedy approach gives near-optimal locations for warehouses by opening centers with best improvement.</p>
 
 <pre>
 #include <bits/stdc++.h>
 using namespace std;
 
-using P=pair<double,double>;
+using P = pair<double,double>;
+
 double dist(const P&a,const P&b){
     return hypot(a.first-b.first,a.second-b.second);
 }
 
 int main(){
-    int n=500,cand=50,K=12;
-    vector<P>d(n),cl(cand);
+    int n=500, cand=60, K=10;
 
-    for(int i=0;i<n;i++) d[i]={rand()%200,rand()%200};
-    for(int i=0;i<cand;i++) cl[i]={rand()%200,rand()%200};
+    vector<P> D(n), C(cand);
 
-    vector<int> open,assign(n,-1);
+    for(int i=0;i<n;i++) D[i]={rand()%200, rand()%200};
+    for(int i=0;i<cand;i++) C[i]={rand()%200, rand()%200};
 
-    for(int k=0;k<K;k++){
-        double best=-1; int bestC=-1;
+    vector<int> open;
+    vector<int> assign(n, -1);
+
+    for(int step=0; step<K; step++){
+        double bestGain=-1;
+        int bestC=-1;
+
         for(int c=0;c<cand;c++){
             if(find(open.begin(),open.end(),c)!=open.end()) continue;
+
             double gain=0;
+
             for(int i=0;i<n;i++){
-                double cur=(assign[i]==-1?1e9:dist(d[i],cl[assign[i]]));
-                double nd=dist(d[i],cl[c]);
-                if(nd<cur) gain+=(cur-nd);
+                double curDist = (assign[i]==-1 ? 1e9 : dist(D[i], C[assign[i]]));
+                double newDist = dist(D[i], C[c]);
+                if(newDist < curDist)
+                    gain += (curDist - newDist);
             }
-            if(gain>best){best=gain;bestC=c;}
+            if(gain > bestGain){
+                bestGain = gain;
+                bestC = c;
+            }
         }
-        if(bestC==-1) break;
+
+        if(bestC == -1) break;
+
         open.push_back(bestC);
 
         for(int i=0;i<n;i++){
-            double bd=1e18; int bi=-1;
-            for(int o:open){
-                double dd=dist(d[i],cl[o]);
-                if(dd<bd){bd=dd;bi=o;}
+            double bestd = 1e18;
+            int idx=-1;
+            for(int o : open){
+                double d = dist(D[i], C[o]);
+                if(d < bestd){ bestd=d; idx=o; }
             }
-            assign[i]=bi;
+            assign[i] = idx;
         }
     }
-    cout<<"Centers opened: "<<open.size()<<"\n";
+
+    cout<<"Opened centers: "<<open.size()<<"\n";
 }
 </pre>
 </div>
 
+
+
 <!-- ========================================================= -->
-<!-- =============== CASE 7 ================================== -->
+<!-- ================= CASE 7 ================================ -->
 <!-- ========================================================= -->
 
 <div id="c7" class="case-content">
 <h2>7) Adaptive Bicycle Lane Reallocation</h2>
 
-<p><b>Algorithm:</b> Dinic Max Flow</p>
+<p><b>Problem Statement:</b>  
+During peak cycling hours, the city reallocates car lanes to bike lanes to reduce congestion and accidents.</p>
+
+<p><b>Algorithm Used:</b> Dinic’s Max Flow Algorithm</p>
+
+<p><b>Time Complexity:</b> O(E × √V)</p>
+
+<p><b>Conclusion:</b>  
+Computes the maximum safe bike capacity on a road network after lane reallocation.</p>
 
 <pre>
 #include <bits/stdc++.h>
 using namespace std;
 
 struct Edge{int to,rev,cap;};
+
 struct Dinic{
     int N;
-    vector<vector<Edge>>G;
-    vector<int>L,it;
-    Dinic(int n):N(n),G(n),L(n),it(n){}
+    vector<vector<Edge>> G;
+    vector<int> level, it;
+
+    Dinic(int n):N(n),G(n),level(n),it(n){}
 
     void addEdge(int u,int v,int c){
         G[u].push_back({v,(int)G[v].size(),c});
@@ -449,28 +549,33 @@ struct Dinic{
     }
 
     bool bfs(int s,int t){
-        fill(L.begin(),L.end(),-1);
-        queue<int>q; L[s]=0; q.push(s);
+        fill(level.begin(), level.end(), -1);
+        queue<int> q;
+        level[s]=0;
+        q.push(s);
+
         while(!q.empty()){
-            int u=q.front();q.pop();
-            for(auto&e:G[u])
-                if(e.cap>0 && L[e.to]==-1){
-                    L[e.to]=L[u]+1;
+            int u=q.front(); q.pop();
+            for(auto &e:G[u]){
+                if(e.cap>0 && level[e.to]<0){
+                    level[e.to]=level[u]+1;
                     q.push(e.to);
                 }
+            }
         }
-        return L[t]!=-1;
+        return level[t]>=0;
     }
 
     int dfs(int u,int t,int f){
         if(u==t) return f;
-        for(int&i=it[u];i<G[u].size();i++){
-            Edge&e=G[u][i];
-            if(e.cap>0 && L[e.to]==L[u]+1){
-                int r=dfs(e.to,t,min(f,e.cap));
-                if(r){
-                    e.cap-=r; G[e.to][e.rev].cap+=r;
-                    return r;
+        for(int &i=it[u]; i<G[u].size(); i++){
+            Edge &e=G[u][i];
+            if(e.cap>0 && level[e.to]==level[u]+1){
+                int got=dfs(e.to,t,min(f,e.cap));
+                if(got){
+                    e.cap-=got;
+                    G[e.to][e.rev].cap += got;
+                    return got;
                 }
             }
         }
@@ -481,7 +586,8 @@ struct Dinic{
         int flow=0;
         while(bfs(s,t)){
             fill(it.begin(),it.end(),0);
-            while(int f=dfs(s,t,1e9)) flow+=f;
+            while(int pushed = dfs(s,t,1e9))
+                flow += pushed;
         }
         return flow;
     }
@@ -489,73 +595,104 @@ struct Dinic{
 
 int main(){
     Dinic D(6);
+
     D.addEdge(0,1,30);
     D.addEdge(1,2,20);
     D.addEdge(0,3,25);
     D.addEdge(3,2,15);
     D.addEdge(2,5,40);
-    cout<<"Max flow: "<<D.maxflow(0,5)<<"\n";
+
+    cout<<"Max bike flow: "<<D.maxflow(0,5)<<"\n";
 }
 </pre>
 </div>
-
 <!-- ========================================================= -->
-<!-- =============== CASE 8 ================================== -->
+<!-- ================= CASE 8 ================================ -->
 <!-- ========================================================= -->
 
 <div id="c8" class="case-content">
 <h2>8) Urban Tree Canopy Optimization</h2>
 
-<p><b>Algorithm:</b> Submodular Greedy Approximation</p>
+<p><b>Problem Statement:</b>  
+Choose optimal plots for planting trees to reduce heat and increase carbon absorption while staying inside a limited city budget.</p>
+
+<p><b>Algorithm Used:</b> Budgeted Submodular Maximization (Lazy Greedy)</p>
+
+<p><b>Time Complexity:</b> O(n log n)</p>
+
+<p><b>Conclusion:</b>  
+This greedy approximation gives near-optimal green-cover benefit for a fixed planting budget.</p>
 
 <pre>
 #include <bits/stdc++.h>
 using namespace std;
 
 struct Plot{
-    int id; double cost; double b1,b2,b3;
-    double score(){return b1+b2+b3;}
+    int id;
+    double cost, heat, carbon, shade;
+    double score() const {
+        return heat + carbon + shade;
+    }
 };
 
 int main(){
-    int n=250; double B=9000,used=0;
-    vector<Plot>P;
-    for(int i=0;i<n;i++)
-        P.push_back({i,(rand()%120)+20,
-            (rand()%200)/2.0,(rand()%150)/2.0,(rand()%100)/1.5
-        });
+    int n = 250;
+    double B = 9000;
+    double used = 0;
 
-    vector<bool>sel(n,false);
-    priority_queue<pair<double,int>>pq;
+    vector<Plot> P(n);
+    for(int i=0;i<n;i++){
+        P[i] = {i,
+                (rand()%120)+20,
+                (rand()%200)/2.0,
+                (rand()%150)/3.0,
+                (rand()%180)/4.0};
+    }
 
-    for(auto&p:P)
-        pq.push({p.score()/p.cost,p.id});
+    vector<bool> chosen(n,false);
+    priority_queue<pair<double,int>> pq;
 
-    vector<int>ans;
+    for(auto &p:P)
+        pq.push({p.score()/p.cost, p.id});
+
+    vector<int> selected;
 
     while(!pq.empty()){
-        auto top=pq.top(); pq.pop();
-        int id=top.second;
-        if(sel[id]) continue;
+        auto top = pq.top(); pq.pop();
+        int id = top.second;
+        if(chosen[id]) continue;
+
         if(used + P[id].cost <= B){
-            sel[id]=true;
-            used+=P[id].cost;
-            ans.push_back(id);
+            chosen[id] = true;
+            used += P[id].cost;
+            selected.push_back(id);
         }
     }
-    cout<<"Selected "<<ans.size()<<" plots\n";
+
+    cout << "Selected: " << selected.size() << " plots\n";
+    cout << "Budget used: " << used << "\n";
 }
 </pre>
 </div>
 
+
+
 <!-- ========================================================= -->
-<!-- =============== CASE 9 ================================== -->
+<!-- ================= CASE 9 ================================ -->
 <!-- ========================================================= -->
 
 <div id="c9" class="case-content">
-<h2>9) Drone Corridor Planning</h2>
+<h2>9) Drone Corridor Planning With No-Fly Zones</h2>
 
-<p><b>Algorithm:</b> A* Search on Grid</p>
+<p><b>Problem Statement:</b>  
+Compute safe airborne routes for delivery drones while avoiding government buildings, houses, hospitals, and restricted areas.</p>
+
+<p><b>Algorithm Used:</b> A* Search on 8-direction Grid</p>
+
+<p><b>Time Complexity:</b> O(E log V)</p>
+
+<p><b>Conclusion:</b>  
+A* gives shortest + safest corridor under dynamic obstacles and wind/noise penalties.</p>
 
 <pre>
 #include <bits/stdc++.h>
@@ -565,120 +702,133 @@ int dx[8]={1,1,0,-1,-1,-1,0,1};
 int dy[8]={0,1,1,1,0,-1,-1,-1};
 
 double H(int x,int y,int tx,int ty){
-    return hypot(tx-x,ty-y);
+    return hypot(tx-x, ty-y);
 }
 
 int main(){
-    int W=200,Hh=200;
-    vector<vector<int>>block(W,vector<int>(Hh,0));
+    int W=200, Hh=200;
+    vector<vector<int>> block(W, vector<int>(Hh,0));
 
     for(int i=60;i<90;i++)
         for(int j=70;j<110;j++)
-            block[i][j]=1;
+            block[i][j] = 1;
 
-    pair<int,int>s={10,10},t={190,170};
-    vector<vector<double>>g(W,vector<double>(Hh,1e18));
-    vector<vector<pair<int,int>>>par(W,vector<pair<int,int>>(Hh,{-1,-1}));
+    pair<int,int> s = {10,10}, t = {180,170};
+
+    vector<vector<double>> g(W, vector<double>(Hh,1e18));
+    vector<vector<pair<int,int>>> parent(W, vector<pair<int,int>>(Hh, {-1,-1}));
 
     priority_queue<
         pair<double,pair<int,int>>,
         vector<pair<double,pair<int,int>>>,
         greater<>
-    >pq;
+    > pq;
 
-    g[s.first][s.second]=0;
+    g[s.first][s.second] = 0;
     pq.push({0,{s.first,s.second}});
 
     while(!pq.empty()){
-        auto cur=pq.top(); pq.pop();
-        int x=cur.second.first, y=cur.second.second;
+        auto cur = pq.top(); pq.pop();
+        int x = cur.second.first;
+        int y = cur.second.second;
+
         if(x==t.first && y==t.second) break;
 
         for(int k=0;k<8;k++){
-            int nx=x+dx[k], ny=y+dy[k];
+            int nx = x+dx[k];
+            int ny = y+dy[k];
+
             if(nx<0||ny<0||nx>=W||ny>=Hh) continue;
             if(block[nx][ny]) continue;
 
-            double move = hypot(dx[k],dy[k]);
+            double move = hypot(dx[k], dy[k]);
             double noise = double(ny)/Hh;
-
-            double nc=g[x][y]+move+noise;
+            double nc = g[x][y] + move + noise*0.5;
 
             if(nc < g[nx][ny]){
-                g[nx][ny]=nc;
-                par[nx][ny]={x,y};
+                g[nx][ny] = nc;
+                parent[nx][ny] = {x,y};
                 double f = nc + H(nx,ny,t.first,t.second);
                 pq.push({f,{nx,ny}});
             }
         }
     }
 
-    vector<pair<int,int>>path;
-    auto cur=t;
-    while(cur!=s && cur.first!=-1){
+    vector<pair<int,int>> path;
+    auto cur = t;
+    while(cur != s && cur.first != -1){
         path.push_back(cur);
-        cur=par[cur.first][cur.second];
+        cur = parent[cur.first][cur.second];
     }
-    reverse(path.begin(),path.end());
 
+    reverse(path.begin(), path.end());
     cout<<"Path length: "<<path.size()<<"\n";
 }
 </pre>
 </div>
 
+
+
 <!-- ========================================================= -->
-<!-- =============== CASE 10 ================================== -->
+<!-- ================= CASE 10 =============================== -->
 <!-- ========================================================= -->
 
 <div id="c10" class="case-content">
 <h2>10) Affordable Housing Allocation</h2>
 
-<p><b>Algorithm:</b> Gale–Shapley Matching with Priority</p>
+<p><b>Problem Statement:</b>  
+City must assign limited government housing units to applicants based on priority (income, disability, family size, urgency).</p>
+
+<p><b>Algorithm Used:</b> Gale–Shapley Stable Matching (Priority Version)</p>
+
+<p><b>Time Complexity:</b> O(n × m)</p>
+
+<p><b>Conclusion:</b>  
+Ensures fair, conflict-free allocation respecting priority without bias.</p>
 
 <pre>
 #include <bits/stdc++.h>
 using namespace std;
 
 int main(){
-    int A=400,H=90;
+    int A=400, H=80;
+
     vector<vector<int>> pref(A);
     for(int i=0;i<A;i++)
         for(int j=0;j<10;j++)
             pref[i].push_back((i+j)%H);
 
-    vector<int>cap(H,4);
-    vector<int>next(A,0);
-    vector<set<pair<int,int>>>house(H);
+    vector<int> cap(H,4);
+    vector<int> next(A,0);
+    vector<set<pair<int,int>>> house(H);
 
-    vector<int>score(A);
-    for(int i=0;i<A;i++) score[i]=rand()%100;
+    vector<int> score(A);
+    for(int i=0;i<A;i++) score[i] = rand()%100;
 
-    queue<int>freeQ;
+    queue<int> freeQ;
     for(int i=0;i<A;i++) freeQ.push(i);
 
     while(!freeQ.empty()){
-        int a=freeQ.front(); freeQ.pop();
-        if(next[a]>=pref[a].size()) continue;
+        int a = freeQ.front(); freeQ.pop();
+        if(next[a] >= pref[a].size()) continue;
 
-        int h=pref[a][next[a]++];
-        house[h].insert({-score[a],a});
+        int h = pref[a][next[a]++];
+        house[h].insert({-score[a], a});
 
-        if(house[h].size()>cap[h]){
-            auto worst=*prev(house[h].end());
+        if(house[h].size() > cap[h]){
+            auto worst = *prev(house[h].end());
             house[h].erase(worst);
-            int out=worst.second;
-            if(out!=a) freeQ.push(out);
+            if(worst.second != a)
+                freeQ.push(worst.second);
         }
     }
 
-    int alloc=0;
+    int allocated = 0;
     for(int h=0;h<H;h++)
-        alloc+=house[h].size();
+        allocated += house[h].size();
 
-    cout<<"Allocated: "<<alloc<<"\n";
+    cout<<"Allocated: "<<allocated<<"\n";
 }
 </pre>
 </div>
 
-</body>
-</html>
