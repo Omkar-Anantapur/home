@@ -2,245 +2,188 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Abhilash – Business Case Study</title>
+<title>Abhilash – Business Case Studies</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <style>
-body { margin:0; font-family:"Segoe UI",sans-serif; background:#020617; color:#e5e7eb; }
-header { text-align:center; padding:2rem; background:rgba(0,0,0,0.6); border-bottom:1px solid rgba(255,255,255,0.1);}
-header h1 { color:#e50914; letter-spacing:3px; margin-bottom:0.5rem; }
-header p { color:#9ca3af; margin:0; }
-.carousel-container { max-width:900px; margin:2rem auto; overflow-x:auto; scroll-snap-type:x mandatory; display:flex; }
-.panel { min-width:100%; scroll-snap-align:start; background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.25); border-radius:16px; padding:2rem; margin-right:1rem; }
-pre { background:rgba(0,0,0,0.4); padding:1rem; border-radius:12px; overflow-x:auto; max-height:400px; }
-button { margin-top:1rem; padding:0.5rem 1rem; background:#e50914; border:none; border-radius:8px; color:#fff; cursor:pointer; }
-button:hover { background:#ff1f3f; }
-a.back { display:inline-block; margin:2rem; color:#38bdf8; text-decoration:none; }
-a.back:hover { text-decoration:underline; }
+  body {
+    margin: 0;
+    font-family: "Segoe UI", sans-serif;
+    background: #020617;
+    color: #e5e7eb;
+    overflow-x: hidden;
+  }
+
+  header {
+    text-align: center;
+    padding: 2rem 1rem;
+    background: rgba(0,0,0,0.6);
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+  }
+
+  header h1 {
+    color: #e50914;
+    letter-spacing: 3px;
+    margin-bottom: 0.5rem;
+  }
+
+  header p {
+    color: #9ca3af;
+    margin: 0;
+  }
+
+  .carousel-container {
+    max-width: 900px;
+    margin: 2rem auto;
+    position: relative;
+  }
+
+  .carousel {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .panel {
+    min-width: 100%;
+    scroll-snap-align: start;
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.25);
+    border-radius: 16px;
+    margin-right: 1rem;
+    padding: 2rem;
+    box-sizing: border-box;
+    position: relative;
+    animation: steelShine 2s infinite alternate;
+  }
+
+  @keyframes steelShine {
+    0% { box-shadow: 0 0 5px rgba(229,9,20,0.1); }
+    100% { box-shadow: 0 0 25px rgba(229,9,20,0.5); }
+  }
+
+  h2 { color: #e50914; margin-bottom: 1rem; }
+
+  pre {
+    background: rgba(0,0,0,0.4);
+    padding: 1rem;
+    border-radius: 12px;
+    overflow-x: auto;
+    max-height: 400px;
+  }
+
+  button.copy-btn, button.expand-btn {
+    margin-top: 1rem;
+    padding: 0.5rem 1rem;
+    background: #e50914;
+    border: none;
+    border-radius: 8px;
+    color: #fff;
+    cursor: pointer;
+    margin-right: 0.5rem;
+    transition: 0.3s;
+  }
+
+  button.copy-btn:hover, button.expand-btn:hover {
+    background: #ff1f3f;
+  }
+
+  .navigation {
+    text-align: center;
+    margin-top: 1.5rem;
+  }
+
+  .navigation button {
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.25);
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    margin: 0 0.5rem;
+    cursor: pointer;
+    color: #e50914;
+    font-size: 1.2rem;
+  }
+
+  .episodes {
+    max-width: 900px;
+    margin: 2rem auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit,minmax(220px,1fr));
+    gap: 1.5rem;
+  }
+
+  .episode {
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    padding:1.8rem 1rem;
+    background:rgba(255,255,255,0.08);
+    border:1px solid rgba(255,255,255,0.25);
+    border-radius:16px;
+    color:#e5e7eb;
+    transition:.3s;
+  }
+
+  .episode:hover {
+    border-color:#e50914;
+    transform:translateY(-5px);
+    box-shadow:0 0 20px rgba(229,9,20,0.4);
+    background:rgba(255,255,255,0.12);
+  }
+
+  .episode h3 { margin:0; font-size:1rem; }
+
+  a.back {
+    display:inline-block;
+    margin: 2rem;
+    color:#38bdf8;
+    font-size:0.95rem;
+    text-decoration:none;
+  }
+
+  a.back:hover { text-decoration:underline; }
 </style>
 </head>
 <body>
 
-<a class="back" href="index.html">← Back to Home</a>
-
 <header>
-  <h1 id="case-title">Business Case Study</h1>
+  <h1>Abhilash – BUSINESS CASE STUDIES</h1>
   <p>Swipe panels or use arrow keys to navigate</p>
 </header>
 
-<div class="carousel-container" id="carousel">
-  <!-- Panels will be injected dynamically -->
+<div class="episodes">
+  <a class="episode" href="case.html?id=1"><h3>Business Case Study 1</h3></a>
+  <a class="episode" href="case.html?id=2"><h3>Business Case Study 2</h3></a>
+  <a class="episode" href="case.html?id=3"><h3>Business Case Study 3</h3></a>
+  <a class="episode" href="case.html?id=4"><h3>Business Case Study 4</h3></a>
+  <a class="episode" href="case.html?id=5"><h3>Business Case Study 5</h3></a>
+  <a class="episode" href="case.html?id=6"><h3>Business Case Study 6</h3></a>
+  <a class="episode" href="case.html?id=7"><h3>Business Case Study 7</h3></a>
+  <a class="episode" href="case.html?id=8"><h3>Business Case Study 8</h3></a>
+  <a class="episode" href="case.html?id=9"><h3>Business Case Study 9</h3></a>
+  <a class="episode" href="case.html?id=10"><h3>Business Case Study 10</h3></a>
 </div>
 
 <script>
-// All 10 C++ case studies
-const cases = [
-  {
-    title:"Business Case 1: Dynamic EV Charger Placement",
-    problem:"Place limited fast chargers across a city to minimize distance and balance load.",
-    algorithm:"k-means clustering for placement + greedy load balancing.",
-    complexity:"k-means: O(I*n*k*d), Assignment: O(n log k).",
-    code:`#include <iostream>
-#include <vector>
-#include <cmath>
-using namespace std;
-
-struct Point { double x,y; };
-double distance(Point a, Point b) { return sqrt((a.x-b.x)(a.x-b.x)+(a.y-b.y)(a.y-b.y)); }
-
-int main() {
-    vector<Point> demandPoints = {{1,1},{2,3},{4,5},{6,7}};
-    vector<Point> stations = {{0,0},{5,5}};
-    for(auto &p:demandPoints){
-        double minDist = 1e9;
-        int closest = -1;
-        for(int i=0;i<stations.size();i++){
-            double d=distance(p,stations[i]);
-            if(d<minDist){ minDist=d; closest=i;}
-        }
-        cout<<"Point("<<p.x<<","<<p.y<<") assigned to Station "<<closest<<endl;
+  // Optional: Keyboard navigation for episodes
+  document.addEventListener('keydown', e => {
+    const current = document.activeElement;
+    if(e.key === 'ArrowRight') {
+      let next = current.nextElementSibling;
+      if(next && next.classList.contains('episode')) next.focus();
     }
-}`},
-  {
-    title:"Business Case 2: Remote Blinking Fix",
-    problem:"Remote continuously blinking red light and not responding.",
-    algorithm:"Check battery, IR sensor, and reset device.",
-    complexity:"O(1) troubleshooting steps.",
-    code:`#include <iostream>
-using namespace std;
-int main(){
-    bool batteryOK=true, irOK=true;
-    if(!batteryOK) cout<<"Replace battery"<<endl;
-    else if(!irOK) cout<<"Clean IR sensor"<<endl;
-    else cout<<"Reset remote"<<endl;
-}`},
-  {
-    title:"Business Case 3: Text Style Comparison",
-    problem:"Identify the style of text from image input.",
-    algorithm:"Compare font styles using OCR or visual comparison.",
-    complexity:"O(n) per font sample.",
-    code:`#include <iostream>
-#include <string>
-using namespace std;
-int main(){
-    string fontSample="Benz Gd";
-    if(fontSample=="Benz Gd") cout<<"Matched font style"<<endl;
-    else cout<<"Font not matched"<<endl;
-}`},
-  {
-    title:"Business Case 4: BFS and DFS Examples",
-    problem:"Provide examples for BFS and DFS traversals.",
-    algorithm:"Use graph adjacency lists and queue/stack traversals.",
-    complexity:"BFS/DFS: O(V+E).",
-    code:`#include <iostream>
-#include <vector>
-#include <queue>
-#include <stack>
-using namespace std;
-
-void BFS(int start, vector<vector<int>>& adj){
-    vector<bool> visited(adj.size(), false);
-    queue<int> q; q.push(start); visited[start]=true;
-    while(!q.empty()){
-        int u=q.front(); q.pop();
-        cout<<u<<" ";
-        for(int v:adj[u]) if(!visited[v]) { visited[v]=true; q.push(v); }
+    if(e.key === 'ArrowLeft') {
+      let prev = current.previousElementSibling;
+      if(prev && prev.classList.contains('episode')) prev.focus();
     }
-}
-
-void DFS(int start, vector<vector<int>>& adj){
-    vector<bool> visited(adj.size(), false);
-    stack<int> s; s.push(start);
-    while(!s.empty()){
-        int u=s.top(); s.pop();
-        if(visited[u]) continue;
-        visited[u]=true;
-        cout<<u<<" ";
-        for(int v:adj[u]) if(!visited[v]) s.push(v);
-    }
-}
-
-int main(){
-    vector<vector<int>> adj={{1,2},{0,3},{0,3},{1,2}};
-    cout<<"BFS: "; BFS(0,adj); cout<<endl;
-    cout<<"DFS: "; DFS(0,adj); cout<<endl;
-}`},
-  {
-    title:"Business Case 5: Combinations and Permutations",
-    problem:"Solve C(n,3)=P(n,2) and other combinatorial problems.",
-    algorithm:"Use combination and permutation formulas.",
-    complexity:"O(1) per calculation.",
-    code:`#include <iostream>
-using namespace std;
-int factorial(int n){ int f=1; for(int i=2;i<=n;i++) f*=i; return f; }
-int C(int n,int r){ return factorial(n)/(factorial(r)*factorial(n-r)); }
-int P(int n,int r){ return factorial(n)/factorial(n-r); }
-
-int main(){
-    int n=8;
-    cout<<"C(8,3) = "<<C(n,3)<<endl;
-    cout<<"P(8,2) = "<<P(n,2)<<endl;
-}`},
-  {
-    title:"Business Case 6: Tower of Hanoi & N-Queens",
-    problem:"Compute time complexity and solve examples.",
-    algorithm:"Recursive solution.",
-    complexity:"Tower of Hanoi: O(2^n), N-Queens: O(n!).",
-    code:`#include <iostream>
-using namespace std;
-
-void hanoi(int n,char A,char B,char C){
-    if(n==1){ cout<<"Move disk from "<<A<<" to "<<C<<endl; return; }
-    hanoi(n-1,A,C,B); cout<<"Move disk from "<<A<<" to "<<C<<endl; hanoi(n-1,B,A,C);
-}
-
-int main(){
-    int n=3;
-    hanoi(n,'A','B','C');
-}`},
-  {
-    title:"Business Case 7: Red-Black Tree Construction",
-    problem:"Construct Red-Black tree with given inputs.",
-    algorithm:"Follow Red-Black tree insertion rules with rotations.",
-    complexity:"O(n log n).",
-    code:`#include <iostream>
-#include <set>
-using namespace std;
-int main(){
-    set<int> rbTree;
-    int values[]={10,6,78,34,67,45,33,98};
-    for(int v:values) rbTree.insert(v);
-    for(int v:rbTree) cout<<v<<" ";
-}`},
-  {
-    title:"Business Case 8: Weight Gain Diet Plan",
-    problem:"Provide weight gain diet based on user's height, weight, and workouts.",
-    algorithm:"Calorie calculation + meal distribution.",
-    complexity:"O(1) calculation steps.",
-    code:`#include <iostream>
-using namespace std;
-int main(){
-    int weight=58,height=171;
-    int target=65;
-    int calIntake=weight*30; // Approx calories
-    cout<<"Calories needed: "<<calIntake<<endl;
-}`},
-  {
-    title:"Business Case 9: Semaphore & Mutex Usage",
-    problem:"Explain semaphore and mutex usage in OS.",
-    algorithm:"Use semaphore wait/signal and mutex lock/unlock examples.",
-    complexity:"O(1) per operation.",
-    code:`#include <iostream>
-#include <mutex>
-using namespace std;
-
-int main(){
-    mutex mtx;
-    mtx.lock();
-    cout<<"Critical section"<<endl;
-    mtx.unlock();
-}`},
-  {
-    title:"Business Case 10: Skip List Construction",
-    problem:"Construct skip list and explain mapping.",
-    algorithm:"Use probabilistic insertion into skip list levels.",
-    complexity:"O(log n) average for search/insert.",
-    code:`#include <iostream>
-#include <vector>
-#include <cstdlib>
-using namespace std;
-
-struct Node{
-    int val;
-    vector<Node*> forward;
-    Node(int v,int level){ val=v; forward.resize(level,nullptr); }
-};
-
-int main(){
-    Node* head=new Node(-1,3);
-    Node* n1=new Node(10,2);
-    head->forward[0]=n1; head->forward[1]=n1;
-    cout<<"Skip List Example"<<endl;
-}`},
-];// Get id from URL
-const params = new URLSearchParams(window.location.search);
-const id = parseInt(params.get("id")) || 1; // default to 1
-
-const selectedCase = cases[id - 1];
-document.getElementById("case-title").textContent = selectedCase.title;
-
-const carousel = document.getElementById("carousel");
-
-// Create panels
-["Problem", "Algorithm", "Complexity", "Code"].forEach(section => {
-  const panel = document.createElement("div");
-  panel.className = "panel";
-  if(section === "Problem") panel.innerHTML = <h2>${section}</h2><p>${selectedCase.problem}</p>;
-  if(section === "Algorithm") panel.innerHTML = <h2>${section}</h2><p>${selectedCase.algorithm}</p>;
-  if(section === "Complexity") panel.innerHTML = <h2>${section}</h2><p>${selectedCase.complexity}</p>;
-  if(section === "Code") panel.innerHTML = <h2>${section}</h2><pre>${selectedCase.code}</pre>;
-  carousel.appendChild(panel);
-});
+  });
 </script>
 
 </body>
 </html>
+
+
