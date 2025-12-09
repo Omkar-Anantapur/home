@@ -2,188 +2,490 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Abhilash – Business Case Studies</title>
+<title>Case Study</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
-  body {
-    margin: 0;
+  body{
     font-family: "Segoe UI", sans-serif;
-    background: #020617;
-    color: #e5e7eb;
-    overflow-x: hidden;
-  }
-
-  header {
-    text-align: center;
-    padding: 2rem 1rem;
-    background: rgba(0,0,0,0.6);
-    border-bottom: 1px solid rgba(255,255,255,0.1);
-  }
-
-  header h1 {
-    color: #e50914;
-    letter-spacing: 3px;
-    margin-bottom: 0.5rem;
-  }
-
-  header p {
-    color: #9ca3af;
-    margin: 0;
-  }
-
-  .carousel-container {
-    max-width: 900px;
-    margin: 2rem auto;
-    position: relative;
-  }
-
-  .carousel {
-    display: flex;
-    overflow-x: auto;
-    scroll-snap-type: x mandatory;
-    scroll-behavior: smooth;
-    -webkit-overflow-scrolling: touch;
-  }
-
-  .panel {
-    min-width: 100%;
-    scroll-snap-align: start;
-    background: rgba(255,255,255,0.08);
-    border: 1px solid rgba(255,255,255,0.25);
-    border-radius: 16px;
-    margin-right: 1rem;
-    padding: 2rem;
-    box-sizing: border-box;
-    position: relative;
-    animation: steelShine 2s infinite alternate;
-  }
-
-  @keyframes steelShine {
-    0% { box-shadow: 0 0 5px rgba(229,9,20,0.1); }
-    100% { box-shadow: 0 0 25px rgba(229,9,20,0.5); }
-  }
-
-  h2 { color: #e50914; margin-bottom: 1rem; }
-
-  pre {
-    background: rgba(0,0,0,0.4);
-    padding: 1rem;
-    border-radius: 12px;
-    overflow-x: auto;
-    max-height: 400px;
-  }
-
-  button.copy-btn, button.expand-btn {
-    margin-top: 1rem;
-    padding: 0.5rem 1rem;
-    background: #e50914;
-    border: none;
-    border-radius: 8px;
-    color: #fff;
-    cursor: pointer;
-    margin-right: 0.5rem;
-    transition: 0.3s;
-  }
-
-  button.copy-btn:hover, button.expand-btn:hover {
-    background: #ff1f3f;
-  }
-
-  .navigation {
-    text-align: center;
-    margin-top: 1.5rem;
-  }
-
-  .navigation button {
-    background: rgba(255,255,255,0.08);
-    border: 1px solid rgba(255,255,255,0.25);
-    border-radius: 50%;
-    width: 40px;
-    height: 40px;
-    margin: 0 0.5rem;
-    cursor: pointer;
-    color: #e50914;
-    font-size: 1.2rem;
-  }
-
-  .episodes {
-    max-width: 900px;
-    margin: 2rem auto;
-    display: grid;
-    grid-template-columns: repeat(auto-fit,minmax(220px,1fr));
-    gap: 1.5rem;
-  }
-
-  .episode {
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    text-align:center;
-    padding:1.8rem 1rem;
-    background:rgba(255,255,255,0.08);
-    border:1px solid rgba(255,255,255,0.25);
-    border-radius:16px;
+    background:#020617;
     color:#e5e7eb;
-    transition:.3s;
+    margin:0;
+    padding:20px;
   }
-
-  .episode:hover {
-    border-color:#e50914;
-    transform:translateY(-5px);
-    box-shadow:0 0 20px rgba(229,9,20,0.4);
-    background:rgba(255,255,255,0.12);
+  h1{ color:#e50914; text-align:center; }
+  .box{
+    background:rgba(255,255,255,0.08);
+    padding:20px;
+    border-radius:15px;
+    border:1px solid rgba(255,255,255,0.25);
+    max-width:900px;
+    margin:auto;
   }
-
-  .episode h3 { margin:0; font-size:1rem; }
-
-  a.back {
-    display:inline-block;
-    margin: 2rem;
+  pre{
+    background:black;
+    padding:20px;
+    border-radius:10px;
+    overflow-x:auto;
+    white-space:pre-wrap;
+  }
+  a{
+    display:block;
+    text-align:center;
+    margin-top:20px;
     color:#38bdf8;
-    font-size:0.95rem;
     text-decoration:none;
   }
-
-  a.back:hover { text-decoration:underline; }
 </style>
+
 </head>
 <body>
 
-<header>
-  <h1>Abhilash – BUSINESS CASE STUDIES</h1>
-  <p>Swipe panels or use arrow keys to navigate</p>
-</header>
+<h1 id="title"></h1>
 
-<div class="episodes">
-  <a class="episode" href="case.html?id=1"><h3>Business Case Study 1</h3></a>
-  <a class="episode" href="case.html?id=2"><h3>Business Case Study 2</h3></a>
-  <a class="episode" href="case.html?id=3"><h3>Business Case Study 3</h3></a>
-  <a class="episode" href="case.html?id=4"><h3>Business Case Study 4</h3></a>
-  <a class="episode" href="case.html?id=5"><h3>Business Case Study 5</h3></a>
-  <a class="episode" href="case.html?id=6"><h3>Business Case Study 6</h3></a>
-  <a class="episode" href="case.html?id=7"><h3>Business Case Study 7</h3></a>
-  <a class="episode" href="case.html?id=8"><h3>Business Case Study 8</h3></a>
-  <a class="episode" href="case.html?id=9"><h3>Business Case Study 9</h3></a>
-  <a class="episode" href="case.html?id=10"><h3>Business Case Study 10</h3></a>
+<div class="box">
+  <p id="problem"></p>
+  <p id="algo"></p>
+  <p id="time"></p>
+
+  <h3>C++ Code</h3>
+  <pre id="code"></pre>
 </div>
 
+<a href="abhilash.html">← Back</a>
+
 <script>
-  // Optional: Keyboard navigation for episodes
-  document.addEventListener('keydown', e => {
-    const current = document.activeElement;
-    if(e.key === 'ArrowRight') {
-      let next = current.nextElementSibling;
-      if(next && next.classList.contains('episode')) next.focus();
+// ALL 10 CASE DATA INSIDE ONE JS OBJECT
+const data = {
+
+1 : {
+title : "Business Case Study 1 – EV Charging Station Placement",
+problem : "Optimal positioning of EV charging stations to minimize travel distance and balance electricity load.",
+algo : "Algorithm Used: K-Means Clustering + Greedy Load Balancing",
+time : "Time Complexity: O(I × n × k × d)",
+code : `
+#include <bits/stdc++.h>
+using namespace std;
+using P = pair<double,double>;
+double dist(const P&a,const P&b){ return hypot(a.first-b.first,a.second-b.second); }
+int main(){
+    int n=1200, k=25, it=60;
+    vector<P> pts(n);
+    mt19937 rng(7);
+    uniform_real_distribution<double> un(0,200);
+    for(int i=0;i<n;i++) pts[i]={un(rng),un(rng)};
+    vector<P> cent(k);
+    for(int i=0;i<k;i++) cent[i]=pts[i*(n/k)];
+    vector<int> assign(n);
+    for(int iters=0;iters<it;iters++){
+        vector<int> cnt(k,0);
+        vector<P> sum(k,{0,0});
+        for(int i=0;i<n;i++){
+            int best=0; double bestd=1e18;
+            for(int j=0;j<k;j++){
+                double d=dist(pts[i],cent[j]);
+                if(d<bestd){bestd=d; best=j;}
+            }
+            assign[i]=best;
+            cnt[best]++; sum[best].first+=pts[i].first; sum[best].second+=pts[i].second;
+        }
+        for(int j=0;j<k;j++) if(cnt[j]) cent[j]={sum[j].first/cnt[j], sum[j].second/cnt[j]};
     }
-    if(e.key === 'ArrowLeft') {
-      let prev = current.previousElementSibling;
-      if(prev && prev.classList.contains('episode')) prev.focus();
+    cout<<"Centers computed.";
+}
+`
+},
+
+2 : {
+title : "Business Case Study 2 – Public Health Outbreak Detection",
+problem : "Detect outbreak clusters using spatial and time window data.",
+algo : "Algorithm Used: DBSCAN Clustering",
+time : "Time Complexity: O(n log n)",
+code : `
+#include <bits/stdc++.h>
+using namespace std;
+struct P{ double x,y; int t; };
+double dist(const P&a,const P&b){ return hypot(a.x-b.x,a.y-b.y); }
+int main(){
+    vector<P> pts;
+    for(int i=0;i<700;i++) pts.push_back({rand()%150,rand()%150,rand()%72});
+    int n=pts.size();
+    double eps=1.3; int minPts=6;
+    vector<int> vis(n,0), cid(n,-1);
+    int C=0;
+    for(int i=0;i<n;i++){
+        if(vis[i]) continue;
+        vis[i]=1;
+        vector<int> nbr;
+        for(int j=0;j<n;j++)
+            if(dist(pts[i],pts[j])<=eps && abs(pts[i].t-pts[j].t)<=8)
+                nbr.push_back(j);
+        if(nbr.size()<minPts){ cid[i]=-2; continue; }
+        cid[i]=C;
+        queue<int>q;
+        for(int id:nbr) q.push(id);
+        while(!q.empty()){
+            int cur=q.front(); q.pop();
+            if(!vis[cur]){
+                vis[cur]=1;
+                vector<int> nbr2;
+                for(int j=0;j<n;j++)
+                    if(dist(pts[cur],pts[j])<=eps && abs(pts[cur].t-pts[j].t)<=8)
+                        nbr2.push_back(j);
+                if(nbr2.size()>=minPts)
+                    for(int id:nbr2) if(!vis[id]) q.push(id);
+            }
+            if(cid[cur]==-1) cid[cur]=C;
+        }
+        C++;
     }
-  });
+    cout<<"Clusters: "<<C;
+}
+`
+},
+
+3 : {
+title : "Business Case Study 3 – Microtransit Routing",
+problem : "Assign minibuses dynamically to ride requests.",
+algo : "Algorithm Used: Greedy VRP Insertion",
+time : "Time Complexity: O(m × L)",
+code : `
+#include <bits/stdc++.h>
+using namespace std;
+struct Req{int id; double x,y; int pax;};
+struct Bus{int id; double x,y; int cap,load; vector<int>route;};
+double dist(pair<double,double>a, pair<double,double>b){ return hypot(a.first-b.first,a.second-b.second); }
+int main(){
+    vector<Bus> bus;
+    for(int i=0;i<12;i++) bus.push_back({i, rand()%120, rand()%120, 15,0,{}});
+    auto assign=[&](Req r){
+        double best=1e18; int vid=-1;
+        for(auto &b:bus){
+            if(b.load+r.pax > b.cap) continue;
+            double c=dist({b.x,b.y},{r.x,r.y});
+            if(c<best){best=c; vid=b.id;}
+        }
+        if(vid==-1){ cout<<"Rejected"; return; }
+        bus[vid].route.push_back(r.id);
+        bus[vid].load+=r.pax;
+        cout<<"Assigned "<<r.id<<" to "<<vid<<"\\n";
+    };
+    for(int i=0;i<60;i++) assign({i, rand()%120, rand()%120,1});
+}
+`
+},
+
+// ******* CASES 4 TO 10 (LONG) WILL CONTINUE BELOW *******
+4 : {
+title:"Business Case Study 4 – Waste Segregation Routing",
+problem:"Optimize truck routes using bin fill prediction.",
+algo:"Algorithm: Clarke Wright Savings",
+time:"Time Complexity: O(n²)",
+code:`
+#include <bits/stdc++.h>
+using namespace std;
+struct Node{int id; double x,y; int demand;};
+double dist(Node&a,Node&b){ return hypot(a.x-b.x,a.y-b.y); }
+int main(){
+    Node depot={0,50,50,0};
+    int n=25;
+    vector<Node> nodes;
+    for(int i=1;i<=n;i++)
+        nodes.push_back({i,double(rand()%100),double(rand()%100),rand()%25+10});
+    int cap=260;
+    struct Route{vector<int>seq; int load;};
+    map<int,Route> R;
+    for(auto &nd:nodes) R[nd.id]={{nd.id}, nd.demand};
+    vector<tuple<double,int,int>> S;
+    for(int i=0;i<n;i++) for(int j=i+1;j<n;j++){
+        double s=dist(depot,nodes[i]) + dist(depot,nodes[j]) - dist(nodes[i],nodes[j]);
+        S.push_back({s,nodes[i].id,nodes[j].id});
+    }
+    sort(S.begin(),S.end(),greater<>());
+    for(auto &t:S){
+        double s; int a,b; tie(s,a,b)=t;
+        int ra=-1,rb=-1;
+        for(auto &r:R){
+            auto &seq=r.second.seq;
+            if(seq.front()==a||seq.back()==a) ra=r.first;
+            if(seq.front()==b||seq.back()==b) rb=r.first;
+        }
+        if(ra<0||rb<0||ra==rb) continue;
+        if(R[ra].load + R[rb].load <= cap){
+            auto merged=R[ra].seq;
+            merged.insert(merged.end(), R[rb].seq.begin(), R[rb].seq.end());
+            R[ra].seq=merged;
+            R[ra].load+=R[rb].load;
+            R.erase(rb);
+        }
+    }
+    cout<<"Routes: "<<R.size();
+}
+`
+},
+
+// Continue
+
+5:{
+title:"Business Case Study 5 – Smart Streetlight Scheduling",
+problem:"Minimize energy while keeping safety lighting ON.",
+algo:"Algorithm: Greedy by safety/energy ratio",
+time:"Time Complexity: O(n log n)",
+code:`
+#include <bits/stdc++.h>
+using namespace std;
+struct Slot{int id; int energy; double safety;};
+int main(){
+    int n=120,budget=1500;
+    vector<Slot>S;
+    for(int i=0;i<n;i++) S.push_back({i,rand()%25+8,double(rand()%100)/100.0});
+    sort(S.begin(),S.end(),[](auto&a,auto&b){
+        return (a.safety/a.energy) > (b.safety/b.energy);
+    });
+    int used=0; vector<int>on;
+    for(auto &s:S){
+        if(used+s.energy <= budget){
+            used+=s.energy; on.push_back(s.id);
+        }
+    }
+    cout<<"Lights ON: "<<on.size();
+}
+`
+},
+
+6:{
+title:"Business Case Study 6 – Fulfillment Center Placement",
+problem:"Select optimal warehouse locations.",
+algo:"Algorithm: Greedy Facility Location",
+time:"Time Complexity: O(nk)",
+code:`
+#include <bits/stdc++.h>
+using namespace std;
+using P=pair<double,double>;
+double dist(const P&a,const P&b){ return hypot(a.first-b.first,a.second-b.second); }
+int main(){
+    int n=600,cand=60,K=12;
+    vector<P>d(n),c(cand);
+    for(int i=0;i<n;i++) d[i]={rand()%200,rand()%200};
+    for(int i=0;i<cand;i++) c[i]={rand()%200,rand()%200};
+    vector<int>open,assign(n,-1);
+    for(int k=0;k<K;k++){
+        double best=-1; int bc=-1;
+        for(int i=0;i<cand;i++){
+            if(find(open.begin(),open.end(),i)!=open.end()) continue;
+            double gain=0;
+            for(int j=0;j<n;j++){
+                double cur=(assign[j]<0?1e9:dist(d[j],c[assign[j]]));
+                double nd=dist(d[j],c[i]);
+                if(nd<cur) gain+=(cur-nd);
+            }
+            if(gain>best){best=gain; bc=i;}
+        }
+        if(bc<0) break;
+        open.push_back(bc);
+        for(int j=0;j<n;j++){
+            double bestd=1e18; int bi=-1;
+            for(int o:open){
+                double d0=dist(d[j],c[o]);
+                if(d0<bestd){bestd=d0; bi=o;}
+            }
+            assign[j]=bi;
+        }
+    }
+    cout<<"Centers: "<<open.size();
+}
+`
+},
+
+7:{
+title:"Business Case Study 7 – Bicycle Lane Reallocation",
+problem:"Reassign traffic lanes based on peak bicycle demand.",
+algo:"Algorithm: Dinic Max Flow",
+time:"Time Complexity: O(E sqrt(V))",
+code:`
+#include <bits/stdc++.h>
+using namespace std;
+struct Edge{int to,rev,cap;};
+struct Dinic{
+    int N; vector<vector<Edge>>G; vector<int>level,it;
+    Dinic(int n):N(n),G(n),level(n),it(n){}
+    void add(int u,int v,int c){
+        G[u].push_back({v,(int)G[v].size(),c});
+        G[v].push_back({u,(int)G[u].size()-1,0});
+    }
+    bool bfs(int s,int t){
+        fill(level.begin(),level.end(),-1);
+        queue<int>q; q.push(s); level[s]=0;
+        while(!q.empty()){
+            int u=q.front(); q.pop();
+            for(auto &e:G[u]) if(e.cap>0 && level[e.to]<0){
+                level[e.to]=level[u]+1; q.push(e.to);
+            }
+        }
+        return level[t]>=0;
+    }
+    int dfs(int u,int t,int f){
+        if(u==t) return f;
+        for(int &i=it[u];i<G[u].size();i++){
+            Edge &e=G[u][i];
+            if(e.cap>0 && level[e.to]==level[u]+1){
+                int x=dfs(e.to,t,min(f,e.cap));
+                if(x){ e.cap-=x; G[e.to][e.rev].cap+=x; return x; }
+            }
+        }
+        return 0;
+    }
+    int flow(int s,int t){
+        int F=0,f;
+        while(bfs(s,t)){
+            fill(it.begin(),it.end(),0);
+            while(f=dfs(s,t,1e9)) F+=f;
+        }
+        return F;
+    }
+};
+int main(){
+    Dinic D(6);
+    D.add(0,1,30);
+    D.add(1,2,20);
+    D.add(0,3,25);
+    D.add(3,2,15);
+    D.add(2,5,40);
+    cout<<D.flow(0,5);
+}
+`
+},
+
+8:{
+title:"Business Case Study 8 – Tree Canopy Optimization",
+problem:"Select plots for planting under a budget.",
+algo:"Algorithm: Submodular Greedy Maximization",
+time:"Time Complexity: O(n log n)",
+code:`
+#include <bits/stdc++.h>
+using namespace std;
+struct Plot{int id; double cost,benefit;};
+int main(){
+    int n=300; double B=10000;
+    vector<Plot>P;
+    for(int i=0;i<n;i++)
+        P.push_back({i,(rand()%100)+20,double(rand()%200)});
+    vector<bool>used(n,false);
+    priority_queue<pair<double,int>>pq;
+    for(auto &p:P) pq.push({p.benefit/p.cost,p.id});
+    double usedB=0; vector<int>sel;
+    while(!pq.empty()){
+        auto [r,id]=pq.top(); pq.pop();
+        if(used[id]) continue;
+        if(usedB + P[id].cost <= B){
+            used[id]=true; usedB += P[id].cost; sel.push_back(id);
+        }
+    }
+    cout<<"Selected: "<<sel.size();
+}
+`
+},
+
+9:{
+title:"Business Case Study 9 – Drone Corridor Planning",
+problem:"Find safe drone path avoiding no-fly zones.",
+algo:"Algorithm: A* Search",
+time:"Time Complexity: O(E log V)",
+code:`
+#include <bits/stdc++.h>
+using namespace std;
+int dx[8]={1,1,0,-1,-1,-1,0,1};
+int dy[8]={0,1,1,1,0,-1,-1,-1};
+double h(int x,int y,int tx,int ty){ return hypot(tx-x,ty-y); }
+int main(){
+    int W=200,H=200;
+    vector<vector<int>>blk(W,vector<int>(H,0));
+    for(int i=50;i<80;i++) for(int j=60;j<90;j++) blk[i][j]=1;
+    pair<int,int>s={10,10},t={180,170};
+    vector<vector<double>>g(W,vector<double>(H,1e18));
+    priority_queue<pair<double,pair<int,int>>,
+        vector<pair<double,pair<int,int>>>,
+        greater<>>pq;
+    g[s.first][s.second]=0;
+    pq.push({0,{s.first,s.second}});
+    vector<vector<pair<int,int>>>par(W,vector<pair<int,int>>(H,{-1,-1}));
+    while(!pq.empty()){
+        auto cur=pq.top(); pq.pop();
+        int x=cur.second.first,y=cur.second.second;
+        if(x==t.first && y==t.second) break;
+        for(int k=0;k<8;k++){
+            int nx=x+dx[k],ny=y+dy[k];
+            if(nx<0||ny<0||nx>=W||ny>=H) continue;
+            if(blk[nx][ny]) continue;
+            double cost=hypot(dx[k],dy[k]);
+            double nc=g[x][y]+cost;
+            if(nc<g[nx][ny]){
+                g[nx][ny]=nc;
+                par[nx][ny]={x,y};
+                pq.push({nc+h(nx,ny,t.first,t.second),{nx,ny}});
+            }
+        }
+    }
+    cout<<"Done.";
+}
+`
+},
+
+10:{
+title:"Business Case Study 10 – Housing Allocation",
+problem:"Fair allocation of housing units.",
+algo:"Algorithm: Gale–Shapley Deferred Acceptance",
+time:"Time Complexity: O(nm)",
+code:`
+#include <bits/stdc++.h>
+using namespace std;
+int main(){
+    int A=300,H=60;
+    vector<vector<int>>pref(A);
+    for(int i=0;i<A;i++)
+        for(int j=0;j<min(H,10);j++)
+            pref[i].push_back((i+j)%H);
+    vector<int>cap(H,4),ap(A,-1),nxt(A,0);
+    vector<set<pair<int,int>>>house(H);
+    vector<int>score(A);
+    for(int i=0;i<A;i++) score[i]=rand()%100;
+    queue<int>q;
+    for(int i=0;i<A;i++) q.push(i);
+    while(!q.empty()){
+        int a=q.front(); q.pop();
+        if(nxt[a]>=pref[a].size()) continue;
+        int h=pref[a][nxt[a]++];
+        house[h].insert({-score[a],a});
+        if(house[h].size()>cap[h]){
+            auto worst=*prev(house[h].end());
+            house[h].erase(worst);
+            q.push(worst.second);
+        }
+    }
+    cout<<"Allocation done.";
+}
+`
+}
+
+};
+
+// =============================================
+// FETCH ID FROM URL AND DISPLAY CONTENT
+// =============================================
+const url = new URLSearchParams(window.location.search);
+const id = url.get("id");
+
+if(data[id]){
+  document.getElementById("title").textContent = data[id].title;
+  document.getElementById("problem").textContent = "Problem: " + data[id].problem;
+  document.getElementById("algo").textContent = data[id].algo;
+  document.getElementById("time").textContent = data[id].time;
+  document.getElementById("code").textContent = data[id].code;
+}else{
+  document.getElementById("title").textContent = "Invalid Case ID";
+}
+
 </script>
 
 </body>
 </html>
-
-
