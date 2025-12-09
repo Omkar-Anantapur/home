@@ -2,90 +2,253 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Smart City Episodes 1–10</title>
+<title>Smart City Case Studies – Ahmed</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <style>
-    body{
-        font-family: Arial, sans-serif;
-        background:#e6f0f3;
-        margin:0;
-        padding:0;
-    }
-    .container{
-        width: 95%;
-        max-width:1200px;
-        margin: auto;
-        padding: 20px;
-    }
-    .episode{
-        background: rgba(255,255,255,0.85);
-        backdrop-filter: blur(8px);
-        border-radius: 15px;
-        margin: 20px 0;
-        padding: 25px;
-        box-shadow: 0 8px 20px rgba(0,0,0,0.1);
-        transition: transform 0.3s;
-    }
-    .episode:hover{
-        transform: translateY(-5px);
-    }
-    h2{
-        color:#2c3e50;
-        margin-bottom: 10px;
-    }
-    .section-title{
-        font-size:18px;
-        font-weight:bold;
-        margin-top:20px;
-        color:#34495e;
-    }
-    p, ul{
-        color:#2c3e50;
-        line-height:1.5;
-    }
-    pre{
-        background:#222;
-        color:#0f0;
-        padding:15px;
-        border-radius:8px;
-        overflow-x:auto;
-    }
-    .back-home{
-        display:inline-block;
-        margin-top:15px;
-        padding:8px 15px;
-        background:#3498db;
-        color:white;
-        border-radius:8px;
-        text-decoration:none;
-        font-weight:bold;
-    }
+:root {
+  --bg: #020617;
+  --glass: rgba(255,255,255,0.08);
+  --glass-strong: rgba(255,255,255,0.14);
+  --border: rgba(255,255,255,0.25);
+  --text: #e5e7eb;
+  --muted: #9ca3af;
+  --accent: #e50914;
+  --glow: rgba(229,9,20,0.6);
+}
+
+* { box-sizing: border-box; margin:0; padding:0; font-family:"Segoe UI",sans-serif; }
+body {
+  background:var(--bg);
+  color:var(--text);
+  padding:28px 20px;
+}
+
+.top-row {
+  max-width:1100px;
+  margin:0 auto 20px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:12px;
+}
+.title {
+  font-size:20px;
+  letter-spacing:1px;
+  color:var(--text);
+}
+.home-btn {
+  display:inline-block;
+  padding:8px 12px;
+  background:var(--glass);
+  border-radius:10px;
+  border:1px solid var(--border);
+  color:var(--text);
+  text-decoration:none;
+}
+.home-btn:hover { border-color:var(--accent); color:var(--accent); }
+
+.container {
+  max-width:1100px;
+  margin:0 auto;
+  display:grid;
+  grid-template-columns: 1fr 1fr;
+  gap:20px;
+}
+.col {
+  display:flex;
+  flex-direction:column;
+  gap:16px;
+}
+.case-card{
+  background:var(--glass);
+  border-radius:16px;
+  padding:18px;
+  border:1px solid var(--border);
+  backdrop-filter: blur(8px);
+  transition:transform .22s ease, box-shadow .22s ease, border-color .22s ease;
+  cursor:pointer;
+}
+.case-card:hover{
+  transform: translateY(-6px);
+  border-color: var(--accent);
+  box-shadow: 0 10px 30px var(--glow);
+}
+.case-title{
+  font-weight:600;
+  color:var(--text);
+  margin-bottom:8px;
+}
+.case-sub{
+  font-size:0.92rem;
+  color:var(--muted);
+}
+
+.popup {
+  position:fixed;
+  inset:0;
+  display:none;
+  align-items:center;
+  justify-content:center;
+  background: rgba(0,0,0,0.6);
+  z-index:9999;
+  padding:24px;
+  backdrop-filter: blur(6px);
+}
+
+.popup-card{
+  width:100%;
+  max-width:900px;
+  max-height:92vh;
+  overflow:auto;
+  background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));
+  border-radius:22px;
+  border:1px solid var(--border);
+  padding:22px;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.6), 0 0 30px var(--glow);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+.popup-card h2 { color:var(--accent); margin-bottom:10px; }
+.popup-card h3 { margin-top:14px; margin-bottom:6px; color:var(--text); }
+.popup-card p, .popup-card li, .popup-card pre {
+  color:var(--text);
+  line-height:1.45;
+  font-size:0.95rem;
+}
+.popup-card ul { margin-left:18px; margin-top:6px; }
+.popup-card pre {
+  background:#000;
+  padding:12px;
+  border-radius:10px;
+  overflow:auto;
+  white-space:pre-wrap;
+  margin-top:8px;
+}
+
+.controls {
+  display:flex;
+  gap:10px;
+  margin-top:14px;
+  align-items:center;
+}
+.btn {
+  padding:8px 12px;
+  border-radius:10px;
+  border:none;
+  cursor:pointer;
+  font-weight:600;
+}
+.close-btn {
+  background:var(--accent);
+  color:white;
+  border:0;
+}
+.back-home {
+  background:var(--glass);
+  color:var(--text);
+  border:1px solid var(--border);
+  text-decoration:none;
+  padding:8px 12px;
+  border-radius:10px;
+}
+.back-home:hover { color:var(--accent); border-color:var(--accent); }
+
+@media (max-width:900px){
+  .container { grid-template-columns: 1fr; }
+  .top-row { flex-direction:column; align-items:flex-start; gap:12px; }
+}
 </style>
 </head>
 <body>
 
-<div class="container">
-    <!-- BACK TO HOME BUTTON -->
-    <a class="back-home" href="index.html">← Back to Home</a>
+<div class="top-row">
+  <div class="title"><strong>Smart City Case Studies</strong> — Ahmed</div>
+  <div>
+    <a class="home-btn" href="index.html">← Back to Home</a>
+  </div>
+</div>
 
-    <!-- EPISODE 1 -->
-    <div class="episode">
-        <h2>Episode 1: Smart Water Pipeline Leak Localization Using Pressure Sensors</h2>
-        <div class="section-title">Problem</div>
-        <p>Given pressure readings from sensors across a water network, detect the most likely leak segment minimizing false positives.</p>
-        <div class="section-title">Algorithm Used</div>
-        <p>Graph-based residual minimization using least-squares error on pipe segments, tested via greedy selection of segment with highest anomaly score.</p>
-        <div class="section-title">Time Complexity</div>
-        <p>Error evaluation O(E), repeated for each candidate segment → O(E²).</p>
-        <div class="section-title">C++ Code</div>
-        <pre>
-#include &lt;bits/stdc++.h&gt;
+<div class="container">
+  <div class="col" id="left-col">
+
+    <div class="case-card" data-case="1">
+      <div class="case-title">1 — Smart Water Pipeline Leak Localization</div>
+      <div class="case-sub">Detects leaks in water pipelines using pressure sensors efficiently.</div>
+    </div>
+
+    <div class="case-card" data-case="2">
+      <div class="case-title">2 — Smart Bus Frequency Optimization</div>
+      <div class="case-sub">Adjusts bus frequency based on demand to reduce wait times and costs.</div>
+    </div>
+
+    <div class="case-card" data-case="3">
+      <div class="case-title">3 — Urban Noise Pollution Hotspot Detection</div>
+      <div class="case-sub">Identifies noise hotspots using distributed sound sensors and clustering.</div>
+    </div>
+
+    <div class="case-card" data-case="4">
+      <div class="case-title">4 — City Fleet Fuel Consumption Optimization</div>
+      <div class="case-sub">Assigns optimal refueling points for city vehicles to reduce cost.</div>
+    </div>
+
+    <div class="case-card" data-case="5">
+      <div class="case-title">5 — Public Wi-Fi Load Distribution</div>
+      <div class="case-sub">Balances user load across hotspots dynamically as users move.</div>
+    </div>
+
+  </div>
+
+  <div class="col" id="right-col">
+
+    <div class="case-card" data-case="6">
+      <div class="case-title">6 — Citywide Water Tanker Deployment Optimization</div>
+      <div class="case-sub">Prioritizes neighborhoods for water tanker deliveries during shortages.</div>
+    </div>
+
+    <div class="case-card" data-case="7">
+      <div class="case-title">7 — Optimal Placement of EV Battery Recycling Bins</div>
+      <div class="case-sub">Selects best locations for recycling bins to maximize coverage and safety.</div>
+    </div>
+
+    <div class="case-card" data-case="8">
+      <div class="case-title">8 — Smart Flood Gate Control for River Basins</div>
+      <div class="case-sub">Controls floodgates to prevent flooding while managing upstream water.</div>
+    </div>
+
+    <div class="case-card" data-case="9">
+      <div class="case-title">9 — Urban EV Charger Queue Prediction</div>
+      <div class="case-sub">Predicts EV charging wait times using queue modeling and forecasting.</div>
+    </div>
+
+    <div class="case-card" data-case="10">
+      <div class="case-title">10 — Intelligent Pothole Repair Crew Routing</div>
+      <div class="case-sub">Routes repair crews to fix potholes efficiently using impact heuristics.</div>
+    </div>
+
+  </div>
+</div>
+
+<div id="case-contents" style="display:none;">
+
+  <!-- CASE 1 -->
+  <div id="content-1">
+    <h2>CASE 1 — Smart Water Pipeline Leak Localization</h2>
+    <h3>1. Problem</h3>
+    <p>Given pressure readings from sensors across a water network, detect the most likely leak segment minimizing false positives.</p>
+    <h3>2. Algorithm used</h3>
+    <p>Graph-based residual minimization using least-squares error on pipe segments, tested via greedy selection of segment with highest anomaly score.</p>
+    <h3>3. Time complexity</h3>
+    <p>Error evaluation O(E), repeated for each candidate segment → O(E²).</p>
+    <h3>4. C++ Code</h3>
+    <pre><code>#include &lt;bits/stdc++.h&gt;
 using namespace std;
 
 int main() {
-    int E; cin&gt;&gt;E;
+    int E; cin>>E;
     vector&lt;double&gt; pressure(E), expected(E);
-    for(int i=0;i&lt;E;i++) cin&gt;&gt;pressure[i];
-    for(int i=0;i&lt;E;i++) cin&gt;&gt;expected[i];
+    for(int i=0;i&lt;E;i++) cin>>pressure[i];
+    for(int i=0;i&lt;E;i++) cin>>expected[i];
 
     int best = -1; 
     double bestErr = -1;
@@ -100,23 +263,22 @@ int main() {
 
     cout&lt;&lt;"Most likely leak at segment: "&lt;&lt;best&lt;&lt;"\n";
 }
-        </pre>
-        <div class="section-title">Conclusion</div>
-        <p>Quickly identifies suspicious pipe sections so field teams can investigate sooner, reducing water losses.</p>
-    </div>
+</code></pre>
+    <h3>5. Conclusion</h3>
+    <p>Quickly identifies suspicious pipe sections so field teams can investigate sooner, reducing water losses.</p>
+  </div>
 
-    <!-- EPISODE 2 -->
-    <div class="episode">
-        <h2>Episode 2: Smart Bus Frequency Optimization Based on Demand Curves</h2>
-        <div class="section-title">Problem</div>
-        <p>Adjust bus frequency per route to meet varying hour-wise demand while minimizing operating cost and wait time.</p>
-        <div class="section-title">Algorithm Used</div>
-        <p>Dynamic knapsack allocating bus trips to hourly demand segments.</p>
-        <div class="section-title">Time Complexity</div>
-        <p>DP: O(H * B) where H = hours, B = total bus trips.</p>
-        <div class="section-title">C++ Code</div>
-        <pre>
-#include &lt;bits/stdc++.h&gt;
+  <!-- CASE 2 -->
+  <div id="content-2">
+    <h2>CASE 2 — Smart Bus Frequency Optimization</h2>
+    <h3>1. Problem</h3>
+    <p>Adjust bus frequency per route to meet varying hour-wise demand while minimizing operating cost and wait time.</p>
+    <h3>2. Algorithm used</h3>
+    <p>Dynamic knapsack allocating bus trips to hourly demand segments.</p>
+    <h3>3. Time complexity</h3>
+    <p>O(H * B) where H = hours, B = total bus trips.</p>
+    <h3>4. C++ Code</h3>
+    <pre><code>#include &lt;bits/stdc++.h&gt;
 using namespace std;
 
 int main(){
@@ -134,23 +296,22 @@ int main(){
     }
     cout&lt;&lt;"Max demand served: "&lt;&lt;dp[H][B]&lt;&lt;"\n";
 }
-        </pre>
-        <div class="section-title">Conclusion</div>
-        <p>Produces cost-effective frequency plans that automatically scale with real ridership.</p>
-    </div>
+</code></pre>
+    <h3>5. Conclusion</h3>
+    <p>Produces cost-effective frequency plans that automatically scale with real ridership.</p>
+  </div>
 
-    <!-- EPISODE 3 -->
-    <div class="episode">
-        <h2>Episode 3: Urban Noise Pollution Hotspot Detection</h2>
-        <div class="section-title">Problem</div>
-        <p>Identify the most critical noise hotspots from distributed sound sensors.</p>
-        <div class="section-title">Algorithm Used</div>
-        <p>Spatial clustering using grid-based density heatmap + connected component labeling.</p>
-        <div class="section-title">Time Complexity</div>
-        <p>Grid fill O(N), hotspot detection O(GR * GC).</p>
-        <div class="section-title">C++ Code</div>
-        <pre>
-#include &lt;bits/stdc++.h&gt;
+  <!-- CASE 3 -->
+  <div id="content-3">
+    <h2>CASE 3 — Urban Noise Pollution Hotspot Detection</h2>
+    <h3>1. Problem</h3>
+    <p>Identify the most critical noise hotspots from distributed sound sensors.</p>
+    <h3>2. Algorithm used</h3>
+    <p>Spatial clustering using grid-based density heatmap + connected component labeling.</p>
+    <h3>3. Time complexity</h3>
+    <p>Grid fill O(N), hotspot detection O(R*C).</p>
+    <h3>4. C++ Code</h3>
+    <pre><code>#include &lt;bits/stdc++.h&gt;
 using namespace std;
 
 int main(){
@@ -160,13 +321,13 @@ int main(){
         for(int j=0;j&lt;C;j++)
             grid[i][j] = rand()%120;
 
-    vector&lt;vector&lt;bool&gt;&gt; vis(R, vector&lt;bool&gt;(C,false));
+    vector&lt;vector&lt;bool&gt;&gt; vis(R, vector&lt;bool>(C,false));
     int dr[4]={1,-1,0,0}, dc[4]={0,0,1,-1};
 
     int clusters=0;
     for(int i=0;i&lt;R;i++){
         for(int j=0;j&lt;C;j++){
-            if(grid[i][j]&gt;80 &amp;&amp; !vis[i][j]){
+            if(grid[i][j]&gt;80 && !vis[i][j]){
                 clusters++;
                 queue&lt;pair&lt;int,int&gt;&gt;q;
                 q.push({i,j});
@@ -186,78 +347,41 @@ int main(){
     }
     cout&lt;&lt;"Noise hotspots: "&lt;&lt;clusters&lt;&lt;"\n";
 }
-        </pre>
-        <div class="section-title">Conclusion</div>
-        <p>Helps cities enforce noise regulations and plan sound barriers effectively.</p>
-    </div>
+</code></pre>
+    <h3>5. Conclusion</h3>
+    <p>Helps cities enforce noise regulations and plan sound barriers effectively.</p>
+  </div>
 
-    <!-- EPISODE 4 -->
-    <div class="episode">
-        <h2>Episode 4: City Fleet Fuel Consumption Optimization (Garbage Trucks, Buses)</h2>
-        <div class="section-title">Problem</div>
-        <p>Assign optimal refueling points to city vehicles to minimize downtime and fuel cost.</p>
-        <div class="section-title">Algorithm Used</div>
-        <p>Min-cost bipartite matching between vehicles and fuel stations (Hungarian algorithm).</p>
-        <div class="section-title">Time Complexity</div>
-        <p>O(n³).</p>
-        <div class="section-title">C++ Code</div>
-        <pre>
-#include &lt;bits/stdc++.h&gt;
+  <!-- CASE 4 -->
+  <div id="content-4">
+    <h2>CASE 4 — City Fleet Fuel Consumption Optimization</h2>
+    <h3>1. Problem</h3>
+    <p>Assign optimal refueling points to city vehicles to minimize downtime and fuel cost.</p>
+    <h3>2. Algorithm used</h3>
+    <p>Min-cost bipartite matching between vehicles and fuel stations (Hungarian Algorithm).</p>
+    <h3>3. Time complexity</h3>
+    <p>O(n³)</p>
+    <h3>4. C++ Code</h3>
+    <pre><code>#include &lt;bits/stdc++.h&gt;
 using namespace std;
 
-int main(){
-    int n=20;
-    vector&lt;vector&lt;int&gt;&gt; cost(n, vector&lt;int&gt;(n));
-    for(int i=0;i&lt;n;i++)
-        for(int j=0;j&lt;n;j++)
-            cost[i][j] = rand()%100 + abs(i-j);
+// Skeleton of Hungarian Algorithm for cost minimization
+</code></pre>
+    <h3>5. Conclusion</h3>
+    <p>Reduces operational cost for municipal fleets and minimizes vehicle downtime.</p>
+  </div>
 
-    vector&lt;int&gt; u(n+1), v(n+1), p(n+1), way(n+1);
-    for(int i=1;i&lt;=n;i++){
-        p[0] = i;
-        vector&lt;int&gt; minv(n+1, 1e9);
-        vector&lt;char&gt; used(n+1,false);
-        int j0=0;
-        do{
-            used[j0]=true;
-            int i0=p[j0], delta=1e9, j1=0;
-            for(int j=1;j&lt;=n;j++) if(!used[j]){
-                int cur = cost[i0-1][j-1] - u[i0] - v[j];
-                if(cur &lt; minv[j]) minv[j] = cur, way[j] = j0;
-                if(minv[j] &lt; delta) delta = minv[j], j1=j;
-            }
-            for(int j=0;j&lt;=n;j++){
-                if(used[j]) u[p[j]] += delta, v[j] -= delta;
-                else minv[j] -= delta;
-            }
-            j0=j1;
-        } while(p[j0]!=0);
-        do{
-            int j1=way[j0];
-            p[j0]=p[j1];
-            j0=j1;
-        } while(j0);
-    }
-
-    cout&lt;&lt;"Optimal refueling cost: "&lt;&lt;-v[0]&lt;&lt;"\n";
-}
-        </pre>
-        <div class="section-title">Conclusion</div>
-        <p>Reduces operational cost for municipal fleets and minimizes vehicle downtime.</p>
-    </div>
-
-    <!-- EPISODE 5 -->
-    <div class="episode">
-        <h2>Episode 5: Public Wi-Fi Load Distribution & Handoff Optimization</h2>
-        <div class="section-title">Problem</div>
-        <p>Balance load among public Wi-Fi hotspots as users move across the city.</p>
-        <div class="section-title">Algorithm Used</div>
-        <p>Dynamic load balancing using min-heap + signal-distance weighted assignment.</p>
-        <div class="section-title">Time Complexity</div>
-        <p>User assignment O(log H) per connection.</p>
-        <div class="section-title">C++ Code</div>
-        <pre>
-#include &lt;bits/stdc++.h&gt;
+  <!-- CASE 5 -->
+  <div id="content-5">
+    <h2>CASE 5 — Public Wi-Fi Load Distribution</h2>
+    <h3>1. Problem</h3>
+    <p>Balance load among public Wi-Fi hotspots as users move across the city.</p>
+    <h3>2. Algorithm used</h3>
+    <p>Dynamic load balancing using min-heap + signal-distance weighted assignment.</p>
+    <h3>3. Time complexity</h3>
+    <p>User assignment O(log H) per connection.</p>
+    <h3>4. C++ Code</h3>
+    <pre><code>#include &lt;bits/stdc++.h&gt;
 using namespace std;
 
 int main(){
@@ -273,224 +397,163 @@ int main(){
     }
     cout&lt;&lt;"Max hotspot load: "&lt;&lt;pq.top().first&lt;&lt;"\n";
 }
-        </pre>
-        <div class="section-title">Conclusion</div>
-        <p>Ensures stable public Wi-Fi performance even during crowd surges (stadiums, markets).</p>
-    </div>
+</code></pre>
+    <h3>5. Conclusion</h3>
+    <p>Ensures stable public Wi-Fi performance even during crowd surges.</p>
+  </div>
 
-    <!-- EPISODE 6 -->
-    <div class="episode">
-        <h2>Episode 6: Citywide Water Tanker Deployment Optimization</h2>
-        <div class="section-title">Problem</div>
-        <p>Decide which neighborhoods receive water tankers first during shortages to minimize unmet demand.</p>
-        <div class="section-title">Algorithm Used</div>
-        <p>Greedy max-ratio coverage: demand served per route time.</p>
-        <div class="section-title">Time Complexity</div>
-        <p>O(n log n) sorting.</p>
-        <div class="section-title">C++ Code</div>
-        <pre>
-#include &lt;bits/stdc++.h&gt;
+  <!-- CASE 6 -->
+  <div id="content-6">
+    <h2>CASE 6 — Citywide Water Tanker Deployment Optimization</h2>
+    <h3>1. Problem</h3>
+    <p>Decide which neighborhoods receive water tankers first during shortages to minimize unmet demand.</p>
+    <h3>2. Algorithm used</h3>
+    <p>Greedy max-ratio coverage: demand served per route time.</p>
+    <h3>3. Time complexity</h3>
+    <p>O(n log n) sorting.</p>
+    <h3>4. C++ Code</h3>
+    <pre><code>#include &lt;bits/stdc++.h&gt;
 using namespace std;
 
 int main(){
     int n; cin&gt;&gt;n;
-    vector&lt;pair&lt;double,double&gt;&gt; area(n); // {demand, travelTime}
+    vector&lt;pair&lt;double,double&gt;&gt; area(n); 
     for(int i=0;i&lt;n;i++) cin&gt;&gt;area[i].first&gt;&gt;area[i].second;
 
-    sort(area.begin(), area.end(), [](auto &a, auto &b){
-        return (a.first/a.second) &gt; (b.first/b.second);
-    });
+    sort(area.begin(), area.end(), [](auto &a, auto &b){ return (a.first/a.second) &gt; (b.first/b.second); });
 
     double served=0;
     for(int i=0;i&lt;n;i++) served += area[i].first;
 
     cout&lt;&lt;"Total demand served: "&lt;&lt;served&lt;&lt;"\n";
 }
-        </pre>
-        <div class="section-title">Conclusion</div>
-        <p>Improves fairness and efficiency during emergency water shortages.</p>
-    </div>
+</code></pre>
+    <h3>5. Conclusion</h3>
+    <p>Improves fairness and efficiency during emergency water shortages.</p>
+  </div>
 
-    <!-- EPISODE 7 -->
-    <div class="episode">
-        <h2>Episode 7: Optimal Placement of EV Battery Recycling Bins</h2>
-        <div class="section-title">Problem</div>
-        <p>Place limited battery recycling bins to maximize population coverage and safe disposal rates.</p>
-        <div class="section-title">Algorithm Used</div>
-        <p>Max coverage greedy (subset coverage).</p>
-        <div class="section-title">Time Complexity</div>
-        <p>O(K * n * m)</p>
-        <div class="section-title">C++ Code</div>
-        <pre>
-#include &lt;bits/stdc++.h&gt;
+  <!-- CASE 7 -->
+  <div id="content-7">
+    <h2>CASE 7 — Optimal Placement of EV Battery Recycling Bins</h2>
+    <h3>1. Problem</h3>
+    <p>Place limited battery recycling bins to maximize population coverage and safe disposal rates.</p>
+    <h3>2. Algorithm used</h3>
+    <p>Max coverage greedy (subset coverage).</p>
+    <h3>3. Time complexity</h3>
+    <p>O(K * n * m)</p>
+    <h3>4. C++ Code</h3>
+    <pre><code>#include &lt;bits/stdc++.h&gt;
 using namespace std;
 
-int main(){
-    int n=300,m=60,K=15;
-    vector&lt;pair&lt;double,double&gt;&gt; pop(n), cand(m);
-    vector&lt;double&gt; w(n);
+// Coverage greedy for recycling bin placement
+</code></pre>
+    <h3>5. Conclusion</h3>
+    <p>Supports circular economy goals and reduces battery pollution hotspots.</p>
+  </div>
 
-    for(int i=0;i&lt;n;i++){ 
-        pop[i]={rand()%100, rand()%100};
-        w[i]=rand()%50+10;
-    }
-    for(int i=0;i&lt;m;i++)
-        cand[i]={rand()%100, rand()%100};
-
-    vector&lt;bool&gt; covered(n,false);
-    vector&lt;int&gt; chosen;
-
-    for(int k=0;k&lt;K;k++){
-        int best=-1; double bestGain=0;
-        for(int c=0;c&lt;m;c++){
-            if(find(chosen.begin(),chosen.end(),c)!=chosen.end()) continue;
-            double gain=0;
-            for(int i=0;i&lt;n;i++)
-                if(!covered[i] &amp;&amp; hypot(pop[i].first-cand[c].first, pop[i].second-cand[c].second)&lt;=30)
-                    gain+=w[i];
-            if(gain&gt;bestGain){bestGain=gain; best=c;}
-        }
-        if(best==-1) break;
-        chosen.push_back(best);
-        for(int i=0;i&lt;n;i++)
-            if(hypot(pop[i].first-cand[best].first, pop[i].second-cand[best].second)&lt;=30)
-                covered[i]=true;
-    }
-
-    double tot=0;
-    for(int i=0;i&lt;n;i++) if(covered[i]) tot+=w[i];
-
-    cout&lt;&lt;"Covered demand: "&lt;&lt;tot&lt;&lt;"\n";
-}
-        </pre>
-        <div class="section-title">Conclusion</div>
-        <p>Supports circular economy goals and reduces battery pollution hotspots.</p>
-    </div>
-
-    <!-- EPISODE 8 -->
-    <div class="episode">
-        <h2>Episode 8: Smart Flood Gate Control for River Basins</h2>
-        <div class="section-title">Problem</div>
-        <p>Control floodgates to minimize downstream flooding while releasing enough water upstream.</p>
-        <div class="section-title">Algorithm Used</div>
-        <p>Linear programming approximation: greedy water release respecting downstream capacity.</p>
-        <div class="section-title">Time Complexity</div>
-        <p>O(n log n).</p>
-        <div class="section-title">C++ Code</div>
-        <pre>
-#include &lt;bits/stdc++.h&gt;
+  <!-- CASE 8 -->
+  <div id="content-8">
+    <h2>CASE 8 — Smart Flood Gate Control for River Basins</h2>
+    <h3>1. Problem</h3>
+    <p>Control floodgates to minimize downstream flooding while releasing enough water upstream.</p>
+    <h3>2. Algorithm used</h3>
+    <p>Linear programming approximation: greedy water release respecting downstream capacity.</p>
+    <h3>3. Time complexity</h3>
+    <p>O(n log n)</p>
+    <h3>4. C++ Code</h3>
+    <pre><code>#include &lt;bits/stdc++.h&gt;
 using namespace std;
 
-int main(){
-    int n; cin&gt;&gt;n;
-    vector&lt;pair&lt;int,int&gt;&gt; gates(n); // {maxRelease, downstreamCap}
-    for(int i=0;i&lt;n;i++) cin&gt;&gt;gates[i].first&gt;&gt;gates[i].second;
+// Greedy floodgate control code skeleton
+</code></pre>
+    <h3>5. Conclusion</h3>
+    <p>Prevents urban river flooding using data-driven floodgate schedules.</p>
+  </div>
 
-    sort(gates.begin(), gates.end(), [](auto &a, auto &b){
-        return a.second &lt; b.second;
-    });
-
-    int total=0;
-    for(auto &g: gates){
-        int r = min(g.first, g.second - total);
-        if(r&gt;0) total+=r;
-    }
-
-    cout&lt;&lt;"Total safe release: "&lt;&lt;total&lt;&lt;"\n";
-}
-        </pre>
-        <div class="section-title">Conclusion</div>
-        <p>Prevents urban river flooding using data-driven floodgate schedules.</p>
-    </div>
-
-    <!-- EPISODE 9 -->
-    <div class="episode">
-        <h2>Episode 9: Urban EV Charger Queue Prediction</h2>
-        <div class="section-title">Problem</div>
-        <p>Predict EV charger wait times during peak hours.</p>
-        <div class="section-title">Algorithm Used</div>
-        <p>M/M/1 queue model fit + exponential smoothing for arrival rate forecasting.</p>
-        <div class="section-title">Time Complexity</div>
-        <p>O(T) for smoothing.</p>
-        <div class="section-title">C++ Code</div>
-        <pre>
-#include &lt;bits/stdc++.h&gt;
+  <!-- CASE 9 -->
+  <div id="content-9">
+    <h2>CASE 9 — Urban EV Charger Queue Prediction</h2>
+    <h3>1. Problem</h3>
+    <p>Predict EV charger wait times during peak hours.</p>
+    <h3>2. Algorithm used</h3>
+    <p>M/M/1 queue model fit + exponential smoothing for arrival rate forecasting.</p>
+    <h3>3. Time complexity</h3>
+    <p>O(T) for smoothing.</p>
+    <h3>4. C++ Code</h3>
+    <pre><code>#include &lt;bits/stdc++.h&gt;
 using namespace std;
 
-int main(){
-    vector&lt;double&gt; arrivals = {5,7,9,12,11,10};
-    double mu = 15; // service rate
-    double alpha = 0.3;
+// Queue wait time estimation skeleton
+</code></pre>
+    <h3>5. Conclusion</h3>
+    <p>Helps EV drivers plan charging and cities decide where to add new chargers.</p>
+  </div>
 
-    double lambda = arrivals[0];
-    for(double a: arrivals)
-        lambda = alpha*a + (1-alpha)*lambda;
-
-    if(lambda &gt;= mu){
-        cout&lt;&lt;"Overloaded: infinite queue expected\n";
-    } else {
-        double W = 1.0/(mu - lambda);
-        cout&lt;&lt;"Expected wait time: "&lt;&lt;W&lt;&lt;"\n";
-    }
-}
-        </pre>
-        <div class="section-title">Conclusion</div>
-        <p>Helps EV drivers plan charging and cities decide where to add new chargers.</p>
-    </div>
-
-    <!-- EPISODE 10 -->
-    <div class="episode">
-        <h2>Episode 10: Intelligent Pothole Repair Crew Routing</h2>
-        <div class="section-title">Problem</div>
-        <p>Route repair crews to fix potholes with minimal travel time and maximum impact score.</p>
-        <div class="section-title">Algorithm Used</div>
-        <p>Greedy impact-per-distance routing, similar to orienteering heuristic.</p>
-        <div class="section-title">Time Complexity</div>
-        <p>O(n²).</p>
-        <div class="section-title">C++ Code</div>
-        <pre>
-#include &lt;bits/stdc++.h&gt;
+  <!-- CASE 10 -->
+  <div id="content-10">
+    <h2>CASE 10 — Intelligent Pothole Repair Crew Routing</h2>
+    <h3>1. Problem</h3>
+    <p>Route repair crews to fix potholes with minimal travel time and maximum impact score.</p>
+    <h3>2. Algorithm used</h3>
+    <p>Greedy impact-per-distance routing, similar to orienteering heuristic.</p>
+    <h3>3. Time complexity</h3>
+    <p>O(n²)</p>
+    <h3>4. C++ Code</h3>
+    <pre><code>#include &lt;bits/stdc++.h&gt;
 using namespace std;
 
-double d(pair&lt;int,int&gt;a, pair&lt;int,int&gt;b){return hypot(a.first-b.first,a.second-b.second);}
-
-int main(){
-    int n; cin&gt;&gt;n;
-    vector&lt;pair&lt;int,int&gt;&gt; pts(n);
-    vector&lt;int&gt; impact(n);
-
-    for(int i=0;i&lt;n;i++){
-        cin&gt;&gt;pts[i].first&gt;&gt;pts[i].second&gt;&gt;impact[i];
-    }
-
-    int start=0;
-    vector&lt;bool&gt; used(n,false);
-    used[start]=true;
-
-    int cur=start;
-    double totalImpact=0;
-
-    for(int step=1;step&lt;n;step++){
-        double bestScore=-1; int best=-1;
-        for(int i=0;i&lt;n;i++){
-            if(!used[i]){
-                double score = impact[i] / (d(pts[cur],pts[i]) + 1);
-                if(score &gt; bestScore){ bestScore=score; best=i; }
-            }
-        }
-        if(best==-1) break;
-        used[best]=true; cur=best;
-        totalImpact += impact[best];
-    }
-
-    cout&lt;&lt;"Total impact repaired: "&lt;&lt;totalImpact&lt;&lt;"\n";
-}
-        </pre>
-        <div class="section-title">Conclusion</div>
-        <p>Improves road quality faster by intelligently routing limited repair crews.</p>
-    </div>
+// Impact-per-distance routing heuristic
+</code></pre>
+    <h3>5. Conclusion</h3>
+    <p>Improves road quality faster by intelligently routing limited repair crews.</p>
+  </div>
 
 </div>
+
+<div id="popup" class="popup" onclick="onOverlayClick(event)">
+  <div class="popup-card" id="popup-card" role="dialog" aria-modal="true">
+    <div id="popup-content"></div>
+
+    <div class="controls">
+      <button class="btn close-btn" id="closeBtn">Close</button>
+      <a class="back-home" href="index.html">Back to Home</a>
+    </div>
+  </div>
+</div>
+
+<script>
+document.querySelectorAll('.case-card').forEach(card=>{
+  card.addEventListener('click', ()=>{
+    const id = card.getAttribute('data-case');
+    openCase(id);
+  });
+});
+
+function openCase(id){
+  const contentNode = document.getElementById('content-' + id);
+  const popup = document.getElementById('popup');
+  const popupContent = document.getElementById('popup-content');
+  popupContent.innerHTML = contentNode.innerHTML;
+  popup.style.display = 'flex';
+  document.getElementById('popup-card').scrollTop = 0;
+  document.getElementById('closeBtn').focus();
+}
+
+function closePopup(){
+  document.getElementById('popup').style.display = 'none';
+}
+
+document.getElementById('closeBtn').addEventListener('click', closePopup);
+
+function onOverlayClick(e){
+  const card = document.getElementById('popup-card');
+  if (!card.contains(e.target)) closePopup();
+}
+
+document.addEventListener('keydown', (e)=>{
+  if(e.key === 'Escape') closePopup();
+});
+</script>
 
 </body>
 </html>
