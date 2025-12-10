@@ -16,7 +16,6 @@
       --text: #e5e7eb;
       --muted: #9ca3af;
       --accent: #e50914;
-      --name: #ff7b00; /* Profile name color */
       --glow: rgba(229,9,20,0.6);
     }
 
@@ -49,12 +48,16 @@
 
     .intro-text {
       display: flex;
-      gap: 0.15em;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 0.1em;
       font-weight: 700;
       color: var(--accent);
       text-transform: uppercase;
       letter-spacing: 4px;
-      font-size: clamp(2rem, 12vw, 6rem);
+      font-size: clamp(1.8rem, 10vw, 6rem);
+      text-align: center;
+      line-height: 1.1;
     }
 
     .intro-text span {
@@ -88,15 +91,15 @@
       }
     }
 
-    /* zoom + reveal effect */
+    /* zoom effect */
     .zoom {
-      animation: zoomInOut 2.5s ease-in-out forwards 2.7s;
+      animation: zoomInOut 2.8s ease-in-out forwards 2.6s;
     }
 
     @keyframes zoomInOut {
       0% { transform: scale(1); opacity: 1; }
-      60% { transform: scale(3.5); opacity: 1; }
-      100% { transform: scale(6); opacity: 0; }
+      60% { transform: scale(2.5); opacity: 1; }
+      100% { transform: scale(5); opacity: 0; }
     }
 
     @keyframes hideIntro {
@@ -104,7 +107,6 @@
       100% { opacity: 0; visibility: hidden; }
     }
 
-    /* Page fade-in after intro */
     main {
       opacity: 0;
       animation: showPage 1.2s ease forwards 4.8s;
@@ -223,7 +225,7 @@
 
     .profile-card h3 {
       margin-top: 1rem;
-      color: var(--name);
+      color: var(--accent); /* same color as avatar letters */
       font-weight: 600;
       letter-spacing: 1px;
       font-size: 1.05rem;
@@ -240,8 +242,9 @@
     /* ================= RESPONSIVE ================= */
     @media (max-width: 600px) {
       .intro-text {
-        font-size: clamp(1.8rem, 10vw, 3.5rem);
+        font-size: clamp(1.5rem, 8.5vw, 3rem);
         letter-spacing: 2px;
+        padding: 0 5vw;
       }
       .title-group h1 { font-size: 1.2rem; }
       .title-group h2 { font-size: 0.75rem; }
