@@ -168,48 +168,49 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      flex-direction: column;
-      animation: introFadeOut 3.8s forwards;
+      animation: introFadeOut 4.5s forwards;
     }
 
     #intro h1 {
       color: var(--accent);
-      font-size: 2.8rem;
-      letter-spacing: 4px;
+      font-size: 3rem;
+      letter-spacing: 6px;
       opacity: 0;
       text-transform: uppercase;
-      animation: logoGlow 3s ease forwards;
+      font-weight: 700;
+      animation: netflixZoom 4s ease forwards;
     }
 
-    /* Glowing animation */
-    @keyframes logoGlow {
+    /* Netflix Zoom Glow animation */
+    @keyframes netflixZoom {
       0% {
         opacity: 0;
+        transform: scale(0.4);
         text-shadow: none;
-        transform: scale(0.9);
       }
       30% {
         opacity: 1;
-        text-shadow: 0 0 10px var(--glow), 0 0 25px var(--accent);
-        transform: scale(1.05);
+        transform: scale(1.1);
+        text-shadow: 0 0 20px var(--glow), 0 0 40px var(--accent);
       }
       60% {
-        text-shadow: 0 0 20px var(--glow), 0 0 40px var(--accent);
+        transform: scale(1);
+        text-shadow: 0 0 30px var(--accent), 0 0 60px var(--glow);
       }
       100% {
         opacity: 1;
-        text-shadow: 0 0 10px var(--glow);
         transform: scale(1);
+        text-shadow: 0 0 15px var(--glow);
       }
     }
 
-    /* Fade out intro */
+    /* Fade out intro overlay */
     @keyframes introFadeOut {
-      0%, 80% { opacity: 1; }
+      0%, 85% { opacity: 1; }
       100% { opacity: 0; visibility: hidden; }
     }
 
-    /* Section animations */
+    /* Smooth appearance animations */
     @keyframes fadeSlideDown {
       from { opacity: 0; transform: translateY(-20px); }
       to { opacity: 1; transform: translateY(0); }
@@ -219,14 +220,15 @@
       from { opacity: 0; transform: translateY(15px); }
       to { opacity: 1; transform: translateY(0); }
     }
+
   </style>
 </head>
 
 <body>
 
-  <!-- Netflix-like glowing intro -->
+  <!-- Netflix-like cinematic intro -->
   <div id="intro">
-    <h1>City Design</h1>
+    <h1>SAMPURNAPURAM</h1>
   </div>
 
   <!-- Background video -->
