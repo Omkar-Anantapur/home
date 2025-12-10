@@ -48,16 +48,17 @@
 
     .intro-text {
       display: flex;
-      flex-wrap: wrap;
       justify-content: center;
-      gap: 0.1em;
+      flex-wrap: nowrap;
       font-weight: 700;
       color: var(--accent);
       text-transform: uppercase;
-      letter-spacing: 4px;
-      font-size: clamp(1.8rem, 10vw, 6rem);
+      letter-spacing: 3px;
+      font-size: clamp(1.8rem, 8.8vw, 6rem);
+      transform: scaleX(0.95); /* Slight horizontal compression to fit on small screens */
+      line-height: 1;
       text-align: center;
-      line-height: 1.1;
+      white-space: nowrap;
     }
 
     .intro-text span {
@@ -93,13 +94,13 @@
 
     /* zoom effect */
     .zoom {
-      animation: zoomInOut 2.8s ease-in-out forwards 2.6s;
+      animation: zoomInOut 3s ease-in-out forwards 2.6s;
     }
 
     @keyframes zoomInOut {
-      0% { transform: scale(1); opacity: 1; }
-      60% { transform: scale(2.5); opacity: 1; }
-      100% { transform: scale(5); opacity: 0; }
+      0% { transform: scale(1) scaleX(0.95); opacity: 1; }
+      60% { transform: scale(2.8) scaleX(1); opacity: 1; }
+      100% { transform: scale(5) scaleX(1); opacity: 0; }
     }
 
     @keyframes hideIntro {
@@ -225,7 +226,7 @@
 
     .profile-card h3 {
       margin-top: 1rem;
-      color: var(--accent); /* same color as avatar letters */
+      color: var(--accent);
       font-weight: 600;
       letter-spacing: 1px;
       font-size: 1.05rem;
@@ -242,9 +243,9 @@
     /* ================= RESPONSIVE ================= */
     @media (max-width: 600px) {
       .intro-text {
-        font-size: clamp(1.5rem, 8.5vw, 3rem);
+        font-size: clamp(1.4rem, 8vw, 3rem);
+        transform: scaleX(0.88); /* Compress more horizontally on phones */
         letter-spacing: 2px;
-        padding: 0 5vw;
       }
       .title-group h1 { font-size: 1.2rem; }
       .title-group h2 { font-size: 0.75rem; }
