@@ -4,9 +4,14 @@
   <meta charset="UTF-8" />
   <title>CITY PLANNING | SAMPURNAPURAM</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
   <style>
     :root {
       --bg: #020617;
+      --glass: rgba(255,255,255,0.08);
+      --border: rgba(255,255,255,0.25);
+      --text: #e5e7eb;
+      --muted: #9ca3af;
       --accent: #e50914;
       --glow: rgba(229,9,20,0.6);
     }
@@ -20,53 +25,51 @@
 
     body {
       background: var(--bg);
-      color: #e5e7eb;
+      color: var(--text);
       overflow-x: hidden;
       min-height: 100vh;
     }
 
-    /* ========== INTRO ========== */
+    /* Netflix Intro */
     #intro {
       position: fixed;
       inset: 0;
       background: black;
+      z-index: 9999;
       display: flex;
       align-items: center;
       justify-content: center;
       overflow: hidden;
-      z-index: 9999;
-      animation: introEnd 6s forwards;
+      animation: hideIntro 5s forwards;
     }
 
     .intro-text {
       display: flex;
-      flex-wrap: nowrap;
-      color: var(--accent);
+      gap: 0.2em;
       font-weight: 700;
-      letter-spacing: 5px;
+      color: var(--accent);
       text-transform: uppercase;
-      font-size: clamp(2rem, 10vw, 6rem);
-      position: relative;
-      z-index: 2;
+      letter-spacing: 4px;
+      font-size: clamp(2rem, 12vw, 6rem);
     }
 
     .intro-text span {
       opacity: 0;
       transform: translateY(30px);
-      filter: blur(4px);
+      filter: blur(6px);
       animation: letterIn 0.4s forwards;
     }
 
-    /* Sequential letter delays */
-    .intro-text span:nth-child(1){animation-delay:.1s;}
-    .intro-text span:nth-child(2){animation-delay:.2s;}
-    .intro-text span:nth-child(3){animation-delay:.3s;}
-    .intro-text span:nth-child(4){animation-delay:.4s;}
-    .intro-text span:nth-child(5){animation-delay:.5s;}
-    .intro-text span:nth-child(6){animation-delay:.6s;}
-    .intro-text span:nth-child(7){animation-delay:.7s;}
-    .intro-text span:nth-child(8){animation-delay:.8s;}
-    .intro-text span:nth-child(9){animation-delay:.9s;}
+    /* sequential letter delay */
+    .intro-text span:nth-child(1){animation-delay:0.1s;}
+    .intro-text span:nth-child(2){animation-delay:0.2s;}
+    .intro-text span:nth-child(3){animation-delay:0.3s;}
+    .intro-text span:nth-child(4){animation-delay:0.4s;}
+    .intro-text span:nth-child(5){animation-delay:0.5s;}
+    .intro-text span:nth-child(6){animation-delay:0.6s;}
+    .intro-text span:nth-child(7){animation-delay:0.7s;}
+    .intro-text span:nth-child(8){animation-delay:0.8s;}
+    .intro-text span:nth-child(9){animation-delay:0.9s;}
     .intro-text span:nth-child(10){animation-delay:1s;}
     .intro-text span:nth-child(11){animation-delay:1.1s;}
     .intro-text span:nth-child(12){animation-delay:1.2s;}
@@ -81,68 +84,52 @@
       }
     }
 
-    /* Ribbons container */
-    .ribbons {
-      position: absolute;
-      inset: 0;
-      display: flex;
-      justify-content: space-evenly;
-      overflow: hidden;
-      z-index: 1;
-      opacity: 0;
-      animation: ribbonsIn 4s ease-in forwards 2.2s;
+    /* zoom + reveal effect */
+    .zoom {
+      animation: zoomInOut 2s ease-in-out forwards 2.8s;
     }
 
-    .ribbon {
-      flex: 1;
-      background: linear-gradient(
-        180deg,
-        rgba(255,0,0,0.7),
-        rgba(255,165,0,0.6),
-        rgba(255,255,0,0.5),
-        rgba(0,128,0,0.6),
-        rgba(0,0,255,0.6),
-        rgba(75,0,130,0.7),
-        rgba(238,130,238,0.7)
-      );
-      background-size: 100% 400%;
-      animation: moveRibbon 3s ease-in-out infinite alternate;
-      mix-blend-mode: screen;
-      filter: blur(40px);
-      transform: scaleY(1.2);
-    }
-
-    @keyframes moveRibbon {
-      0% { background-position: center 0%; transform: scaleY(1.2) translateX(0); }
-      100% { background-position: center 100%; transform: scaleY(1.2) translateX(10px); }
-    }
-
-    @keyframes ribbonsIn {
-      0% { opacity: 0; }
-      30% { opacity: 0.7; }
-      100% { opacity: 1; }
-    }
-
-    /* When the intro exits, scale text up dramatically while ribbons stay */
-    @keyframes introEnd {
-      0%,85% { opacity: 1; transform: scale(1); }
-      100% { opacity: 1; transform: scale(1); visibility: hidden; pointer-events:none; }
-    }
-
-    .zoom-out {
-      animation: textZoom 3s ease-in-out forwards 2.8s;
-    }
-
-    @keyframes textZoom {
+    @keyframes zoomInOut {
       0% { transform: scale(1); opacity: 1; }
-      60% { transform: scale(1.5); opacity: 1; }
-      100% { transform: scale(6); opacity: 0; }
+      70% { transform: scale(3.5); opacity: 1; }
+      100% { transform: scale(5); opacity: 0; }
     }
 
-    /* Page content after intro */
-    main { opacity: 0; animation: showPage 1s forwards 5.5s; }
+    @keyframes hideIntro {
+      0%, 85% { opacity: 1; }
+      100% { opacity: 0; visibility: hidden; }
+    }
 
-    @keyframes showPage { to { opacity: 1; } }
+    /* After intro */
+    main {
+      opacity: 0;
+      animation: showPage 1s ease forwards 4.8s;
+    }
+
+    @keyframes showPage {
+      to { opacity: 1; }
+    }
+
+    /* Background video */
+    .bg-video {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: -4;
+      opacity: 0.55;
+      filter: brightness(0.55) contrast(1.1);
+    }
+
+    .city-sketch {
+      position: fixed;
+      bottom: 2%;
+      right: 2%;
+      width: 250px;
+      opacity: 0.18;
+      z-index: -2;
+    }
 
     header {
       background: rgba(0,0,0,0.55);
@@ -152,62 +139,120 @@
       align-items: center;
       border-bottom: 1px solid rgba(255,255,255,0.1);
       backdrop-filter: blur(6px);
+      position: sticky;
+      top: 0;
+      z-index: 10;
     }
 
-    .title-group h1 { letter-spacing:3px; font-weight:600; font-size:1.4rem; }
-    .title-group h2 { font-size:0.8rem; color:var(--accent); letter-spacing:4px; margin-top:2px; text-transform:uppercase; }
-    nav a { color:#e5e7eb; margin-left:1.5rem; text-decoration:none; font-size:0.95rem; }
-    nav a:hover { color:var(--accent); }
-
-    section { padding:3rem 5vw; text-align:center; }
-    footer { text-align:center; padding:2rem; color:#9ca3af; font-size:0.9rem; }
-
-    /* Background video */
-    .bg-video {
-      position: fixed;
-      top:0;left:0;width:100%;height:100%;
-      object-fit:cover;
-      opacity:0.55;
-      z-index:-4;
-      filter:brightness(0.55) contrast(1.1);
+    .title-group h1 {
+      letter-spacing: 3px;
+      font-weight: 600;
+      font-size: 1.4rem;
     }
 
-    .city-sketch {
-      position: fixed;
-      bottom:2%;
-      right:2%;
-      width: 220px;
-      opacity:0.2;
-      z-index:-2;
+    .title-group h2 {
+      font-size: 0.8rem;
+      color: var(--accent);
+      letter-spacing: 4px;
+      margin-top: 2px;
+      text-transform: uppercase;
     }
 
-    @media (max-width:600px){
-      .intro-text{font-size:clamp(1.5rem,12vw,4rem); letter-spacing:2px;}
-      .city-sketch{width:160px;}
+    nav a {
+      color: var(--text);
+      margin-left: 1.5rem;
+      text-decoration: none;
+      font-size: 0.95rem;
+      transition: color 0.3s;
     }
+
+    nav a:hover {
+      color: var(--accent);
+    }
+
+    section {
+      padding: 3rem 5vw;
+      text-align: center;
+    }
+
+    .profile-wrapper h1 {
+      font-size: 1.6rem;
+      margin-bottom: 2rem;
+      letter-spacing: 1px;
+    }
+
+    .profiles {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 2rem;
+      max-width: 900px;
+      margin: auto;
+    }
+
+    .profile-card {
+      background: var(--glass);
+      border-radius: 16px;
+      padding: 2rem;
+      border: 1px solid var(--border);
+      transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s;
+    }
+
+    .profile-card:hover {
+      transform: scale(1.05);
+      border-color: var(--accent);
+      box-shadow: 0 0 25px var(--glow);
+    }
+
+    .avatar {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      background: #111827;
+      margin: auto;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 1.5rem;
+      color: var(--accent);
+      font-weight: 600;
+    }
+
+    footer {
+      text-align: center;
+      padding: 2rem;
+      color: var(--muted);
+      font-size: 0.9rem;
+      border-top: 1px solid rgba(255,255,255,0.1);
+    }
+
+    @media (max-width: 600px) {
+      .intro-text {
+        font-size: clamp(1.8rem, 10vw, 3.5rem);
+        letter-spacing: 2px;
+      }
+      .city-sketch {
+        width: 150px;
+      }
+    }
+
   </style>
 </head>
+
 <body>
 
   <!-- Netflix-style Intro -->
   <div id="intro">
-    <div class="ribbons">
-      <div class="ribbon"></div>
-      <div class="ribbon"></div>
-      <div class="ribbon"></div>
-      <div class="ribbon"></div>
-      <div class="ribbon"></div>
-      <div class="ribbon"></div>
-    </div>
     <div class="intro-text" id="introText">
       <span>S</span><span>A</span><span>M</span><span>P</span><span>U</span><span>R</span><span>N</span><span>A</span><span>P</span><span>U</span><span>R</span><span>A</span><span>M</span>
     </div>
   </div>
 
+  <!-- Background video -->
   <video class="bg-video" autoplay muted loop playsinline>
     <source src="https://cdn.coverr.co/videos/coverr-misty-forest-night-9716/1080p.mp4" type="video/mp4">
   </video>
 
+  <!-- Hand sketch -->
   <img class="city-sketch" src="city-sketch.png" alt="City Hand Sketch">
 
   <main>
@@ -223,18 +268,52 @@
     </header>
 
     <section id="profiles">
-      <h1>Who’s Designing Today?</h1>
-      <p>Profiles content here…</p>
+      <div class="profile-wrapper">
+        <h1>Who’s Designing Today?</h1>
+
+        <div class="profiles">
+
+          <div class="profile-card">
+            <a href="manish.html">
+              <div class="avatar">M1</div>
+              <h3>Manish</h3>
+            </a>
+          </div>
+
+          <div class="profile-card">
+            <a href="omkar.html">
+              <div class="avatar">M2</div>
+              <h3>Omkar</h3>
+            </a>
+          </div>
+
+          <div class="profile-card">
+            <a href="bheemangouda.html">
+              <div class="avatar">M3</div>
+              <h3>BнєємαηGᴏᴜᴅᴀ</h3>
+            </a>
+          </div>
+
+          <div class="profile-card">
+            <a href="Abhilashcase.html">
+              <div class="avatar">M4</div>
+              <h3>Abhilash</h3>
+            </a>
+          </div>
+
+        </div>
+      </div>
     </section>
 
     <footer>© 2025 CITY PLANNING | SAMPURNAPURAM</footer>
   </main>
 
   <script>
-    // Add zoom-out effect to text at the right time
-    setTimeout(()=>{
-      document.getElementById('introText').classList.add('zoom-out');
-    },2800);
+    // Trigger zoom after letters finish appearing
+    setTimeout(() => {
+      document.getElementById('introText').classList.add('zoom');
+    }, 2700);
   </script>
+
 </body>
 </html>
