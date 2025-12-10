@@ -5,6 +5,9 @@
   <title>CITY PLANNING | SAMPURNAPURAM</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
   <style>
     :root {
       --bg: #020617;
@@ -13,6 +16,7 @@
       --text: #e5e7eb;
       --muted: #9ca3af;
       --accent: #e50914;
+      --name: #ff7b00; /* Profile name color */
       --glow: rgba(229,9,20,0.6);
     }
 
@@ -20,7 +24,7 @@
       margin: 0;
       padding: 0;
       box-sizing: border-box;
-      font-family: "Segoe UI", system-ui, sans-serif;
+      font-family: "Poppins", sans-serif;
     }
 
     body {
@@ -30,7 +34,7 @@
       min-height: 100vh;
     }
 
-    /* Netflix Intro */
+    /* ================= INTRO ================= */
     #intro {
       position: fixed;
       inset: 0;
@@ -45,7 +49,7 @@
 
     .intro-text {
       display: flex;
-      gap: 0.2em;
+      gap: 0.15em;
       font-weight: 700;
       color: var(--accent);
       text-transform: uppercase;
@@ -86,13 +90,13 @@
 
     /* zoom + reveal effect */
     .zoom {
-      animation: zoomInOut 2s ease-in-out forwards 2.8s;
+      animation: zoomInOut 2.5s ease-in-out forwards 2.7s;
     }
 
     @keyframes zoomInOut {
       0% { transform: scale(1); opacity: 1; }
-      70% { transform: scale(3.5); opacity: 1; }
-      100% { transform: scale(5); opacity: 0; }
+      60% { transform: scale(3.5); opacity: 1; }
+      100% { transform: scale(6); opacity: 0; }
     }
 
     @keyframes hideIntro {
@@ -100,37 +104,15 @@
       100% { opacity: 0; visibility: hidden; }
     }
 
-    /* After intro */
+    /* Page fade-in after intro */
     main {
       opacity: 0;
-      animation: showPage 1s ease forwards 4.8s;
+      animation: showPage 1.2s ease forwards 4.8s;
     }
 
-    @keyframes showPage {
-      to { opacity: 1; }
-    }
+    @keyframes showPage { to { opacity: 1; } }
 
-    /* Background video */
-    .bg-video {
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      z-index: -4;
-      opacity: 0.55;
-      filter: brightness(0.55) contrast(1.1);
-    }
-
-    .city-sketch {
-      position: fixed;
-      bottom: 2%;
-      right: 2%;
-      width: 250px;
-      opacity: 0.18;
-      z-index: -2;
-    }
-
+    /* ================= HEADER ================= */
     header {
       background: rgba(0,0,0,0.55);
       padding: 1rem 3vw;
@@ -151,9 +133,9 @@
     }
 
     .title-group h2 {
-      font-size: 0.8rem;
+      font-size: 0.85rem;
       color: var(--accent);
-      letter-spacing: 4px;
+      letter-spacing: 3px;
       margin-top: 2px;
       text-transform: uppercase;
     }
@@ -170,6 +152,28 @@
       color: var(--accent);
     }
 
+    /* ================= BACKGROUND VIDEO & SKETCH ================= */
+    .bg-video {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: -4;
+      opacity: 0.55;
+      filter: brightness(0.55) contrast(1.1);
+    }
+
+    .city-sketch {
+      position: fixed;
+      bottom: 2%;
+      right: 2%;
+      width: 220px;
+      opacity: 0.18;
+      z-index: -2;
+    }
+
+    /* ================= PROFILES ================= */
     section {
       padding: 3rem 5vw;
       text-align: center;
@@ -217,6 +221,14 @@
       font-weight: 600;
     }
 
+    .profile-card h3 {
+      margin-top: 1rem;
+      color: var(--name);
+      font-weight: 600;
+      letter-spacing: 1px;
+      font-size: 1.05rem;
+    }
+
     footer {
       text-align: center;
       padding: 2rem;
@@ -225,14 +237,18 @@
       border-top: 1px solid rgba(255,255,255,0.1);
     }
 
+    /* ================= RESPONSIVE ================= */
     @media (max-width: 600px) {
       .intro-text {
         font-size: clamp(1.8rem, 10vw, 3.5rem);
         letter-spacing: 2px;
       }
-      .city-sketch {
-        width: 150px;
-      }
+      .title-group h1 { font-size: 1.2rem; }
+      .title-group h2 { font-size: 0.75rem; }
+      .profiles { gap: 1.5rem; }
+      .profile-card { padding: 1.5rem; }
+      .avatar { width: 70px; height: 70px; font-size: 1.3rem; }
+      .city-sketch { width: 150px; opacity: 0.15; }
     }
 
   </style>
@@ -290,7 +306,7 @@
           <div class="profile-card">
             <a href="bheemangouda.html">
               <div class="avatar">M3</div>
-              <h3>BнєємαηGᴏᴜᴅᴀ</h3>
+              <h3>Bheemangouda</h3>
             </a>
           </div>
 
