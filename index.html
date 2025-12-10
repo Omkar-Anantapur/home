@@ -17,15 +17,21 @@
       --glow: rgba(229,9,20,0.6);
     }
 
-    * { box-sizing: border-box; margin: 0; padding: 0; font-family: "Segoe UI", sans-serif; }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: "Segoe UI", system-ui, sans-serif;
+    }
 
     body {
       min-height: 100vh;
       color: var(--text);
-      background: #020617;
+      background: var(--bg);
       overflow-x: hidden;
     }
 
+    /* Background video */
     .bg-video {
       position: fixed;
       top: 0; left: 0;
@@ -37,26 +43,78 @@
       filter: brightness(0.55) contrast(1.1);
     }
 
+    /* Hand sketch image */
+    .city-sketch {
+      position: fixed;
+      bottom: 2%;
+      right: 2%;
+      width: 280px;
+      opacity: 0.2;
+      z-index: -2;
+      transition: opacity 0.8s ease;
+    }
+
+    .city-sketch:hover {
+      opacity: 0.35;
+    }
+
+    /* Header */
     header {
-      background: rgba(0,0,0,0.65);
+      background: rgba(0,0,0,0.55);
       padding: 1rem 3vw;
       display: flex;
       justify-content: space-between;
-      position: sticky; top: 0;
+      align-items: center;
+      position: sticky;
+      top: 0;
       z-index: 10;
       border-bottom: 1px solid rgba(255,255,255,0.1);
+      backdrop-filter: blur(6px);
+      animation: fadeSlideDown 1.2s ease forwards;
     }
 
-    .title-group h1 { letter-spacing: 3px; }
-    .title-group h2 { font-size: 0.9rem; color: var(--accent); letter-spacing: 5px; }
+    .title-group h1 {
+      letter-spacing: 3px;
+      font-weight: 600;
+      font-size: 1.4rem;
+    }
 
-    nav a { color: var(--text); margin-left: 1.5rem; text-decoration: none; }
-    nav a:hover { color: var(--accent); }
+    .title-group h2 {
+      font-size: 0.8rem;
+      color: var(--accent);
+      letter-spacing: 4px;
+      margin-top: 2px;
+      text-transform: uppercase;
+    }
 
-    section { padding: 3rem 5vw; }
-    #profiles { display: block; }
+    nav a {
+      color: var(--text);
+      margin-left: 1.5rem;
+      text-decoration: none;
+      font-size: 0.95rem;
+      transition: color 0.3s;
+    }
 
-    .profile-wrapper { text-align: center; }
+    nav a:hover {
+      color: var(--accent);
+    }
+
+    section {
+      padding: 3rem 5vw;
+      animation: fadeIn 1.2s ease forwards;
+    }
+
+    #profiles {
+      display: block;
+      text-align: center;
+    }
+
+    .profile-wrapper h1 {
+      font-size: 1.6rem;
+      margin-bottom: 2rem;
+      letter-spacing: 1px;
+    }
+
     .profiles {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
@@ -67,101 +125,168 @@
 
     .profile-card {
       background: var(--glass);
-      border-radius: 20px;
+      border-radius: 16px;
       padding: 2rem;
       border: 1px solid var(--border);
-      transition: 0.3s;
-      text-align: center;
+      transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s;
     }
 
     .profile-card:hover {
-      transform: scale(1.07);
+      transform: scale(1.05);
       border-color: var(--accent);
       box-shadow: 0 0 25px var(--glow);
     }
 
     .avatar {
-      width: 90px; height: 90px; border-radius: 50%;
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
       background: #111827;
       margin: auto;
       display: flex;
       justify-content: center;
       align-items: center;
-      font-size: 1.7rem;
+      font-size: 1.5rem;
       color: var(--accent);
-      font-weight: bold;
+      font-weight: 600;
     }
 
-    footer { text-align: center; padding: 2rem; color: var(--muted); }
+    footer {
+      text-align: center;
+      padding: 2rem;
+      color: var(--muted);
+      font-size: 0.9rem;
+      border-top: 1px solid rgba(255,255,255,0.1);
+    }
+
+    /* Netflix-style Intro */
+    #intro {
+      position: fixed;
+      inset: 0;
+      background: black;
+      z-index: 9999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      animation: introFadeOut 3.8s forwards;
+    }
+
+    #intro h1 {
+      color: var(--accent);
+      font-size: 2.8rem;
+      letter-spacing: 4px;
+      opacity: 0;
+      text-transform: uppercase;
+      animation: logoGlow 3s ease forwards;
+    }
+
+    /* Glowing animation */
+    @keyframes logoGlow {
+      0% {
+        opacity: 0;
+        text-shadow: none;
+        transform: scale(0.9);
+      }
+      30% {
+        opacity: 1;
+        text-shadow: 0 0 10px var(--glow), 0 0 25px var(--accent);
+        transform: scale(1.05);
+      }
+      60% {
+        text-shadow: 0 0 20px var(--glow), 0 0 40px var(--accent);
+      }
+      100% {
+        opacity: 1;
+        text-shadow: 0 0 10px var(--glow);
+        transform: scale(1);
+      }
+    }
+
+    /* Fade out intro */
+    @keyframes introFadeOut {
+      0%, 80% { opacity: 1; }
+      100% { opacity: 0; visibility: hidden; }
+    }
+
+    /* Section animations */
+    @keyframes fadeSlideDown {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(15px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
   </style>
 </head>
 
 <body>
 
-<video class="bg-video" autoplay muted loop playsinline>
-  <source src="https://cdn.coverr.co/videos/coverr-misty-forest-night-9716/1080p.mp4" type="video/mp4">
-</video>
-
-<header>
-  <div class="title-group">
-    <h1>CITY PLANNING</h1>
-    <h2>SAMPURNAPURAM</h2>
+  <!-- Netflix-like glowing intro -->
+  <div id="intro">
+    <h1>City Design</h1>
   </div>
-  <nav>
-    <a href="#profiles">Profiles</a>
-  </nav>
-</header>
 
-<section id="profiles">
-  <div class="profile-wrapper">
-    <h1>Who’s Designing Today?</h1>
+  <!-- Background video -->
+  <video class="bg-video" autoplay muted loop playsinline>
+    <source src="https://cdn.coverr.co/videos/coverr-misty-forest-night-9716/1080p.mp4" type="video/mp4">
+  </video>
 
-    <div class="profiles">
+  <!-- Sketch image -->
+  <img class="city-sketch" src="city-sketch.png" alt="City Hand Sketch">
 
-      <div class="profile-card">
-        <a href="manish.html">
-          <div class="avatar">M1</div>
-          <h3>Manish</h3>
-        </a>
-      </div>
-
-      <div class="profile-card">
-        <a href="omkar.html">
-          <div class="avatar">M2</div>
-          <h3>omkar</h3>
-        </a>
-      </div>
-
-      <!-- FIXED MEMBER 3 -->
-      <div class="profile-card">
-        <a href="bheemangouda.html">
-          <div class="avatar">M3</div>
-          <h3 style="font-size:1.3rem;">BнєємαηGᴏᴜᴅᴀ</h3>
-        </a>
-      </div>
-   
-
-<!-- MEMBER 4 (Abhilash) -->
-<div class="profile-card">
-  <a href="Abhilashcase.html">
-    <div class="avatar">M4</div>
-    <h3>Abhilash</h3>
-  </a>
-</div>
-
+  <header>
+    <div class="title-group">
+      <h1>CITY PLANNING</h1>
+      <h2>SAMPURNAPURAM</h2>
     </div>
-  </div>
-</section>
+    <nav>
+      <a href="about.html">About</a>
+      <a href="#profiles">Profiles</a>
+    </nav>
+  </header>
 
-<footer>© 2025 CITY PLANNING | SAMPURNAPURAM</footer>
+  <section id="profiles">
+    <div class="profile-wrapper">
+      <h1>Who’s Designing Today?</h1>
+
+      <div class="profiles">
+
+        <div class="profile-card">
+          <a href="manish.html">
+            <div class="avatar">M1</div>
+            <h3>Manish</h3>
+          </a>
+        </div>
+
+        <div class="profile-card">
+          <a href="omkar.html">
+            <div class="avatar">M2</div>
+            <h3>Omkar</h3>
+          </a>
+        </div>
+
+        <div class="profile-card">
+          <a href="bheemangouda.html">
+            <div class="avatar">M3</div>
+            <h3>BнєємαηGᴏᴜᴅᴀ</h3>
+          </a>
+        </div>
+
+        <div class="profile-card">
+          <a href="Abhilashcase.html">
+            <div class="avatar">M4</div>
+            <h3>Abhilash</h3>
+          </a>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <footer>© 2025 CITY PLANNING | SAMPURNAPURAM</footer>
 
 </body>
 </html>
-
-
-
-
-
-
-
-
